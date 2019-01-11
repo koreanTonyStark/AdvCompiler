@@ -1,0 +1,288 @@
+primes.mod:
+[[ module: primes
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array of <int>>>
+      <ptr(4) to <array 14 of <char>>>
+      <ptr(4) to <array 24 of <char>>>
+      <ptr(4) to <array 1000000 of <int>>>
+      <ptr(4) to <array 30 of <char>>>
+      <ptr(4) to <array 4 of <char>>>
+      <ptr(4) to <array 45 of <char>>>
+      <ptr(4) to <array 7 of <char>>>
+      <ptr(4) to <array 15 of <char>>>
+      <ptr(4) to <array 20 of <char>>>
+      <ptr(4) to <array 3 of <char>>>
+    array types:
+      <array of <char>>
+      <array 1000000 of <int>>
+      <array of <int>>
+      <array 30 of <char>>
+      <array 4 of <char>>
+      <array 45 of <char>>
+      <array 7 of <char>>
+      <array 15 of <char>>
+      <array 20 of <char>>
+      <array 3 of <char>>
+      <array 14 of <char>>
+      <array 24 of <char>>
+  ]]
+  [[
+    [ *CalcPrimes(<ptr(4) to <array of <int>>>,<int>) --> <int>     ]
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *PrintPrimes(<ptr(4) to <array of <int>>>,<int>,<int>) --> <NULL>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @_str_1   <array 30 of <char>>     ]
+      [ data: '  computing primes from 1 to ' ]
+    [ @_str_10  <array 24 of <char>>     ]
+      [ data: 'Compute primes up to : ' ]
+    [ @_str_2   <array 4 of <char>>     ]
+      [ data: '...' ]
+    [ @_str_3   <array 45 of <char>>     ]
+      [ data: 'WARNING: array too small to hold all primes.' ]
+    [ @_str_4   <array 7 of <char>>     ]
+      [ data: 'ERROR.' ]
+    [ @_str_5   <array 7 of <char>>     ]
+      [ data: 'done. ' ]
+    [ @_str_6   <array 15 of <char>>     ]
+      [ data: ' primes found.' ]
+    [ @_str_7   <array 20 of <char>>     ]
+      [ data: 'Prime numbers 1 to ' ]
+    [ @_str_8   <array 3 of <char>>     ]
+      [ data: '  ' ]
+    [ @_str_9   <array 14 of <char>>     ]
+      [ data: 'Prime numbers' ]
+    [ main     <NULL>     ]
+    [ @n        <int>     ]
+    [ @p        <array 1000000 of <int>>     ]
+    [ @pn       <int>     ]
+    [ $t0       <ptr(4) to <array 14 of <char>>>     ]
+    [ $t1       <ptr(4) to <array 24 of <char>>>     ]
+    [ $t2       <int>     ]
+    [ $t3       <ptr(4) to <array 1000000 of <int>>>     ]
+    [ $t4       <int>     ]
+    [ $t5       <ptr(4) to <array 1000000 of <int>>>     ]
+  ]]
+  [[ primes
+      0:     param  0 <- _str_9
+      1:     call   WriteStr
+      2:     call   WriteLn
+      3:     param  0 <- _str_10
+      4:     call   WriteStr
+      5:     param  1 <- ReadInt
+      6:     param  0 <- p
+      7:     param  2 <- CalcPrimes
+      8:     param  1 <- ReadInt
+      9:     param  0 <- p
+     10:     call   PrintPrimes
+  ]]
+
+  [[ procedure: CalcPrimes
+    [[
+      [ $N        <int>       ]
+      [ $i        <int>       ]
+      [ $isprime  <bool>       ]
+      [ %n        <int>       ]
+      [ %p        <ptr(4) to <array of <int>>>       ]
+      [ $pidx     <int>       ]
+      [ $psqrt    <int>       ]
+      [ $t10      <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <int>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+      [ $t23      <int>       ]
+      [ $t24      <int>       ]
+      [ $t25      <int>       ]
+      [ $t26      <int>       ]
+      [ $t27      <int>       ]
+      [ $t28      <int>       ]
+      [ $t29      <int>       ]
+      [ $t30      <int>       ]
+      [ $t31      <int>       ]
+      [ $t32      <int>       ]
+      [ $t33      <ptr(4) to <array 45 of <char>>>       ]
+      [ $t34      <int>       ]
+      [ $t35      <int>       ]
+      [ $t36      <int>       ]
+      [ $t37      <int>       ]
+      [ $t38      <int>       ]
+      [ $t39      <int>       ]
+      [ $t40      <int>       ]
+      [ $t41      <int>       ]
+      [ $t42      <int>       ]
+      [ $t43      <int>       ]
+      [ $t44      <int>       ]
+      [ $t45      <ptr(4) to <array 7 of <char>>>       ]
+      [ $t46      <ptr(4) to <array 7 of <char>>>       ]
+      [ $t47      <ptr(4) to <array 15 of <char>>>       ]
+      [ $t6       <ptr(4) to <array 30 of <char>>>       ]
+      [ $t7       <ptr(4) to <array 4 of <char>>>       ]
+      [ $t8       <int>       ]
+      [ $t9       <int>       ]
+      [ $v        <int>       ]
+    ]]
+    [[ CalcPrimes
+        0:     param  0 <- _str_1
+        1:     call   WriteStr
+        2:     param  0 <- n
+        3:     call   WriteInt
+        4:     param  0 <- _str_2
+        5:     call   WriteStr
+        6:     param  1 <- 1
+        7:     param  0 <- p
+        8:     assign N <- DIM
+        9:     if     DIM < 1 goto 5_if_true
+       10:     goto   6_if_false
+       11: 5_if_true:
+       12:     return 0
+       13:     goto   4
+       14: 6_if_false:
+       15: 4:
+       16:     param  0 <- p
+       17:     param  0 <- p
+       18:     assign pidx <- 2
+       19:     assign psqrt <- 1
+       20:     assign v <- 3
+       21: 15_while_cond:
+       22:     if     v <= n goto 16_while_body
+       23:     goto   14
+       24: 16_while_body:
+       25:     assign isprime <- 1
+       26:     assign i <- 1
+       27: 21_while_cond:
+       28:     if     isprime = 1 goto 23
+       29:     goto   20
+       30: 23:
+       31:     if     i <= psqrt goto 22_while_body
+       32:     goto   20
+       33: 22_while_body:
+       34:     param  0 <- p
+       35:     param  0 <- p
+       36:     if     v = v goto 26_if_true
+       37:     goto   27_if_false
+       38: 26_if_true:
+       39:     assign isprime <- 0
+       40:     goto   25
+       41: 27_if_false:
+       42: 25:
+       43:     assign i <- i
+       44:     goto   21_while_cond
+       45: 20:
+       46:     if     isprime = 1 goto 32_if_true
+       47:     goto   33_if_false
+       48: 32_if_true:
+       49:     param  0 <- p
+       50:     assign pidx <- pidx
+       51:     if     pidx = N goto 38_if_true
+       52:     goto   39_if_false
+       53: 38_if_true:
+       54:     param  0 <- _str_3
+       55:     call   WriteStr
+       56:     assign n <- 0
+       57:     goto   37
+       58: 39_if_false:
+       59: 37:
+       60:     goto   31
+       61: 33_if_false:
+       62: 31:
+       63:     assign v <- v
+       64:     param  0 <- p
+       65:     param  0 <- p
+       66:     mul    t43 <- p, p
+       67:     if     v > t43 goto 45_if_true
+       68:     goto   46_if_false
+       69: 45_if_true:
+       70:     assign psqrt <- psqrt
+       71:     if     psqrt >= pidx goto 50_if_true
+       72:     goto   51_if_false
+       73: 50_if_true:
+       74:     param  0 <- _str_4
+       75:     call   WriteStr
+       76:     assign n <- 0
+       77:     goto   49
+       78: 51_if_false:
+       79: 49:
+       80:     goto   44
+       81: 46_if_false:
+       82: 44:
+       83:     goto   15_while_cond
+       84: 14:
+       85:     param  0 <- _str_5
+       86:     call   WriteStr
+       87:     param  0 <- pidx
+       88:     call   WriteInt
+       89:     param  0 <- _str_6
+       90:     call   WriteStr
+       91:     call   WriteLn
+       92:     return pidx
+    ]]
+  ]]
+
+  [[ procedure: PrintPrimes
+    [[
+      [ $i        <int>       ]
+      [ %n        <int>       ]
+      [ %p        <ptr(4) to <array of <int>>>       ]
+      [ %pn       <int>       ]
+      [ $t10      <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t6       <ptr(4) to <array 20 of <char>>>       ]
+      [ $t7       <ptr(4) to <array 3 of <char>>>       ]
+      [ $t8       <int>       ]
+      [ $t9       <int>       ]
+    ]]
+    [[ PrintPrimes
+        0:     param  0 <- _str_7
+        1:     call   WriteStr
+        2:     param  0 <- n
+        3:     call   WriteInt
+        4:     call   WriteLn
+        5:     assign i <- 0
+        6: 5_while_cond:
+        7:     if     i < pn goto 6_while_body
+        8:     goto   4
+        9: 6_while_body:
+       10:     param  0 <- _str_8
+       11:     call   WriteStr
+       12:     param  0 <- p
+       13:     param  0 <- p
+       14:     call   WriteInt
+       15:     assign i <- i
+       16:     if     i = i goto 12_if_true
+       17:     goto   13_if_false
+       18: 12_if_true:
+       19:     call   WriteLn
+       20:     goto   11
+       21: 13_if_false:
+       22: 11:
+       23:     goto   5_while_cond
+       24: 4:
+       25:     call   WriteLn
+    ]]
+  ]]
+]]

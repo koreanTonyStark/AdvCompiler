@@ -1,0 +1,8 @@
+
+--This line, and those below, will be ignored--
+
+M    source/snuplc/Makefile
+M    source/snuplc/include/cfg.h
+A    source/snuplc/include/constant_propagation.h
+A    source/snuplc/src/constant_propagation.cpp
+M    source/snuplc/src/snuplc.cpp

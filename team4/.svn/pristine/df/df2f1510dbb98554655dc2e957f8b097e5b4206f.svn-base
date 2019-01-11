@@ -1,0 +1,160 @@
+test10.mod:
+[[ module: test10
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 25 of <char>>>
+      <ptr(4) to <array 29 of <char>>>
+      <ptr(4) to <array 16 of <char>>>
+    array types:
+      <array of <char>>
+      <array 25 of <char>>
+      <array 29 of <char>>
+      <array 16 of <char>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @_str_1   <array 25 of <char>>     ]
+      [ data: 'Sum of natural numbers\n\n' ]
+    [ @_str_2   <array 29 of <char>>     ]
+      [ data: 'Enter a number (0 to exit): ' ]
+    [ @_str_3   <array 16 of <char>>     ]
+      [ data: ' recursive   : ' ]
+    [ @_str_4   <array 16 of <char>>     ]
+      [ data: ' iterative   : ' ]
+    [ @_str_5   <array 16 of <char>>     ]
+      [ data: ' algorithmic : ' ]
+    [ @_str_6   <array 29 of <char>>     ]
+      [ data: 'Enter a number (0 to exit): ' ]
+    [ @i        <int>     ]
+    [ main     <NULL>     ]
+    [ *sum_alg(<int>) --> <int>     ]
+    [ *sum_iter(<int>) --> <int>     ]
+    [ *sum_rec(<int>) --> <int>     ]
+    [ $t0       <ptr(4) to <array 25 of <char>>>     ]
+    [ $t1       <ptr(4) to <array 29 of <char>>>     ]
+    [ $t10      <int>     ]
+    [ $t2       <int>     ]
+    [ $t3       <ptr(4) to <array 16 of <char>>>     ]
+    [ $t4       <int>     ]
+    [ $t5       <ptr(4) to <array 16 of <char>>>     ]
+    [ $t6       <int>     ]
+    [ $t7       <ptr(4) to <array 16 of <char>>>     ]
+    [ $t8       <int>     ]
+    [ $t9       <ptr(4) to <array 29 of <char>>>     ]
+  ]]
+  [[ test10
+      0:     param  0 <- _str_1
+      1:     call   WriteStr
+      2:     param  0 <- _str_2
+      3:     assign i <- ReadNumber
+      4: 3_while_cond:
+      5:     if     i > 0 goto 4_while_body
+      6:     goto   2
+      7: 4_while_body:
+      8:     param  0 <- _str_3
+      9:     call   WriteStr
+     10:     param  0 <- i
+     11:     param  0 <- sum_rec
+     12:     call   WriteInt
+     13:     call   WriteLn
+     14:     param  0 <- _str_4
+     15:     call   WriteStr
+     16:     param  0 <- i
+     17:     param  0 <- sum_iter
+     18:     call   WriteInt
+     19:     call   WriteLn
+     20:     param  0 <- _str_5
+     21:     call   WriteStr
+     22:     param  0 <- i
+     23:     param  0 <- sum_alg
+     24:     call   WriteInt
+     25:     call   WriteLn
+     26:     param  0 <- _str_6
+     27:     assign i <- ReadNumber
+     28:     goto   3_while_cond
+     29: 2:
+  ]]
+
+  [[ procedure: sum_rec
+    [[
+      [ %n        <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+    ]]
+    [[ sum_rec
+        0:     if     n > 0 goto 1_if_true
+        1:     goto   2_if_false
+        2: 1_if_true:
+        3:     param  0 <- n
+        4:     return n
+        5:     goto   0
+        6: 2_if_false:
+        7:     return 0
+        8: 0:
+    ]]
+  ]]
+
+  [[ procedure: sum_iter
+    [[
+      [ $i        <int>       ]
+      [ %n        <int>       ]
+      [ $sum      <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+    ]]
+    [[ sum_iter
+        0:     assign sum <- 0
+        1:     assign i <- 0
+        2: 3_while_cond:
+        3:     if     i <= n goto 4_while_body
+        4:     goto   2
+        5: 4_while_body:
+        6:     assign sum <- sum
+        7:     assign i <- i
+        8:     goto   3_while_cond
+        9: 2:
+       10:     return sum
+    ]]
+  ]]
+
+  [[ procedure: sum_alg
+    [[
+      [ %n        <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+    ]]
+    [[ sum_alg
+        0:     return n
+    ]]
+  ]]
+
+  [[ procedure: ReadNumber
+    [[
+      [ $i        <int>       ]
+      [ %str      <ptr(4) to <array of <char>>>       ]
+      [ $t11      <int>       ]
+    ]]
+    [[ ReadNumber
+        0:     param  0 <- str
+        1:     call   WriteStr
+        2:     return ReadInt
+    ]]
+  ]]
+]]

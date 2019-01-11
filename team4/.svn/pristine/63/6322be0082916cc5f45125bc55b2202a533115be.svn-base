@@ -1,0 +1,77 @@
+test02.mod:
+[[ module: test02
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 10 of <int>>>
+    array types:
+      <array of <char>>
+      <array 10 of <int>>
+      <array 2 of <bool>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @a        <array 10 of <int>>     ]
+    [ @b        <bool>     ]
+    [ @c        <array 2 of <bool>>     ]
+    [ @i        <int>     ]
+    [ main     <NULL>     ]
+    [ $t0       <ptr(4) to <array 10 of <int>>>     ]
+    [ $t1       <int>     ]
+    [ $t10      <int>     ]
+    [ $t11      <int>     ]
+    [ $t12      <int>     ]
+    [ $t13      <int>     ]
+    [ $t14      <ptr(4) to <array 10 of <int>>>     ]
+    [ $t15      <int>     ]
+    [ $t16      <ptr(4) to <array 10 of <int>>>     ]
+    [ $t17      <int>     ]
+    [ $t18      <int>     ]
+    [ $t19      <int>     ]
+    [ $t2       <ptr(4) to <array 10 of <int>>>     ]
+    [ $t20      <int>     ]
+    [ $t3       <int>     ]
+    [ $t4       <int>     ]
+    [ $t5       <int>     ]
+    [ $t6       <int>     ]
+    [ $t7       <ptr(4) to <array 10 of <int>>>     ]
+    [ $t8       <int>     ]
+    [ $t9       <ptr(4) to <array 10 of <int>>>     ]
+  ]]
+  [[ test02
+      0:     param  0 <- a
+      1:     assign i <- 1
+      2: 3_while_cond:
+      3:     if     i < 10 goto 4_while_body
+      4:     goto   2
+      5: 4_while_body:
+      6:     param  0 <- a
+      7:     assign i <- i
+      8:     goto   3_while_cond
+      9: 2:
+     10:     assign i <- 0
+     11: 10_while_cond:
+     12:     if     i < 10 goto 11_while_body
+     13:     goto   9
+     14: 11_while_body:
+     15:     param  0 <- a
+     16:     param  0 <- a
+     17:     call   WriteInt
+     18:     assign i <- i
+     19:     goto   10_while_cond
+     20: 9:
+  ]]
+]]

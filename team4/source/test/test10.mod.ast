@@ -1,0 +1,195 @@
+test10.mod:
+    CAstScope: 'test10'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @_str_1   <array 25 of <char>>           ]
+            [ data: 'Sum of natural numbers\n\n' ]
+          [ @_str_2   <array 29 of <char>>           ]
+            [ data: 'Enter a number (0 to exit): ' ]
+          [ @_str_3   <array 16 of <char>>           ]
+            [ data: ' recursive   : ' ]
+          [ @_str_4   <array 16 of <char>>           ]
+            [ data: ' iterative   : ' ]
+          [ @_str_5   <array 16 of <char>>           ]
+            [ data: ' algorithmic : ' ]
+          [ @_str_6   <array 29 of <char>>           ]
+            [ data: 'Enter a number (0 to exit): ' ]
+          [ @i        <int>           ]
+          [ main     <NULL>           ]
+          [ *sum_alg(<int>) --> <int>           ]
+          [ *sum_iter(<int>) --> <int>           ]
+          [ *sum_rec(<int>) --> <int>           ]
+        ]]
+      statement list:
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 25 of <char>>>
+            "Sum of natural numbers\n\n" <array 25 of <char>>
+        := <int>
+          [ @i        <int> ] <int>
+          call [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int> ] <int>
+            &() <ptr(4) to <array 29 of <char>>>
+              "Enter a number (0 to exit): " <array 29 of <char>>
+        while cond
+          > <bool>
+            [ @i        <int> ] <int>
+            0 <int>
+        while-body
+          call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+            &() <ptr(4) to <array 16 of <char>>>
+              " recursive   : " <array 16 of <char>>
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            call [ *sum_rec(<int>) --> <int> ] <int>
+              [ @i        <int> ] <int>
+          call [ *WriteLn() --> <NULL> ] <NULL>
+          call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+            &() <ptr(4) to <array 16 of <char>>>
+              " iterative   : " <array 16 of <char>>
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            call [ *sum_iter(<int>) --> <int> ] <int>
+              [ @i        <int> ] <int>
+          call [ *WriteLn() --> <NULL> ] <NULL>
+          call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+            &() <ptr(4) to <array 16 of <char>>>
+              " algorithmic : " <array 16 of <char>>
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            call [ *sum_alg(<int>) --> <int> ] <int>
+              [ @i        <int> ] <int>
+          call [ *WriteLn() --> <NULL> ] <NULL>
+          := <int>
+            [ @i        <int> ] <int>
+            call [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int> ] <int>
+              &() <ptr(4) to <array 29 of <char>>>
+                "Enter a number (0 to exit): " <array 29 of <char>>
+      nested scopes:
+        CAstScope: 'sum_rec'
+          symbol table:
+            [[
+              [ %n        <int>               ]
+            ]]
+          statement list:
+            if cond
+              > <bool>
+                [ %n        <int> ] <int>
+                0 <int>
+            if-body
+              return <int>
+                add <int>
+                  [ %n        <int> ] <int>
+                  call [ *sum_rec(<int>) --> <int> ] <int>
+                    sub <int>
+                      [ %n        <int> ] <int>
+                      1 <int>
+            else-body
+              return <int>
+                0 <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'sum_iter'
+          symbol table:
+            [[
+              [ $i        <int>               ]
+              [ %n        <int>               ]
+              [ $sum      <int>               ]
+            ]]
+          statement list:
+            := <int>
+              [ $sum      <int> ] <int>
+              0 <int>
+            := <int>
+              [ $i        <int> ] <int>
+              0 <int>
+            while cond
+              <= <bool>
+                [ $i        <int> ] <int>
+                [ %n        <int> ] <int>
+            while-body
+              := <int>
+                [ $sum      <int> ] <int>
+                add <int>
+                  [ $sum      <int> ] <int>
+                  [ $i        <int> ] <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+            return <int>
+              [ $sum      <int> ] <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'sum_alg'
+          symbol table:
+            [[
+              [ %n        <int>               ]
+            ]]
+          statement list:
+            return <int>
+              div <int>
+                mul <int>
+                  [ %n        <int> ] <int>
+                  add <int>
+                    [ %n        <int> ] <int>
+                    1 <int>
+                2 <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'ReadNumber'
+          symbol table:
+            [[
+              [ $i        <int>               ]
+              [ %str      <ptr(4) to <array of <char>>>               ]
+            ]]
+          statement list:
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              [ %str      <ptr(4) to <array of <char>>> ] <ptr(4) to <array of <char>>>
+            := <int>
+              [ $i        <int> ] <int>
+              call [ *ReadInt() --> <int> ] <int>
+            return <int>
+              [ $i        <int> ] <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @_str_1   <array 25 of <char>>       ]
+        [ data: 'Sum of natural numbers\n\n' ]
+      [ @_str_2   <array 29 of <char>>       ]
+        [ data: 'Enter a number (0 to exit): ' ]
+      [ @_str_3   <array 16 of <char>>       ]
+        [ data: ' recursive   : ' ]
+      [ @_str_4   <array 16 of <char>>       ]
+        [ data: ' iterative   : ' ]
+      [ @_str_5   <array 16 of <char>>       ]
+        [ data: ' algorithmic : ' ]
+      [ @_str_6   <array 29 of <char>>       ]
+        [ data: 'Enter a number (0 to exit): ' ]
+      [ @i        <int>       ]
+      [ main     <NULL>       ]
+      [ *sum_alg(<int>) --> <int>       ]
+      [ *sum_iter(<int>) --> <int>       ]
+      [ *sum_rec(<int>) --> <int>       ]
+    ]]
+

@@ -1,0 +1,85 @@
+test03.mod:
+    CAstScope: 'test03'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @a        <bool>           ]
+          [ @b        <bool>           ]
+          [ @b1       <int>           ]
+          [ @c        <bool>           ]
+          [ main     <NULL>           ]
+        ]]
+      statement list:
+        := <bool>
+          [ @a        <bool> ] <bool>
+          true <bool>
+        := <bool>
+          [ @b        <bool> ] <bool>
+          false <bool>
+        := <bool>
+          [ @c        <bool> ] <bool>
+          and <bool>
+            [ @a        <bool> ] <bool>
+            [ @b        <bool> ] <bool>
+        if cond
+          [ @c        <bool> ] <bool>
+        if-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            1 <int>
+        else-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            0 <int>
+        := <bool>
+          [ @c        <bool> ] <bool>
+          or <bool>
+            [ @a        <bool> ] <bool>
+            [ @b        <bool> ] <bool>
+        if cond
+          [ @c        <bool> ] <bool>
+        if-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            1 <int>
+        else-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            0 <int>
+        := <bool>
+          [ @c        <bool> ] <bool>
+          not <bool>
+            or <bool>
+              [ @a        <bool> ] <bool>
+              [ @b        <bool> ] <bool>
+        if cond
+          [ @c        <bool> ] <bool>
+        if-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            1 <int>
+        else-body
+          call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+            0 <int>
+      nested scopes:
+        empty.
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @a        <bool>       ]
+      [ @b        <bool>       ]
+      [ @b1       <int>       ]
+      [ @c        <bool>       ]
+      [ main     <NULL>       ]
+    ]]
+

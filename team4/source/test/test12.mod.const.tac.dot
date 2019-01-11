@@ -1,0 +1,10 @@
+digraph IR {
+  graph [fontname="Times New Roman",fontsize=10];
+  node  [fontname="Courier New",fontsize=10];
+  edge  [fontname="Times New Roman",fontsize=10];
+
+  // scope 'test12'
+  test12_cb [label="test12\r  0:     call   Test\l",shape=box]
+  // scope 'Test'
+  Test_cb [label="Test\r  0:     assign t0 <- 1\l  1:     assign b <- 1\l  2:     assign t1 <- 66\l  3:     assign c <- 66\l  4:     assign t2 <- 75\l  5:     assign i <- 75\l",shape=box]
+}

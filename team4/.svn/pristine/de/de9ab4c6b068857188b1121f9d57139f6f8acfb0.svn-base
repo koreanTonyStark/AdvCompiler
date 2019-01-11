@@ -1,0 +1,63 @@
+/*
+ * liveness.h
+ *
+ *      Author: team4
+ */
+
+#ifndef __SnuPL_LIVENESS_H_
+#define __SnuPL_LIVENESS_H_
+
+#include "cfg.h"
+
+class LiveNode: public CfgNode {
+public:
+	LiveNode(CfgProc *owner, CTacInstr *instr);
+	LiveNode(const CfgNode &cfgNode);
+	virtual ~LiveNode(void);
+	const pair<CTacAddr*, CTacAddr*> &GetUse(void) const;
+	const CTacAddr* GetDef(void) const;
+	const list<CTacAddr*> &GetIn(void) const;
+	const list<CTacAddr*> &GetOut(void) const;
+	bool IsLiveIn(const CTacAddr* var) const;
+	bool IsLiveOut(const CTacAddr* var) const;
+	bool IsLive(const CTacAddr* var) const;
+	void AddIn(CTacAddr* var);
+	void AddOut(CTacAddr* var);
+protected:
+	pair<CTacAddr*, CTacAddr*> _use;
+	CTacAddr* _def;
+	list<CTacAddr*> _in;
+	list<CTacAddr*> _out;
+	void InitLiveNode(void);
+};
+
+class LiveProc: public CfgProc {
+public:
+	LiveProc(CCodeBlock *cb, size_t offset);
+	LiveProc(const CfgProc &cfgProc);
+	const list<shared_ptr<CfgNode>> &GetNodes(void) const;
+	virtual ~LiveProc(void);
+protected:
+	list<shared_ptr<LiveNode>> _liveNodes;
+	void MakeLiveNodes(void);
+	void LiveAnalysis(void);
+};
+
+class LiveIntraProc: public CfgIntraProc {
+public:
+	LiveIntraProc(CModule *m);
+	virtual ~LiveIntraProc(void);
+protected:
+	vector<shared_ptr<LiveProc>> _liveProcs;
+};
+
+class LiveInterProc: public CfgInterProc {
+public:
+	LiveInterProc(CModule *m);
+	virtual ~LiveInterProc(void);
+protected:
+	vector<shared_ptr<LiveProc>> _liveProcs;
+};
+
+
+#endif /* __SnuPL_LIVENESS_H_ */

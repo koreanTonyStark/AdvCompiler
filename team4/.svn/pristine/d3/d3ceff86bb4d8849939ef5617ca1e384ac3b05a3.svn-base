@@ -1,0 +1,1 @@
+gcc -static -m32 -o test02 test02.mod.const.dead.s ../rte/IA32/IO.s ../rte/IA32/ARRAY.s

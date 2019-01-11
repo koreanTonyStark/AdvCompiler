@@ -1,0 +1,159 @@
+/*
+ * cfg.h
+ *
+ *      Author: team4
+ */
+
+#ifndef __SnuPL_CFG_H__
+#define __SnuPL_CFG_H__
+
+#include <iostream>
+#include <memory>
+#include <list>
+#include <vector>
+#include <set>
+
+#include "ir.h"
+
+using namespace std;
+
+
+class CfgNode;
+class CfgProc;
+
+class CfgNodeCmp{
+public:
+	CfgNodeCmp(void);
+	bool operator()(const shared_ptr<CfgNode> &lhs, const shared_ptr<CfgNode> &rhs) const;
+};
+
+class CfgNode {
+public:
+	struct LIVE {
+		set<CTacAddr*,CTacAddrCmp> _liveIn;
+		set<CTacAddr*,CTacAddrCmp> _liveOut;
+	};
+	struct REACH {
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _gen;
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _kill;
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _reachIn;
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _reachOut;
+	};
+	struct GLOBAL {
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _preds;
+		set<shared_ptr<CfgNode>,CfgNodeCmp> _succs;
+	};
+public:
+	CfgNode(CfgProc *owner, CTacInstr *instr);
+	CfgNode(const CfgNode &node);
+	virtual ~CfgNode(void);
+	const size_t InDegree(void) const;
+	const size_t OutDegree(void) const;
+	bool GoesTo(const shared_ptr<CfgNode> &n) const;
+	bool ComesFrom(const shared_ptr<CfgNode> &n) const;
+	void AddSucc(const shared_ptr<CfgNode> &n);
+	void AddPred(const shared_ptr<CfgNode> &n);
+	void RmSucc(const shared_ptr<CfgNode> &n);
+	void RmPred(const shared_ptr<CfgNode> &n);
+	inline CfgProc* GetOwner(void) const {return _owner;};
+	inline const size_t GetId(void) const {return _id;};
+	inline const CTacInstr* GetInstr(void) const {return _instr;};
+	inline const list<shared_ptr<CfgNode>> &GetSuccs(void) const {return _succs;};
+	inline const list<shared_ptr<CfgNode>> &GetPreds(void) const {return _preds;};
+	inline const vector<CTacAddr*> &GetUse(void) const {return _use;};
+	inline CTacAddr* GetDef(void) const {return _def;};
+	inline const set<CTacAddr*,CTacAddrCmp> &GetGlobal(void) const {return _global;};
+	inline LIVE &GetLiveInfo(void) {return _liveInfo;};
+	inline REACH &GetReachInfo(void) {return _reachInfo;};
+	inline GLOBAL &GetGlobalInfo(void) {return _globalInfo;};
+	bool VarIsGlobal(CTacAddr* var) const;
+	void InitNode(void);
+protected:
+	CfgProc* _owner;
+	size_t _id;
+	CTacInstr* _instr;
+	list<shared_ptr<CfgNode>> _succs;
+	list<shared_ptr<CfgNode>> _preds;
+	vector<CTacAddr*> _use;
+	CTacAddr* _def;
+	set<CTacAddr*,CTacAddrCmp> _global;
+	LIVE _liveInfo;
+	REACH _reachInfo;
+	GLOBAL _globalInfo;
+};
+
+class CfgProc {
+public:
+	CfgProc(CCodeBlock *cb, size_t offset, vector<string> &globals);
+	CfgProc(const CfgProc &proc);
+	virtual ~CfgProc(void);
+	const size_t GetNodeCnt(void) const;
+	const shared_ptr<CfgNode> FindNode(const CTacInstr *instr) const;
+	void AddEdge(const shared_ptr<CfgNode> &from, const shared_ptr<CfgNode> &to);
+	void RmEdge(const shared_ptr<CfgNode> &from, const shared_ptr<CfgNode> &to);
+	void DelNode(const shared_ptr<CfgNode> &n);
+	void toDot(ostream &out) const;
+	inline CCodeBlock* GetCCodeBlock(void) const {return _cb;};
+	inline const string &GetName(void) const {return _name;};
+	inline const list<shared_ptr<CfgNode>> &GetNodes(void) const {return _nodes;};
+	inline const size_t GetNodeOffset(void) const {return _offset;};
+	inline const vector<string> &GetGlobals(void) const {return _globals;};
+	inline bool GetReturnsConst(void) const {return _ReturnsConst;};
+	inline int GetReturnVal(void) const {return _ReturnVal;};
+	inline void SetReturnsConst(bool ReturnsConst) {_ReturnsConst = ReturnsConst;};
+	inline void SetReturnVal(int ReturnVal) {_ReturnVal = ReturnVal;};
+	void LiveAlgo(void);
+	void ReachAlgo(void);
+protected:
+	CCodeBlock* _cb;
+	string _name;
+	list<shared_ptr<CfgNode>> _nodes;
+	size_t _offset;
+	vector<string> _globals;
+	bool _ReturnsConst;
+	int  _ReturnVal;
+	//string _parentFuncName;
+private:
+	bool LiveFixPoint(const list<shared_ptr<CfgNode>> &copy_nodes);
+	void LiveEq(const shared_ptr<CfgNode> &node);
+	void ReachDef(void);
+	bool ReachFixPoint(const list<shared_ptr<CfgNode>> &copy_nodes);
+	void ReachEq(const shared_ptr<CfgNode> &node);
+	void DumpLive(const unsigned int step, const CfgProc *proc) const;
+	void DumpReachDef(const CfgProc *proc) const;
+	void DumpReach(const unsigned int step, const CfgProc *proc) const;
+	void MakeNodes(void);
+	void MakeEdges(void);
+};
+
+class CfgIntraProc {
+public:
+	CfgIntraProc(CModule *m);
+	virtual ~CfgIntraProc(void);
+	const shared_ptr<CfgProc> FindProc(const string &name) const;
+	void toDot(ostream &out) const;
+	inline CModule* GetCModule() const {return _m;};
+	inline const string &GetName(void) const {return _name;};
+	inline const vector<shared_ptr<CfgProc>> &GetProcs(void) const {return _procs;};
+protected:
+	CModule* _m;
+	string _name;
+	vector<shared_ptr<CfgProc>> _procs;
+private:
+	vector<string> _globals;
+	size_t MakeProcs(CCodeBlock *cb, size_t offset);
+};
+
+class CfgInterProc: public CfgIntraProc {
+public:
+	CfgInterProc(CModule *m);
+	virtual ~CfgInterProc(void);
+	void MakeGraph(void);
+private:
+	void BaseGlobals(const list<shared_ptr<CfgNode>> &nodes,
+			map<CTacAddr*, shared_ptr<CfgNode>, CTacAddrCmp> &globals) const;
+	void DestGlobals(const shared_ptr<CfgProc> &proc,
+			map<CTacAddr*, shared_ptr<CfgNode>, CTacAddrCmp> &globals) const;
+};
+
+#endif /* __SnuPL_CFG_H__ */

@@ -1,0 +1,86 @@
+test05.mod:
+    CAstScope: 'test05'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @a        <array 10 of <int>>           ]
+          [ main     <NULL>           ]
+          [ *test(<ptr(4) to <array of <int>>>) --> <NULL>           ]
+        ]]
+      statement list:
+        call [ *test(<ptr(4) to <array of <int>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 10 of <int>>>
+            [ @a        <array 10 of <int>> ] <array 10 of <int>>
+      nested scopes:
+        CAstScope: 'test'
+          symbol table:
+            [[
+              [ %a        <ptr(4) to <array of <int>>>               ]
+              [ $i        <int>               ]
+            ]]
+          statement list:
+            := <int>
+              [ %a        <ptr(4) to <array of <int>>> ] <int>
+                0 <int>
+              1 <int>
+            := <int>
+              [ $i        <int> ] <int>
+              1 <int>
+            while cond
+              < <bool>
+                [ $i        <int> ] <int>
+                10 <int>
+            while-body
+              := <int>
+                [ %a        <ptr(4) to <array of <int>>> ] <int>
+                  [ $i        <int> ] <int>
+                sub <int>
+                  10 <int>
+                  [ $i        <int> ] <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+            := <int>
+              [ $i        <int> ] <int>
+              0 <int>
+            while cond
+              < <bool>
+                [ $i        <int> ] <int>
+                10 <int>
+            while-body
+              call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                [ %a        <ptr(4) to <array of <int>>> ] <int>
+                  [ $i        <int> ] <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @a        <array 10 of <int>>       ]
+      [ main     <NULL>       ]
+      [ *test(<ptr(4) to <array of <int>>>) --> <NULL>       ]
+    ]]
+

@@ -1,0 +1,88 @@
+test06.mod:
+    CAstScope: 'test06'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @a        <array 10 of <bool>>           ]
+          [ main     <NULL>           ]
+          [ *test(<ptr(4) to <array of <bool>>>) --> <NULL>           ]
+        ]]
+      statement list:
+        call [ *test(<ptr(4) to <array of <bool>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 10 of <bool>>>
+            [ @a        <array 10 of <bool>> ] <array 10 of <bool>>
+      nested scopes:
+        CAstScope: 'test'
+          symbol table:
+            [[
+              [ %a        <ptr(4) to <array of <bool>>>               ]
+              [ $i        <int>               ]
+            ]]
+          statement list:
+            := <int>
+              [ $i        <int> ] <int>
+              0 <int>
+            while cond
+              < <bool>
+                [ $i        <int> ] <int>
+                10 <int>
+            while-body
+              := <bool>
+                [ %a        <ptr(4) to <array of <bool>>> ] <bool>
+                  [ $i        <int> ] <int>
+                > <bool>
+                  [ $i        <int> ] <int>
+                  2 <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+            := <int>
+              [ $i        <int> ] <int>
+              0 <int>
+            while cond
+              < <bool>
+                [ $i        <int> ] <int>
+                10 <int>
+            while-body
+              if cond
+                [ %a        <ptr(4) to <array of <bool>>> ] <bool>
+                  [ $i        <int> ] <int>
+              if-body
+                call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                  1 <int>
+              else-body
+                call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                  0 <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @a        <array 10 of <bool>>       ]
+      [ main     <NULL>       ]
+      [ *test(<ptr(4) to <array of <bool>>>) --> <NULL>       ]
+    ]]
+

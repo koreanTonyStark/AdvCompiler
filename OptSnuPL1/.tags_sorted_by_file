@@ -1,0 +1,849 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+DIM	rte/AMD64/ARRAY.s	/^DIM:$/;"	l
+DOFS	rte/AMD64/ARRAY.s	/^DOFS:$/;"	l
+ReadInt	rte/AMD64/IO.s	/^ReadInt:$/;"	l
+WriteChar	rte/AMD64/IO.s	/^WriteChar:$/;"	l
+WriteInt	rte/AMD64/IO.s	/^WriteInt:$/;"	l
+WriteLn	rte/AMD64/IO.s	/^WriteLn:$/;"	l
+WriteStr	rte/AMD64/IO.s	/^WriteStr:$/;"	l
+CC	rte/AMD64/Makefile	/^CC=gcc$/;"	m
+CCFLAGS	rte/AMD64/Makefile	/^CCFLAGS=-m64 -march=x86-64 -std=c99 -O1$/;"	m
+RTE_OBJ	rte/AMD64/Makefile	/^RTE_OBJ=$(patsubst %.s,%.o,$(RTE_SRC))$/;"	m
+RTE_SRC	rte/AMD64/Makefile	/^RTE_SRC=ARRAY.s IO.s$/;"	m
+createSnuPLArray	rte/AMD64/snupl.c	/^void* createSnuPLArray(const void *data, size_t elem_size, int dim, ...)$/;"	f
+__SNUPL_H__	rte/AMD64/snupl.h	34;"	d
+dump	rte/AMD64/test_array.c	/^void dump(void *a)$/;"	f
+main	rte/AMD64/test_array.c	/^int main(void)$/;"	f
+main	rte/AMD64/test_io.c	/^void main(int argc, char **argv)$/;"	f
+testInput	rte/AMD64/test_io.c	/^void testInput(void)$/;"	f
+testOutput	rte/AMD64/test_io.c	/^void testOutput(void)$/;"	f
+testWriteChar	rte/AMD64/test_io.c	/^void testWriteChar(char c)$/;"	f
+testWriteInt	rte/AMD64/test_io.c	/^void testWriteInt(int v)$/;"	f
+testWriteLn	rte/AMD64/test_io.c	/^void testWriteLn(void)$/;"	f
+testWriteStr	rte/AMD64/test_io.c	/^void testWriteStr(const char *s)$/;"	f
+DIM	rte/IA32/ARRAY.s	/^DIM:$/;"	l
+DOFS	rte/IA32/ARRAY.s	/^DOFS:$/;"	l
+ReadInt	rte/IA32/IO.s	/^ReadInt:$/;"	l
+WriteChar	rte/IA32/IO.s	/^WriteChar:$/;"	l
+WriteInt	rte/IA32/IO.s	/^WriteInt:$/;"	l
+WriteLn	rte/IA32/IO.s	/^WriteLn:$/;"	l
+WriteStr	rte/IA32/IO.s	/^WriteStr:$/;"	l
+CC	rte/IA32/Makefile	/^CC=gcc$/;"	m
+CCFLAGS	rte/IA32/Makefile	/^CCFLAGS=-march=i686 -m32 -std=c99 -O1$/;"	m
+RTE_OBJ	rte/IA32/Makefile	/^RTE_OBJ=$(patsubst %.s,%.o,$(RTE_SRC))$/;"	m
+RTE_SRC	rte/IA32/Makefile	/^RTE_SRC=ARRAY.s IO.s$/;"	m
+createSnuPLArray	rte/IA32/snupl.c	/^void* createSnuPLArray(const void *data, size_t elem_size, int dim, ...)$/;"	f
+__SNUPL_H__	rte/IA32/snupl.h	34;"	d
+dump	rte/IA32/test_array.c	/^void dump(void *a)$/;"	f
+main	rte/IA32/test_array.c	/^int main(void)$/;"	f
+main	rte/IA32/test_io.c	/^void main(int argc, char **argv)$/;"	f
+testInput	rte/IA32/test_io.c	/^void testInput(void)$/;"	f
+testOutput	rte/IA32/test_io.c	/^void testOutput(void)$/;"	f
+testWriteChar	rte/IA32/test_io.c	/^void testWriteChar(char c)$/;"	f
+testWriteInt	rte/IA32/test_io.c	/^void testWriteInt(int v)$/;"	f
+testWriteLn	rte/IA32/test_io.c	/^void testWriteLn(void)$/;"	f
+testWriteStr	rte/IA32/test_io.c	/^void testWriteStr(const char *s)$/;"	f
+BIN	snuplc/Makefile	/^BIN=$(patsubst %.cpp,$(BIN_DIR)\/%.o,$(MOD))$/;"	m
+BIN_DIR	snuplc/Makefile	/^BIN_DIR=bin$/;"	m
+CC	snuplc/Makefile	/^CC=g++$/;"	m
+CCFLAGS	snuplc/Makefile	/^CCFLAGS=-std=c++0x -Iinclude -O2$/;"	m
+DEPS	snuplc/Makefile	/^DEPS=ir.h \\$/;"	m
+DEPS_	snuplc/Makefile	/^DEPS_=$(patsubst %,$(INC_DIR)\/%,$(DEPS))$/;"	m
+INC_DIR	snuplc/Makefile	/^INC_DIR=include$/;"	m
+MOD	snuplc/Makefile	/^MOD=scanner.cpp \\$/;"	m
+MOD_DEPS	snuplc/Makefile	/^MOD_DEPS=$(patsubst %.cpp,$(INC_DIR)\/%.h,$(MOD))$/;"	m
+OBJ	snuplc/Makefile	/^OBJ=$(patsubst %.cpp,$(OBJ_DIR)\/%.o, $(SRC))$/;"	m
+OBJ_DIR	snuplc/Makefile	/^OBJ_DIR=obj$/;"	m
+PRIV_DIR	snuplc/Makefile	/^PRIV_DIR=private$/;"	m
+SRC	snuplc/Makefile	/^SRC=ir.cpp \\$/;"	m
+SRC_DIR	snuplc/Makefile	/^SRC_DIR=src$/;"	m
+ReadNumber	snuplc/factorial.mod.s	/^ReadNumber:$/;"	l
+_str_1	snuplc/factorial.mod.s	/^_str_1:                             # <array 11 of <char>>$/;"	l
+_str_2	snuplc/factorial.mod.s	/^_str_2:                             # <array 29 of <char>>$/;"	l
+_str_3	snuplc/factorial.mod.s	/^_str_3:                             # <array 11 of <char>>$/;"	l
+_str_4	snuplc/factorial.mod.s	/^_str_4:                             # <array 5 of <char>>$/;"	l
+_str_5	snuplc/factorial.mod.s	/^_str_5:                             # <array 29 of <char>>$/;"	l
+fact	snuplc/factorial.mod.s	/^fact:$/;"	l
+i	snuplc/factorial.mod.s	/^i:                                  # <int>$/;"	l
+l_ReadNumber_exit	snuplc/factorial.mod.s	/^l_ReadNumber_exit:$/;"	l
+l_fact_0	snuplc/factorial.mod.s	/^l_fact_0:$/;"	l
+l_fact_1_if_true	snuplc/factorial.mod.s	/^l_fact_1_if_true:$/;"	l
+l_fact_2_if_false	snuplc/factorial.mod.s	/^l_fact_2_if_false:$/;"	l
+l_fact_5	snuplc/factorial.mod.s	/^l_fact_5:$/;"	l
+l_fact_6_if_true	snuplc/factorial.mod.s	/^l_fact_6_if_true:$/;"	l
+l_fact_7_if_false	snuplc/factorial.mod.s	/^l_fact_7_if_false:$/;"	l
+l_fact_exit	snuplc/factorial.mod.s	/^l_fact_exit:$/;"	l
+l_factorial_4	snuplc/factorial.mod.s	/^l_factorial_4:$/;"	l
+l_factorial_5_while_cond	snuplc/factorial.mod.s	/^l_factorial_5_while_cond:$/;"	l
+l_factorial_6_while_body	snuplc/factorial.mod.s	/^l_factorial_6_while_body:$/;"	l
+l_factorial_exit	snuplc/factorial.mod.s	/^l_factorial_exit:$/;"	l
+main	snuplc/factorial.mod.s	/^main:$/;"	l
+CAstArrayDesignator	snuplc/include/ast.h	/^class CAstArrayDesignator : public CAstDesignator {$/;"	c
+CAstBinaryOp	snuplc/include/ast.h	/^class CAstBinaryOp : public CAstOperation {$/;"	c
+CAstConstant	snuplc/include/ast.h	/^class CAstConstant : public CAstOperand {$/;"	c
+CAstDesignator	snuplc/include/ast.h	/^class CAstDesignator : public CAstOperand {$/;"	c
+CAstExpression	snuplc/include/ast.h	/^class CAstExpression : public CAstNode {$/;"	c
+CAstFunctionCall	snuplc/include/ast.h	/^class CAstFunctionCall : public CAstExpression {$/;"	c
+CAstModule	snuplc/include/ast.h	/^class CAstModule : public CAstScope {$/;"	c
+CAstNode	snuplc/include/ast.h	/^class CAstNode {$/;"	c
+CAstOperand	snuplc/include/ast.h	/^class CAstOperand : public CAstExpression {$/;"	c
+CAstOperation	snuplc/include/ast.h	/^class CAstOperation : public CAstExpression {$/;"	c
+CAstProcedure	snuplc/include/ast.h	/^class CAstProcedure : public CAstScope {$/;"	c
+CAstScope	snuplc/include/ast.h	/^class CAstScope : public CAstNode {$/;"	c
+CAstSpecialOp	snuplc/include/ast.h	/^class CAstSpecialOp : public CAstOperation {$/;"	c
+CAstStatAssign	snuplc/include/ast.h	/^class CAstStatAssign : public CAstStatement {$/;"	c
+CAstStatCall	snuplc/include/ast.h	/^class CAstStatCall : public CAstStatement {$/;"	c
+CAstStatIf	snuplc/include/ast.h	/^class CAstStatIf : public CAstStatement {$/;"	c
+CAstStatReturn	snuplc/include/ast.h	/^class CAstStatReturn : public CAstStatement {$/;"	c
+CAstStatWhile	snuplc/include/ast.h	/^class CAstStatWhile : public CAstStatement {$/;"	c
+CAstStatement	snuplc/include/ast.h	/^class CAstStatement : public CAstNode {$/;"	c
+CAstStringConstant	snuplc/include/ast.h	/^class CAstStringConstant : public CAstOperand {$/;"	c
+CAstType	snuplc/include/ast.h	/^class CAstType : public CAstNode {$/;"	c
+CAstUnaryOp	snuplc/include/ast.h	/^class CAstUnaryOp : public CAstOperation {$/;"	c
+__SnuPL_AST_H__	snuplc/include/ast.h	36;"	d
+_addr	snuplc/include/ast.h	/^    CTacAddr   *_addr;              \/\/\/< result of this node in three-address$/;"	m	class:CAstNode
+_arg	snuplc/include/ast.h	/^    vector<CAstExpression*> _arg;   \/\/\/< parameter list$/;"	m	class:CAstFunctionCall
+_body	snuplc/include/ast.h	/^    CAstStatement *_body;           \/\/\/< body$/;"	m	class:CAstStatWhile
+_call	snuplc/include/ast.h	/^    CAstFunctionCall *_call;        \/\/\/< call expression$/;"	m	class:CAstStatCall
+_cb	snuplc/include/ast.h	/^    CCodeBlock *_cb;                \/\/\/< (entry) code block for this scope$/;"	m	class:CAstScope
+_children	snuplc/include/ast.h	/^    vector<CAstScope*> _children;   \/\/\/< subordinate scopes$/;"	m	class:CAstScope
+_cond	snuplc/include/ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatIf
+_cond	snuplc/include/ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatWhile
+_done	snuplc/include/ast.h	/^    bool _done;                     \/\/\/< flag indicating all index expressions$/;"	m	class:CAstArrayDesignator
+_elseBody	snuplc/include/ast.h	/^    CAstStatement *_elseBody;       \/\/\/< else body$/;"	m	class:CAstStatIf
+_expr	snuplc/include/ast.h	/^    CAstExpression *_expr;          \/\/\/< return expression$/;"	m	class:CAstStatReturn
+_global_id	snuplc/include/ast.h	/^    static int _global_id;          \/\/\/< holds the (global) next id$/;"	m	class:CAstNode
+_id	snuplc/include/ast.h	/^    int        _id;                 \/\/\/< id of the node$/;"	m	class:CAstNode
+_idx	snuplc/include/ast.h	/^    static int       _idx;          \/\/\/< static counter$/;"	m	class:CAstStringConstant
+_idx	snuplc/include/ast.h	/^    vector<CAstExpression*> _idx;   \/\/\/< index expressions$/;"	m	class:CAstArrayDesignator
+_ifBody	snuplc/include/ast.h	/^    CAstStatement *_ifBody;         \/\/\/< if body$/;"	m	class:CAstStatIf
+_left	snuplc/include/ast.h	/^    CAstExpression *_left;          \/\/\/< left operand$/;"	m	class:CAstBinaryOp
+_lhs	snuplc/include/ast.h	/^    CAstDesignator *_lhs;           \/\/\/< LHS (designator)$/;"	m	class:CAstStatAssign
+_name	snuplc/include/ast.h	/^    string    _name;                \/\/\/< name$/;"	m	class:CAstScope
+_next	snuplc/include/ast.h	/^    CAstStatement* _next;           \/\/\/< next statement$/;"	m	class:CAstStatement
+_offset	snuplc/include/ast.h	/^    CAstExpression *_offset;        \/\/\/< address computation expression$/;"	m	class:CAstArrayDesignator
+_oper	snuplc/include/ast.h	/^    EOperation _oper;               \/\/\/< operation$/;"	m	class:CAstOperation
+_operand	snuplc/include/ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstSpecialOp
+_operand	snuplc/include/ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstUnaryOp
+_parent	snuplc/include/ast.h	/^    CAstScope *_parent;             \/\/\/< superordinate scope$/;"	m	class:CAstScope
+_parenthesized	snuplc/include/ast.h	/^    bool       _parenthesized;      \/\/\/< expression was parenthesized$/;"	m	class:CAstExpression
+_rhs	snuplc/include/ast.h	/^    CAstExpression *_rhs;           \/\/\/< RHS (expression)$/;"	m	class:CAstStatAssign
+_right	snuplc/include/ast.h	/^    CAstExpression *_right;         \/\/\/< right operand$/;"	m	class:CAstBinaryOp
+_scope	snuplc/include/ast.h	/^    CAstScope      *_scope;         \/\/\/< enclosing scope$/;"	m	class:CAstStatReturn
+_statseq	snuplc/include/ast.h	/^    CAstStatement* _statseq;        \/\/\/< statement sequence$/;"	m	class:CAstScope
+_sym	snuplc/include/ast.h	/^    CSymGlobal      *_sym;          \/\/\/< symbol holding the string$/;"	m	class:CAstStringConstant
+_symbol	snuplc/include/ast.h	/^    CSymProc *_symbol;              \/\/\/< corresponding symbol$/;"	m	class:CAstProcedure
+_symbol	snuplc/include/ast.h	/^    const CSymProc *_symbol;        \/\/\/< symbol$/;"	m	class:CAstFunctionCall
+_symbol	snuplc/include/ast.h	/^    const CSymbol *_symbol;         \/\/\/< symbol$/;"	m	class:CAstDesignator
+_symtab	snuplc/include/ast.h	/^    CSymtab   *_symtab;             \/\/\/< symbol table$/;"	m	class:CAstScope
+_token	snuplc/include/ast.h	/^    CToken     _token;              \/\/\/< token in input stream that triggered$/;"	m	class:CAstNode
+_type	snuplc/include/ast.h	/^    const CType     *_type;         \/\/\/< constant type$/;"	m	class:CAstStringConstant
+_type	snuplc/include/ast.h	/^    const CType *_type;             \/\/\/< constant type$/;"	m	class:CAstConstant
+_type	snuplc/include/ast.h	/^    const CType *_type;             \/\/\/< forced type of this op$/;"	m	class:CAstSpecialOp
+_type	snuplc/include/ast.h	/^    const CType *_type;             \/\/\/< type$/;"	m	class:CAstType
+_value	snuplc/include/ast.h	/^    CDataInitString *_value;        \/\/\/< data initializer (holds string data)$/;"	m	class:CAstStringConstant
+_value	snuplc/include/ast.h	/^    long long _value;               \/\/\/< constant value$/;"	m	class:CAstConstant
+CBackend	snuplc/include/backend.h	/^class CBackend {$/;"	c
+CBackendx86	snuplc/include/backend.h	/^class CBackendx86 : public CBackend {$/;"	c
+__SnuPL_BACKEND_H__	snuplc/include/backend.h	36;"	d
+_curr_scope	snuplc/include/backend.h	/^    CScope *_curr_scope;            \/\/\/< current scope$/;"	m	class:CBackendx86
+_ind	snuplc/include/backend.h	/^    string _ind;                    \/\/\/< indentation$/;"	m	class:CBackendx86
+_m	snuplc/include/backend.h	/^    CModule *_m;                    \/\/\/< module$/;"	m	class:CBackend
+_out	snuplc/include/backend.h	/^    ostream &_out;                  \/\/\/< output stream$/;"	m	class:CBackend
+CDataInitString	snuplc/include/data.h	/^class CDataInitString : public CDataInitializer {$/;"	c
+CDataInitializer	snuplc/include/data.h	/^class CDataInitializer {$/;"	c
+__SnuPL_DATA_H__	snuplc/include/data.h	34;"	d
+_data	snuplc/include/data.h	/^    const string   _data;         \/\/\/< string data$/;"	m	class:CDataInitString
+CCodeBlock	snuplc/include/ir.h	/^class CCodeBlock {$/;"	c
+CModule	snuplc/include/ir.h	/^class CModule : public CScope {$/;"	c
+CProcedure	snuplc/include/ir.h	/^class CProcedure : public CScope {$/;"	c
+CScope	snuplc/include/ir.h	/^class CScope {$/;"	c
+CTac	snuplc/include/ir.h	/^class CTac {$/;"	c
+CTacAddr	snuplc/include/ir.h	/^class CTacAddr : public CTac {$/;"	c
+CTacConst	snuplc/include/ir.h	/^class CTacConst : public CTacAddr {$/;"	c
+CTacInstr	snuplc/include/ir.h	/^class CTacInstr : public CTac {$/;"	c
+CTacLabel	snuplc/include/ir.h	/^class CTacLabel : public CTacInstr {$/;"	c
+CTacName	snuplc/include/ir.h	/^class CTacName : public CTacAddr {$/;"	c
+CTacReference	snuplc/include/ir.h	/^class CTacReference: public CTacName {$/;"	c
+CTacTemp	snuplc/include/ir.h	/^class CTacTemp: public CTacName {$/;"	c
+EOperation	snuplc/include/ir.h	/^enum EOperation {$/;"	g
+__SnuPL_IR_H__	snuplc/include/ir.h	38;"	d
+_ast	snuplc/include/ir.h	/^    CAstNode *_ast;                  \/\/\/< abstract syntax tree$/;"	m	class:CScope
+_cb	snuplc/include/ir.h	/^    CCodeBlock* _cb;                 \/\/\/< list of code blocks$/;"	m	class:CScope
+_children	snuplc/include/ir.h	/^    vector<CScope*> _children;       \/\/\/< list of functions$/;"	m	class:CScope
+_deref	snuplc/include/ir.h	/^    const CSymbol *_deref;           \/\/\/< symbol this reference is pointing to$/;"	m	class:CTacReference
+_dst	snuplc/include/ir.h	/^    CTac          *_dst;             \/\/\/< destination operand$/;"	m	class:CTacInstr
+_id	snuplc/include/ir.h	/^    unsigned int   _id;              \/\/\/< unique instruction id$/;"	m	class:CTacInstr
+_inst_id	snuplc/include/ir.h	/^    unsigned int _inst_id;           \/\/\/< next id for instructions$/;"	m	class:CCodeBlock
+_label	snuplc/include/ir.h	/^    const string _label;             \/\/\/< label$/;"	m	class:CTacLabel
+_label_id	snuplc/include/ir.h	/^    unsigned int _label_id;          \/\/\/< next id for labels$/;"	m	class:CScope
+_name	snuplc/include/ir.h	/^    string         _name;            \/\/\/< name (for debugging purposes)$/;"	m	class:CTacInstr
+_name	snuplc/include/ir.h	/^    string _name;                    \/\/\/< name$/;"	m	class:CScope
+_op	snuplc/include/ir.h	/^    EOperation     _op;              \/\/\/< opcode$/;"	m	class:CTacInstr
+_ops	snuplc/include/ir.h	/^    list<CTacInstr*> _ops;           \/\/\/< operation list$/;"	m	class:CCodeBlock
+_owner	snuplc/include/ir.h	/^    CScope *_owner;                  \/\/\/< block owner$/;"	m	class:CCodeBlock
+_parent	snuplc/include/ir.h	/^    CScope *_parent;                 \/\/\/< superordinate scope$/;"	m	class:CScope
+_refcnt	snuplc/include/ir.h	/^    int _refcnt;                     \/\/\/< reference counter$/;"	m	class:CTacLabel
+_src1	snuplc/include/ir.h	/^    CTacAddr      *_src1;            \/\/\/< source operand 1$/;"	m	class:CTacInstr
+_src2	snuplc/include/ir.h	/^    CTacAddr      *_src2;            \/\/\/< source operand 2$/;"	m	class:CTacInstr
+_symbol	snuplc/include/ir.h	/^    const CSymbol *_symbol;          \/\/\/< symbol$/;"	m	class:CTacName
+_symtab	snuplc/include/ir.h	/^    CSymtab *_symtab;                \/\/\/< symbol table$/;"	m	class:CScope
+_temp_id	snuplc/include/ir.h	/^    unsigned int _temp_id;           \/\/\/< next id for temporaries$/;"	m	class:CScope
+_value	snuplc/include/ir.h	/^    int _value;                      \/\/\/< constant value$/;"	m	class:CTacConst
+opAdd	snuplc/include/ir.h	/^  opAdd=0,                          \/\/\/< +  addition$/;"	e	enum:EOperation
+opAddress	snuplc/include/ir.h	/^  opAddress,                        \/\/\/< reference: dst = &src1$/;"	e	enum:EOperation
+opAnd	snuplc/include/ir.h	/^  opAnd,                            \/\/\/< && binary and$/;"	e	enum:EOperation
+opAssign	snuplc/include/ir.h	/^  opAssign,                         \/\/\/< assignment$/;"	e	enum:EOperation
+opBiggerEqual	snuplc/include/ir.h	/^  opBiggerEqual,                    \/\/\/< >= bigger or equal$/;"	e	enum:EOperation
+opBiggerThan	snuplc/include/ir.h	/^  opBiggerThan,                     \/\/\/< >  bigger than$/;"	e	enum:EOperation
+opCall	snuplc/include/ir.h	/^  opCall,                           \/\/\/< call:  dst = call src1$/;"	e	enum:EOperation
+opCast	snuplc/include/ir.h	/^  opCast,                           \/\/\/< type cast: dst = (type)src1$/;"	e	enum:EOperation
+opDeref	snuplc/include/ir.h	/^  opDeref,                          \/\/\/< dereference: dst = *src1$/;"	e	enum:EOperation
+opDiv	snuplc/include/ir.h	/^  opDiv,                            \/\/\/< \/  division$/;"	e	enum:EOperation
+opEqual	snuplc/include/ir.h	/^  opEqual,                          \/\/\/< =  equal$/;"	e	enum:EOperation
+opGoto	snuplc/include/ir.h	/^  opGoto,                           \/\/\/< dst = target$/;"	e	enum:EOperation
+opLabel	snuplc/include/ir.h	/^  opLabel,                          \/\/\/< jump label; no arguments$/;"	e	enum:EOperation
+opLessEqual	snuplc/include/ir.h	/^  opLessEqual,                      \/\/\/< <= less or equal$/;"	e	enum:EOperation
+opLessThan	snuplc/include/ir.h	/^  opLessThan,                       \/\/\/< <  less than$/;"	e	enum:EOperation
+opMul	snuplc/include/ir.h	/^  opMul,                            \/\/\/< *  multiplication$/;"	e	enum:EOperation
+opNeg	snuplc/include/ir.h	/^  opNeg,                            \/\/\/< -  negation$/;"	e	enum:EOperation
+opNop	snuplc/include/ir.h	/^  opNop,                            \/\/\/< no operation$/;"	e	enum:EOperation
+opNot	snuplc/include/ir.h	/^  opNot,                            \/\/\/< !  binary not$/;"	e	enum:EOperation
+opNotEqual	snuplc/include/ir.h	/^  opNotEqual,                       \/\/\/< #  not equal$/;"	e	enum:EOperation
+opOr	snuplc/include/ir.h	/^  opOr,                             \/\/\/< || binary or$/;"	e	enum:EOperation
+opParam	snuplc/include/ir.h	/^  opParam,                          \/\/\/< parameter: dst = index,src1 = parameter$/;"	e	enum:EOperation
+opPos	snuplc/include/ir.h	/^  opPos,                            \/\/\/< +  unary +$/;"	e	enum:EOperation
+opReturn	snuplc/include/ir.h	/^  opReturn,                         \/\/\/< return: return optional src1$/;"	e	enum:EOperation
+opSub	snuplc/include/ir.h	/^  opSub,                            \/\/\/< -  subtraction$/;"	e	enum:EOperation
+CParser	snuplc/include/parser.h	/^class CParser {$/;"	c
+HasError	snuplc/include/parser.h	/^    bool HasError(void) const { return _abort; };$/;"	f	class:CParser
+__SnuPL_PARSER_H__	snuplc/include/parser.h	36;"	d
+_abort	snuplc/include/parser.h	/^    bool          _abort;         \/\/\/< error flag$/;"	m	class:CParser
+_error_token	snuplc/include/parser.h	/^    CToken        _error_token;   \/\/\/< error token$/;"	m	class:CParser
+_message	snuplc/include/parser.h	/^    string        _message;       \/\/\/< error message$/;"	m	class:CParser
+_module	snuplc/include/parser.h	/^    CAstModule   *_module;        \/\/\/< root node of the program$/;"	m	class:CParser
+_scanner	snuplc/include/parser.h	/^    CScanner     *_scanner;       \/\/\/< CScanner instance$/;"	m	class:CParser
+_token	snuplc/include/parser.h	/^    CToken        _token;         \/\/\/< current token$/;"	m	class:CParser
+CScanner	snuplc/include/scanner.h	/^class CScanner {$/;"	c
+CToken	snuplc/include/scanner.h	/^class CToken {$/;"	c
+ECharacter	snuplc/include/scanner.h	/^    enum ECharacter {$/;"	g	class:CScanner
+EToken	snuplc/include/scanner.h	/^enum EToken {$/;"	g
+GetCharPosition	snuplc/include/scanner.h	/^    int GetCharPosition() const { return _char; };$/;"	f	class:CScanner
+GetCharPosition	snuplc/include/scanner.h	/^    int GetCharPosition(void) const { return _char; };$/;"	f	class:CToken
+GetLineNumber	snuplc/include/scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CScanner
+GetLineNumber	snuplc/include/scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CToken
+GetType	snuplc/include/scanner.h	/^    EToken GetType(void) const { return _type; };$/;"	f	class:CToken
+GetValue	snuplc/include/scanner.h	/^    string GetValue(void) const { return _value; };$/;"	f	class:CToken
+Good	snuplc/include/scanner.h	/^    bool Good(void) const { return _good; };$/;"	f	class:CScanner
+__SnuPL_SCANNER_H__	snuplc/include/scanner.h	37;"	d
+_char	snuplc/include/scanner.h	/^    int     _char;                  \/\/\/< current stream position (character pos)$/;"	m	class:CScanner
+_char	snuplc/include/scanner.h	/^    int    _char;                   \/\/\/< input stream position (character pos)$/;"	m	class:CToken
+_delete_in	snuplc/include/scanner.h	/^    bool    _delete_in;             \/\/\/< delete input stream upon destruction$/;"	m	class:CScanner
+_good	snuplc/include/scanner.h	/^    bool    _good;                  \/\/\/< scanner status flag$/;"	m	class:CScanner
+_in	snuplc/include/scanner.h	/^    istream *_in;                   \/\/\/< input stream$/;"	m	class:CScanner
+_line	snuplc/include/scanner.h	/^    int     _line;                  \/\/\/< current stream position (line)$/;"	m	class:CScanner
+_line	snuplc/include/scanner.h	/^    int    _line;                   \/\/\/< input stream position (line)$/;"	m	class:CToken
+_saved_char	snuplc/include/scanner.h	/^    int     _saved_char;            \/\/\/< saved stream position (character pos)$/;"	m	class:CScanner
+_saved_line	snuplc/include/scanner.h	/^    int     _saved_line;            \/\/\/< saved stream position (line)$/;"	m	class:CScanner
+_token	snuplc/include/scanner.h	/^    CToken *_token;                 \/\/\/< next token in input stream$/;"	m	class:CScanner
+_type	snuplc/include/scanner.h	/^    EToken _type;                   \/\/\/< token type$/;"	m	class:CToken
+_value	snuplc/include/scanner.h	/^    string _value;                  \/\/\/< token value$/;"	m	class:CToken
+cEOF	snuplc/include/scanner.h	/^      cEOF,                         \/\/\/< input stream EoF$/;"	e	enum:CScanner::ECharacter
+cIOError	snuplc/include/scanner.h	/^      cIOError,                     \/\/\/< input stream error$/;"	e	enum:CScanner::ECharacter
+cInvChar	snuplc/include/scanner.h	/^      cInvChar,                     \/\/\/< invalid character$/;"	e	enum:CScanner::ECharacter
+cInvEnc	snuplc/include/scanner.h	/^      cInvEnc,                      \/\/\/< invalid escape sequence$/;"	e	enum:CScanner::ECharacter
+cOkay	snuplc/include/scanner.h	/^      cOkay =0,                     \/\/\/< character parsed$/;"	e	enum:CScanner::ECharacter
+keywords	snuplc/include/scanner.h	/^    static map<string, EToken> keywords;\/\/\/< reserved keywords with corr. tokens$/;"	m	class:CScanner
+tAnd	snuplc/include/scanner.h	/^  tAnd,                             \/\/\/< '&&'$/;"	e	enum:EToken
+tAssign	snuplc/include/scanner.h	/^  tAssign,                          \/\/\/< assignment operator$/;"	e	enum:EToken
+tBegin	snuplc/include/scanner.h	/^  tBegin,                           \/\/\/< 'begin'$/;"	e	enum:EToken
+tBoolConst	snuplc/include/scanner.h	/^  tBoolConst,                       \/\/\/< boolean constant$/;"	e	enum:EToken
+tBoolean	snuplc/include/scanner.h	/^  tBoolean,                         \/\/\/< 'boolean'$/;"	e	enum:EToken
+tChar	snuplc/include/scanner.h	/^  tChar,                            \/\/\/< 'char'$/;"	e	enum:EToken
+tCharConst	snuplc/include/scanner.h	/^  tCharConst,                       \/\/\/< character constant$/;"	e	enum:EToken
+tColon	snuplc/include/scanner.h	/^  tColon,                           \/\/\/< a colon$/;"	e	enum:EToken
+tComma	snuplc/include/scanner.h	/^  tComma,                           \/\/\/< a comma$/;"	e	enum:EToken
+tComment	snuplc/include/scanner.h	/^  tComment,                         \/\/\/< comment ('\/\/ .... \\n')$/;"	e	enum:EToken
+tDo	snuplc/include/scanner.h	/^  tDo,                              \/\/\/< 'do'$/;"	e	enum:EToken
+tDot	snuplc/include/scanner.h	/^  tDot,                             \/\/\/< a dot$/;"	e	enum:EToken
+tEOF	snuplc/include/scanner.h	/^  tEOF,                             \/\/\/< end of file$/;"	e	enum:EToken
+tElse	snuplc/include/scanner.h	/^  tElse,                            \/\/\/< 'else'$/;"	e	enum:EToken
+tEnd	snuplc/include/scanner.h	/^  tEnd,                             \/\/\/< 'end'$/;"	e	enum:EToken
+tFunction	snuplc/include/scanner.h	/^  tFunction,                        \/\/\/< 'function'$/;"	e	enum:EToken
+tIOError	snuplc/include/scanner.h	/^  tIOError,                         \/\/\/< I\/O error$/;"	e	enum:EToken
+tIdent	snuplc/include/scanner.h	/^  tIdent=0,                         \/\/\/< ident$/;"	e	enum:EToken
+tIf	snuplc/include/scanner.h	/^  tIf,                              \/\/\/< 'if'$/;"	e	enum:EToken
+tInteger	snuplc/include/scanner.h	/^  tInteger,                         \/\/\/< 'integer'$/;"	e	enum:EToken
+tLBrak	snuplc/include/scanner.h	/^  tLBrak,                           \/\/\/< a left bracket$/;"	e	enum:EToken
+tLParens	snuplc/include/scanner.h	/^  tLParens,                         \/\/\/< a left parenthesis$/;"	e	enum:EToken
+tModule	snuplc/include/scanner.h	/^  tModule,                          \/\/\/< 'module'$/;"	e	enum:EToken
+tMulDiv	snuplc/include/scanner.h	/^  tMulDiv,                          \/\/\/< '*' or '\/'$/;"	e	enum:EToken
+tNot	snuplc/include/scanner.h	/^  tNot,                             \/\/\/< '!'$/;"	e	enum:EToken
+tNumber	snuplc/include/scanner.h	/^  tNumber,                          \/\/\/< number$/;"	e	enum:EToken
+tOr	snuplc/include/scanner.h	/^  tOr,                              \/\/\/< '||'$/;"	e	enum:EToken
+tPlusMinus	snuplc/include/scanner.h	/^  tPlusMinus,                       \/\/\/< '+' or '-'$/;"	e	enum:EToken
+tProcedure	snuplc/include/scanner.h	/^  tProcedure,                       \/\/\/< 'procedure'$/;"	e	enum:EToken
+tRBrak	snuplc/include/scanner.h	/^  tRBrak,                           \/\/\/< a right bracket$/;"	e	enum:EToken
+tRParens	snuplc/include/scanner.h	/^  tRParens,                         \/\/\/< a right parenthesis$/;"	e	enum:EToken
+tRelOp	snuplc/include/scanner.h	/^  tRelOp,                           \/\/\/< relational operator$/;"	e	enum:EToken
+tReturn	snuplc/include/scanner.h	/^  tReturn,                          \/\/\/< 'return'$/;"	e	enum:EToken
+tSemicolon	snuplc/include/scanner.h	/^  tSemicolon,                       \/\/\/< a semicolon$/;"	e	enum:EToken
+tString	snuplc/include/scanner.h	/^  tString,                          \/\/\/< string constant$/;"	e	enum:EToken
+tThen	snuplc/include/scanner.h	/^  tThen,                            \/\/\/< 'then'$/;"	e	enum:EToken
+tUndefined	snuplc/include/scanner.h	/^  tUndefined,                       \/\/\/< undefined$/;"	e	enum:EToken
+tVarDecl	snuplc/include/scanner.h	/^  tVarDecl,                         \/\/\/< 'var'$/;"	e	enum:EToken
+tWhile	snuplc/include/scanner.h	/^  tWhile,                           \/\/\/< 'while'$/;"	e	enum:EToken
+CSymGlobal	snuplc/include/symtab.h	/^class CSymGlobal : public CSymbol {$/;"	c
+CSymLocal	snuplc/include/symtab.h	/^class CSymLocal : public CSymbol {$/;"	c
+CSymParam	snuplc/include/symtab.h	/^class CSymParam : public CSymLocal {$/;"	c
+CSymProc	snuplc/include/symtab.h	/^class CSymProc : public CSymbol {$/;"	c
+CSymbol	snuplc/include/symtab.h	/^class CSymbol {$/;"	c
+CSymtab	snuplc/include/symtab.h	/^class CSymtab {$/;"	c
+EScope	snuplc/include/symtab.h	/^enum EScope {$/;"	g
+ESymbolType	snuplc/include/symtab.h	/^enum ESymbolType {$/;"	g
+__SnuPL_SYMTAB_H__	snuplc/include/symtab.h	34;"	d
+_data	snuplc/include/symtab.h	/^    const CDataInitializer *_data;\/\/\/< data initializer$/;"	m	class:CSymbol
+_datatype	snuplc/include/symtab.h	/^    const CType   *_datatype;     \/\/\/< data type$/;"	m	class:CSymbol
+_index	snuplc/include/symtab.h	/^    int            _index;        \/\/\/< index$/;"	m	class:CSymParam
+_name	snuplc/include/symtab.h	/^    string         _name;         \/\/\/< name$/;"	m	class:CSymbol
+_offset	snuplc/include/symtab.h	/^    int            _offset;       \/\/\/< offset$/;"	m	class:CSymbol
+_param	snuplc/include/symtab.h	/^    vector<CSymParam*> _param;      \/\/\/< parameter list$/;"	m	class:CSymProc
+_parent	snuplc/include/symtab.h	/^    CSymtab       *_parent;       \/\/\/< parent$/;"	m	class:CSymtab
+_rbase	snuplc/include/symtab.h	/^    string         _rbase;        \/\/\/< base register$/;"	m	class:CSymbol
+_symboltype	snuplc/include/symtab.h	/^    ESymbolType    _symboltype;   \/\/\/< symbol type$/;"	m	class:CSymbol
+_symtab	snuplc/include/symtab.h	/^    CSymtab       *_symtab;       \/\/\/< symbol table owning this symbol$/;"	m	class:CSymbol
+_symtab	snuplc/include/symtab.h	/^    map<string, CSymbol*> _symtab;\/\/\/< local symbol table$/;"	m	class:CSymtab
+sGlobal	snuplc/include/symtab.h	/^  sGlobal,                        \/\/\/< global$/;"	e	enum:EScope
+sLocal	snuplc/include/symtab.h	/^  sLocal,                         \/\/\/< local$/;"	e	enum:EScope
+stGlobal	snuplc/include/symtab.h	/^  stGlobal,         \/\/\/< global symbol$/;"	e	enum:ESymbolType
+stLocal	snuplc/include/symtab.h	/^  stLocal,          \/\/\/< local symbol$/;"	e	enum:ESymbolType
+stParam	snuplc/include/symtab.h	/^  stParam,          \/\/\/< parameter symbol$/;"	e	enum:ESymbolType
+stProcedure	snuplc/include/symtab.h	/^  stProcedure,      \/\/\/< procedure symbol$/;"	e	enum:ESymbolType
+stReserved	snuplc/include/symtab.h	/^  stReserved,       \/\/\/< reserved names$/;"	e	enum:ESymbolType
+CArrayType	snuplc/include/type.h	/^class CArrayType : public CType {$/;"	c
+CBoolType	snuplc/include/type.h	/^class CBoolType : public CScalarType {$/;"	c
+CCharType	snuplc/include/type.h	/^class CCharType : public CScalarType {$/;"	c
+CIntType	snuplc/include/type.h	/^class CIntType : public CScalarType {$/;"	c
+CNullType	snuplc/include/type.h	/^class CNullType : public CScalarType {$/;"	c
+CPointerType	snuplc/include/type.h	/^class CPointerType : public CScalarType {$/;"	c
+CScalarType	snuplc/include/type.h	/^class CScalarType : public CType {$/;"	c
+CType	snuplc/include/type.h	/^class CType {$/;"	c
+CTypeManager	snuplc/include/type.h	/^class CTypeManager {$/;"	c
+GetAlign	snuplc/include/type.h	/^    virtual int GetAlign(void) const { return 0; };$/;"	f	class:CNullType
+GetAlign	snuplc/include/type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CBoolType
+GetAlign	snuplc/include/type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CCharType
+GetAlign	snuplc/include/type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CIntType
+GetAlign	snuplc/include/type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CPointerType
+GetBaseType	snuplc/include/type.h	/^    const CType* GetBaseType(void) const { return _basetype; };$/;"	f	class:CPointerType
+GetInnerType	snuplc/include/type.h	/^    const CType* GetInnerType(void) const { return _innertype; };$/;"	f	class:CArrayType
+GetNElem	snuplc/include/type.h	/^    int GetNElem(void) const { return _nelem; };$/;"	f	class:CArrayType
+GetSize	snuplc/include/type.h	/^    virtual unsigned int GetSize(void) const { return 0; };$/;"	f	class:CNullType
+GetSize	snuplc/include/type.h	/^    virtual unsigned int GetSize(void) const { return 1; };$/;"	f	class:CBoolType
+GetSize	snuplc/include/type.h	/^    virtual unsigned int GetSize(void) const { return 1; };$/;"	f	class:CCharType
+GetSize	snuplc/include/type.h	/^    virtual unsigned int GetSize(void) const { return 4; };$/;"	f	class:CIntType
+GetSize	snuplc/include/type.h	/^    virtual unsigned int GetSize(void) const { return 4; };$/;"	f	class:CPointerType
+IsArray	snuplc/include/type.h	/^    virtual bool IsArray(void) const { return false; };$/;"	f	class:CType
+IsArray	snuplc/include/type.h	/^    virtual bool IsArray(void) const { return true; };$/;"	f	class:CArrayType
+IsBoolean	snuplc/include/type.h	/^    virtual bool IsBoolean(void) const { return false; };$/;"	f	class:CType
+IsBoolean	snuplc/include/type.h	/^    virtual bool IsBoolean(void) const { return true; };$/;"	f	class:CBoolType
+IsChar	snuplc/include/type.h	/^    virtual bool IsChar(void) const { return false; };$/;"	f	class:CType
+IsChar	snuplc/include/type.h	/^    virtual bool IsChar(void) const { return true; };$/;"	f	class:CCharType
+IsInt	snuplc/include/type.h	/^    virtual bool IsInt(void) const { return false; };$/;"	f	class:CType
+IsInt	snuplc/include/type.h	/^    virtual bool IsInt(void) const { return true; };$/;"	f	class:CIntType
+IsNull	snuplc/include/type.h	/^    virtual bool IsNull(void) const { return false; };$/;"	f	class:CType
+IsNull	snuplc/include/type.h	/^    virtual bool IsNull(void) const { return true; };$/;"	f	class:CNullType
+IsPointer	snuplc/include/type.h	/^    virtual bool IsPointer(void) const { return false; };$/;"	f	class:CType
+IsPointer	snuplc/include/type.h	/^    virtual bool IsPointer(void) const { return true; };$/;"	f	class:CPointerType
+IsScalar	snuplc/include/type.h	/^    virtual bool IsScalar(void) const { return false; };$/;"	f	class:CType
+IsScalar	snuplc/include/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CBoolType
+IsScalar	snuplc/include/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CCharType
+IsScalar	snuplc/include/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CIntType
+IsScalar	snuplc/include/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CPointerType
+MAX_SIZE	snuplc/include/type.h	/^    const static unsigned long long MAX_SIZE = INT_MAX; \/\/\/< max. size of array$/;"	m	class:CArrayType
+OPEN	snuplc/include/type.h	/^    const static int OPEN = -1;   \/\/\/< open array (dimensions unspecified)$/;"	m	class:CArrayType
+__SnuPL_TYPE_H__	snuplc/include/type.h	35;"	d
+_array	snuplc/include/type.h	/^    vector<CArrayType*> _array;   \/\/\/< array types$/;"	m	class:CTypeManager
+_basetype	snuplc/include/type.h	/^    const CType   *_basetype;     \/\/\/< base type$/;"	m	class:CPointerType
+_boolean	snuplc/include/type.h	/^    CBoolType     *_boolean;      \/\/\/< boolean base type$/;"	m	class:CTypeManager
+_char	snuplc/include/type.h	/^    CCharType     *_char;         \/\/\/< char base type$/;"	m	class:CTypeManager
+_global_tm	snuplc/include/type.h	/^    static CTypeManager *_global_tm; \/\/\/< global type manager instance$/;"	m	class:CTypeManager
+_innertype	snuplc/include/type.h	/^    const CType   *_innertype;    \/\/\/< inner type$/;"	m	class:CArrayType
+_integer	snuplc/include/type.h	/^    CIntType      *_integer;      \/\/\/< integer base type$/;"	m	class:CTypeManager
+_nelem	snuplc/include/type.h	/^    int            _nelem;        \/\/\/< element count$/;"	m	class:CArrayType
+_null	snuplc/include/type.h	/^    CNullType     *_null;         \/\/\/< null base type$/;"	m	class:CTypeManager
+_ptr	snuplc/include/type.h	/^    vector<CPointerType*> _ptr;   \/\/\/< pointer types$/;"	m	class:CTypeManager
+_voidptr	snuplc/include/type.h	/^    CPointerType  *_voidptr;      \/\/\/< void pointer type$/;"	m	class:CTypeManager
+CBackend	snuplc/src/backend.cpp	/^CBackend::CBackend(ostream &out)$/;"	f	class:CBackend
+CBackendx86	snuplc/src/backend.cpp	/^CBackendx86::CBackendx86(ostream &out)$/;"	f	class:CBackendx86
+ComputeStackOffsets	snuplc/src/backend.cpp	/^size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,$/;"	f	class:CBackendx86
+Condition	snuplc/src/backend.cpp	/^string CBackendx86::Condition(EOperation cond) const$/;"	f	class:CBackendx86
+Emit	snuplc/src/backend.cpp	/^bool CBackend::Emit(CModule *m)$/;"	f	class:CBackend
+EmitCode	snuplc/src/backend.cpp	/^void CBackend::EmitCode(void)$/;"	f	class:CBackend
+EmitCode	snuplc/src/backend.cpp	/^void CBackendx86::EmitCode(void)$/;"	f	class:CBackendx86
+EmitCodeBlock	snuplc/src/backend.cpp	/^void CBackendx86::EmitCodeBlock(CCodeBlock *cb)$/;"	f	class:CBackendx86
+EmitData	snuplc/src/backend.cpp	/^void CBackend::EmitData(void)$/;"	f	class:CBackend
+EmitData	snuplc/src/backend.cpp	/^void CBackendx86::EmitData(void)$/;"	f	class:CBackendx86
+EmitFooter	snuplc/src/backend.cpp	/^void CBackend::EmitFooter(void)$/;"	f	class:CBackend
+EmitFooter	snuplc/src/backend.cpp	/^void CBackendx86::EmitFooter(void)$/;"	f	class:CBackendx86
+EmitGlobalData	snuplc/src/backend.cpp	/^void CBackendx86::EmitGlobalData(CScope *scope)$/;"	f	class:CBackendx86
+EmitHeader	snuplc/src/backend.cpp	/^void CBackend::EmitHeader(void)$/;"	f	class:CBackend
+EmitHeader	snuplc/src/backend.cpp	/^void CBackendx86::EmitHeader(void)$/;"	f	class:CBackendx86
+EmitInstruction	snuplc/src/backend.cpp	/^void CBackendx86::EmitInstruction(CTacInstr *i)$/;"	f	class:CBackendx86
+EmitInstruction	snuplc/src/backend.cpp	/^void CBackendx86::EmitInstruction(string mnemonic, string args, string comment)$/;"	f	class:CBackendx86
+EmitLocalData	snuplc/src/backend.cpp	/^void CBackendx86::EmitLocalData(CScope *scope)$/;"	f	class:CBackendx86
+EmitScope	snuplc/src/backend.cpp	/^void CBackendx86::EmitScope(CScope *scope)$/;"	f	class:CBackendx86
+GetScope	snuplc/src/backend.cpp	/^CScope* CBackendx86::GetScope(void) const$/;"	f	class:CBackendx86
+Imm	snuplc/src/backend.cpp	/^string CBackendx86::Imm(int value) const$/;"	f	class:CBackendx86
+Label	snuplc/src/backend.cpp	/^string CBackendx86::Label(const CTacLabel* label) const$/;"	f	class:CBackendx86
+Label	snuplc/src/backend.cpp	/^string CBackendx86::Label(string label) const$/;"	f	class:CBackendx86
+Load	snuplc/src/backend.cpp	/^void CBackendx86::Load(CTacAddr *src, string dst, string comment)$/;"	f	class:CBackendx86
+Operand	snuplc/src/backend.cpp	/^string CBackendx86::Operand(const CTac *op)$/;"	f	class:CBackendx86
+OperandSize	snuplc/src/backend.cpp	/^int CBackendx86::OperandSize(CTac *t) const$/;"	f	class:CBackendx86
+SetScope	snuplc/src/backend.cpp	/^void CBackendx86::SetScope(CScope *scope)$/;"	f	class:CBackendx86
+Store	snuplc/src/backend.cpp	/^void CBackendx86::Store(CTac *dst, char src_base, string comment)$/;"	f	class:CBackendx86
+~CBackend	snuplc/src/backend.cpp	/^CBackend::~CBackend(void)$/;"	f	class:CBackend
+~CBackendx86	snuplc/src/backend.cpp	/^CBackendx86::~CBackendx86(void)$/;"	f	class:CBackendx86
+AddInstr	snuplc/src/ir.cpp	/^CTacInstr* CCodeBlock::AddInstr(CTacInstr *instr)$/;"	f	class:CCodeBlock
+AddReference	snuplc/src/ir.cpp	/^int CTacLabel::AddReference(int ofs)$/;"	f	class:CTacLabel
+CCodeBlock	snuplc/src/ir.cpp	/^CCodeBlock::CCodeBlock(CScope *owner)$/;"	f	class:CCodeBlock
+CModule	snuplc/src/ir.cpp	/^CModule::CModule(CAstNode *ast)$/;"	f	class:CModule
+CProcedure	snuplc/src/ir.cpp	/^CProcedure::CProcedure(CAstNode *ast, CScope *parent)$/;"	f	class:CProcedure
+CScope	snuplc/src/ir.cpp	/^CScope::CScope(CAstNode *ast, CScope *parent)$/;"	f	class:CScope
+CTac	snuplc/src/ir.cpp	/^CTac::CTac(void)$/;"	f	class:CTac
+CTacAddr	snuplc/src/ir.cpp	/^CTacAddr::CTacAddr(void)$/;"	f	class:CTacAddr
+CTacConst	snuplc/src/ir.cpp	/^CTacConst::CTacConst(int value)$/;"	f	class:CTacConst
+CTacInstr	snuplc/src/ir.cpp	/^CTacInstr::CTacInstr(EOperation op, CTac *dst, CTacAddr *src1, CTacAddr *src2)$/;"	f	class:CTacInstr
+CTacInstr	snuplc/src/ir.cpp	/^CTacInstr::CTacInstr(string name)$/;"	f	class:CTacInstr
+CTacLabel	snuplc/src/ir.cpp	/^CTacLabel::CTacLabel(const string label)$/;"	f	class:CTacLabel
+CTacName	snuplc/src/ir.cpp	/^CTacName::CTacName(const CSymbol *symbol)$/;"	f	class:CTacName
+CTacReference	snuplc/src/ir.cpp	/^CTacReference::CTacReference(const CSymbol *symbol, const CSymbol *deref)$/;"	f	class:CTacReference
+CTacTemp	snuplc/src/ir.cpp	/^CTacTemp::CTacTemp(const CSymbol *symbol)$/;"	f	class:CTacTemp
+CleanupControlFlow	snuplc/src/ir.cpp	/^void CCodeBlock::CleanupControlFlow(void)$/;"	f	class:CCodeBlock
+CreateLabel	snuplc/src/ir.cpp	/^CTacLabel* CCodeBlock::CreateLabel(const char *hint)$/;"	f	class:CCodeBlock
+CreateLabel	snuplc/src/ir.cpp	/^CTacLabel* CScope::CreateLabel(const char *hint)$/;"	f	class:CScope
+CreateTemp	snuplc/src/ir.cpp	/^CTacTemp* CCodeBlock::CreateTemp(const CType *type)$/;"	f	class:CCodeBlock
+CreateTemp	snuplc/src/ir.cpp	/^CTacTemp* CScope::CreateTemp(const CType *type)$/;"	f	class:CScope
+EOperationName	snuplc/src/ir.cpp	/^char EOperationName[][OPERATION_STRLEN] = {$/;"	v
+GetCodeBlock	snuplc/src/ir.cpp	/^CCodeBlock* CScope::GetCodeBlock(void) const$/;"	f	class:CScope
+GetDeclaration	snuplc/src/ir.cpp	/^CSymbol* CModule::GetDeclaration(void) const$/;"	f	class:CModule
+GetDeclaration	snuplc/src/ir.cpp	/^CSymbol* CProcedure::GetDeclaration(void) const$/;"	f	class:CProcedure
+GetDerefSymbol	snuplc/src/ir.cpp	/^const CSymbol* CTacReference::GetDerefSymbol(void) const$/;"	f	class:CTacReference
+GetDest	snuplc/src/ir.cpp	/^CTac* CTacInstr::GetDest(void) const$/;"	f	class:CTacInstr
+GetId	snuplc/src/ir.cpp	/^unsigned int CTacInstr::GetId(void) const$/;"	f	class:CTacInstr
+GetInstr	snuplc/src/ir.cpp	/^const list<CTacInstr*>& CCodeBlock::GetInstr(void) const$/;"	f	class:CCodeBlock
+GetLabel	snuplc/src/ir.cpp	/^const string CTacLabel::GetLabel(void) const$/;"	f	class:CTacLabel
+GetName	snuplc/src/ir.cpp	/^string CCodeBlock::GetName(void) const$/;"	f	class:CCodeBlock
+GetName	snuplc/src/ir.cpp	/^string CScope::GetName(void) const$/;"	f	class:CScope
+GetNumSrc	snuplc/src/ir.cpp	/^unsigned int CTacInstr::GetNumSrc(void) const$/;"	f	class:CTacInstr
+GetOperation	snuplc/src/ir.cpp	/^EOperation CTacInstr::GetOperation(void) const$/;"	f	class:CTacInstr
+GetOwner	snuplc/src/ir.cpp	/^CScope* CCodeBlock::GetOwner(void) const$/;"	f	class:CCodeBlock
+GetParent	snuplc/src/ir.cpp	/^CScope* CScope::GetParent(void) const$/;"	f	class:CScope
+GetRefCnt	snuplc/src/ir.cpp	/^int CTacLabel::GetRefCnt(void) const$/;"	f	class:CTacLabel
+GetSrc	snuplc/src/ir.cpp	/^CTacAddr* CTacInstr::GetSrc(int index) const$/;"	f	class:CTacInstr
+GetSubscopes	snuplc/src/ir.cpp	/^const vector<CScope*>& CScope::GetSubscopes(void) const$/;"	f	class:CScope
+GetSymbol	snuplc/src/ir.cpp	/^const CSymbol* CTacName::GetSymbol(void) const$/;"	f	class:CTacName
+GetSymbolTable	snuplc/src/ir.cpp	/^CSymtab* CScope::GetSymbolTable(void) const$/;"	f	class:CScope
+GetValue	snuplc/src/ir.cpp	/^int CTacConst::GetValue(void) const$/;"	f	class:CTacConst
+IsBranch	snuplc/src/ir.cpp	/^bool CTacInstr::IsBranch(void) const$/;"	f	class:CTacInstr
+IsRelOp	snuplc/src/ir.cpp	/^bool IsRelOp(EOperation t)$/;"	f
+OPERATION_STRLEN	snuplc/src/ir.cpp	48;"	d	file:
+SetDest	snuplc/src/ir.cpp	/^void CTacInstr::SetDest(CTac* dst)$/;"	f	class:CTacInstr
+SetId	snuplc/src/ir.cpp	/^void CTacInstr::SetId(unsigned int id)$/;"	f	class:CTacInstr
+dotAttr	snuplc/src/ir.cpp	/^string CCodeBlock::dotAttr(void) const$/;"	f	class:CCodeBlock
+dotID	snuplc/src/ir.cpp	/^string CCodeBlock::dotID(void) const$/;"	f	class:CCodeBlock
+dotID	snuplc/src/ir.cpp	/^string CScope::dotID(void) const$/;"	f	class:CScope
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, EOperation t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock &t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock *t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CScope &t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CScope *t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CTac &t)$/;"	f
+operator <<	snuplc/src/ir.cpp	/^ostream& operator<<(ostream &out, const CTac *t)$/;"	f
+print	snuplc/src/ir.cpp	/^ostream& CCodeBlock::print(ostream &out, int indent) const$/;"	f	class:CCodeBlock
+print	snuplc/src/ir.cpp	/^ostream& CModule::print(ostream &out, int indent) const$/;"	f	class:CModule
+print	snuplc/src/ir.cpp	/^ostream& CProcedure::print(ostream &out, int indent) const$/;"	f	class:CProcedure
+print	snuplc/src/ir.cpp	/^ostream& CScope::print(ostream &out, int indent) const$/;"	f	class:CScope
+print	snuplc/src/ir.cpp	/^ostream& CTacConst::print(ostream &out, int indent) const$/;"	f	class:CTacConst
+print	snuplc/src/ir.cpp	/^ostream& CTacInstr::print(ostream &out, int indent) const$/;"	f	class:CTacInstr
+print	snuplc/src/ir.cpp	/^ostream& CTacLabel::print(ostream &out, int indent) const$/;"	f	class:CTacLabel
+print	snuplc/src/ir.cpp	/^ostream& CTacName::print(ostream &out, int indent) const$/;"	f	class:CTacName
+print	snuplc/src/ir.cpp	/^ostream& CTacReference::print(ostream &out, int indent) const$/;"	f	class:CTacReference
+toDot	snuplc/src/ir.cpp	/^void CCodeBlock::toDot(ostream &out, int indent) const$/;"	f	class:CCodeBlock
+toDot	snuplc/src/ir.cpp	/^void CScope::toDot(ostream &out, int indent) const$/;"	f	class:CScope
+~CCodeBlock	snuplc/src/ir.cpp	/^CCodeBlock::~CCodeBlock(void)$/;"	f	class:CCodeBlock
+~CModule	snuplc/src/ir.cpp	/^CModule::~CModule(void)$/;"	f	class:CModule
+~CProcedure	snuplc/src/ir.cpp	/^CProcedure::~CProcedure(void)$/;"	f	class:CProcedure
+~CScope	snuplc/src/ir.cpp	/^CScope::~CScope(void)$/;"	f	class:CScope
+~CTac	snuplc/src/ir.cpp	/^CTac::~CTac(void)$/;"	f	class:CTac
+~CTacAddr	snuplc/src/ir.cpp	/^CTacAddr::~CTacAddr(void)$/;"	f	class:CTacAddr
+~CTacInstr	snuplc/src/ir.cpp	/^CTacInstr::~CTacInstr(void)$/;"	f	class:CTacInstr
+~CTacLabel	snuplc/src/ir.cpp	/^CTacLabel::~CTacLabel(void)$/;"	f	class:CTacLabel
+DumpAST	snuplc/src/snuplc.cpp	/^void DumpAST(string file, CAstModule *ast)$/;"	f
+DumpTAC	snuplc/src/snuplc.cpp	/^void DumpTAC(string file, CModule *m)$/;"	f
+ParseArgs	snuplc/src/snuplc.cpp	/^void ParseArgs(int argc, char *argv[])$/;"	f
+RunCompile	snuplc/src/snuplc.cpp	/^void RunCompile(string file)$/;"	f
+RunDOT	snuplc/src/snuplc.cpp	/^void RunDOT(string file)$/;"	f
+Syntax	snuplc/src/snuplc.cpp	/^void Syntax(string msg)$/;"	f
+dump_asm	snuplc/src/snuplc.cpp	/^bool dump_asm = true;$/;"	v
+dump_dot	snuplc/src/snuplc.cpp	/^bool dump_dot = true;$/;"	v
+dump_tac	snuplc/src/snuplc.cpp	/^bool dump_tac = true;$/;"	v
+files	snuplc/src/snuplc.cpp	/^vector<string> files;$/;"	v
+main	snuplc/src/snuplc.cpp	/^int main(int argc, char *argv[])$/;"	f
+rte_path	snuplc/src/snuplc.cpp	/^string rte_path = "rte\/IA32\/";$/;"	v
+run_dot	snuplc/src/snuplc.cpp	/^bool run_dot  = true;$/;"	v
+run_gcc	snuplc/src/snuplc.cpp	/^bool run_gcc  = false;$/;"	v
+ROOT	test/Makefile	/^ROOT=..$/;"	m
+ReadNumber	test/factorial.mod.s	/^ReadNumber:$/;"	l
+_str_1	test/factorial.mod.s	/^_str_1:                             # <array 11 of <char>>$/;"	l
+_str_2	test/factorial.mod.s	/^_str_2:                             # <array 29 of <char>>$/;"	l
+_str_3	test/factorial.mod.s	/^_str_3:                             # <array 11 of <char>>$/;"	l
+_str_4	test/factorial.mod.s	/^_str_4:                             # <array 5 of <char>>$/;"	l
+_str_5	test/factorial.mod.s	/^_str_5:                             # <array 29 of <char>>$/;"	l
+fact	test/factorial.mod.s	/^fact:$/;"	l
+i	test/factorial.mod.s	/^i:                                  # <int>$/;"	l
+l_ReadNumber_exit	test/factorial.mod.s	/^l_ReadNumber_exit:$/;"	l
+l_fact_0	test/factorial.mod.s	/^l_fact_0:$/;"	l
+l_fact_1_if_true	test/factorial.mod.s	/^l_fact_1_if_true:$/;"	l
+l_fact_2_if_false	test/factorial.mod.s	/^l_fact_2_if_false:$/;"	l
+l_fact_5	test/factorial.mod.s	/^l_fact_5:$/;"	l
+l_fact_6_if_true	test/factorial.mod.s	/^l_fact_6_if_true:$/;"	l
+l_fact_7_if_false	test/factorial.mod.s	/^l_fact_7_if_false:$/;"	l
+l_fact_exit	test/factorial.mod.s	/^l_fact_exit:$/;"	l
+l_factorial_4	test/factorial.mod.s	/^l_factorial_4:$/;"	l
+l_factorial_5_while_cond	test/factorial.mod.s	/^l_factorial_5_while_cond:$/;"	l
+l_factorial_6_while_body	test/factorial.mod.s	/^l_factorial_6_while_body:$/;"	l
+l_factorial_exit	test/factorial.mod.s	/^l_factorial_exit:$/;"	l
+main	test/factorial.mod.s	/^main:$/;"	l
+ReadNumber	test/fibonacci.mod.s	/^ReadNumber:$/;"	l
+_str_1	test/fibonacci.mod.s	/^_str_1:                             # <array 18 of <char>>$/;"	l
+_str_2	test/fibonacci.mod.s	/^_str_2:                             # <array 29 of <char>>$/;"	l
+_str_3	test/fibonacci.mod.s	/^_str_3:                             # <array 11 of <char>>$/;"	l
+_str_4	test/fibonacci.mod.s	/^_str_4:                             # <array 5 of <char>>$/;"	l
+_str_5	test/fibonacci.mod.s	/^_str_5:                             # <array 29 of <char>>$/;"	l
+fib	test/fibonacci.mod.s	/^fib:$/;"	l
+i	test/fibonacci.mod.s	/^i:                                  # <int>$/;"	l
+l_ReadNumber_exit	test/fibonacci.mod.s	/^l_ReadNumber_exit:$/;"	l
+l_fib_0	test/fibonacci.mod.s	/^l_fib_0:$/;"	l
+l_fib_1_if_true	test/fibonacci.mod.s	/^l_fib_1_if_true:$/;"	l
+l_fib_2_if_false	test/fibonacci.mod.s	/^l_fib_2_if_false:$/;"	l
+l_fib_exit	test/fibonacci.mod.s	/^l_fib_exit:$/;"	l
+l_fibonacci_4	test/fibonacci.mod.s	/^l_fibonacci_4:$/;"	l
+l_fibonacci_5_while_cond	test/fibonacci.mod.s	/^l_fibonacci_5_while_cond:$/;"	l
+l_fibonacci_6_while_body	test/fibonacci.mod.s	/^l_fibonacci_6_while_body:$/;"	l
+l_fibonacci_exit	test/fibonacci.mod.s	/^l_fibonacci_exit:$/;"	l
+main	test/fibonacci.mod.s	/^main:$/;"	l
+ReadNumbers	test/gcd.mod.s	/^ReadNumbers:$/;"	l
+_str_1	test/gcd.mod.s	/^_str_1:                             # <array 22 of <char>>$/;"	l
+_str_2	test/gcd.mod.s	/^_str_2:                             # <array 22 of <char>>$/;"	l
+_str_3	test/gcd.mod.s	/^_str_3:                             # <array 25 of <char>>$/;"	l
+_str_4	test/gcd.mod.s	/^_str_4:                             # <array 14 of <char>>$/;"	l
+_str_5	test/gcd.mod.s	/^_str_5:                             # <array 14 of <char>>$/;"	l
+_str_6	test/gcd.mod.s	/^_str_6:                             # <array 14 of <char>>$/;"	l
+gcd_iter	test/gcd.mod.s	/^gcd_iter:$/;"	l
+gcd_mod	test/gcd.mod.s	/^gcd_mod:$/;"	l
+gcd_rec	test/gcd.mod.s	/^gcd_rec:$/;"	l
+l_ReadNumbers_exit	test/gcd.mod.s	/^l_ReadNumbers_exit:$/;"	l
+l_gcd_exit	test/gcd.mod.s	/^l_gcd_exit:$/;"	l
+l_gcd_iter_0	test/gcd.mod.s	/^l_gcd_iter_0:$/;"	l
+l_gcd_iter_1_while_cond	test/gcd.mod.s	/^l_gcd_iter_1_while_cond:$/;"	l
+l_gcd_iter_2_while_body	test/gcd.mod.s	/^l_gcd_iter_2_while_body:$/;"	l
+l_gcd_iter_4	test/gcd.mod.s	/^l_gcd_iter_4:$/;"	l
+l_gcd_iter_5_if_true	test/gcd.mod.s	/^l_gcd_iter_5_if_true:$/;"	l
+l_gcd_iter_6_if_false	test/gcd.mod.s	/^l_gcd_iter_6_if_false:$/;"	l
+l_gcd_iter_exit	test/gcd.mod.s	/^l_gcd_iter_exit:$/;"	l
+l_gcd_mod_0	test/gcd.mod.s	/^l_gcd_mod_0:$/;"	l
+l_gcd_mod_1_while_cond	test/gcd.mod.s	/^l_gcd_mod_1_while_cond:$/;"	l
+l_gcd_mod_2_while_body	test/gcd.mod.s	/^l_gcd_mod_2_while_body:$/;"	l
+l_gcd_mod_exit	test/gcd.mod.s	/^l_gcd_mod_exit:$/;"	l
+l_gcd_rec_0	test/gcd.mod.s	/^l_gcd_rec_0:$/;"	l
+l_gcd_rec_1_if_true	test/gcd.mod.s	/^l_gcd_rec_1_if_true:$/;"	l
+l_gcd_rec_2_if_false	test/gcd.mod.s	/^l_gcd_rec_2_if_false:$/;"	l
+l_gcd_rec_exit	test/gcd.mod.s	/^l_gcd_rec_exit:$/;"	l
+main	test/gcd.mod.s	/^main:$/;"	l
+n	test/gcd.mod.s	/^n:                                  # <array 2 of <int>>$/;"	l
+_str_1	test/pfact.mod.s	/^_str_1:                             # <array 2 of <char>>$/;"	l
+_str_2	test/pfact.mod.s	/^_str_2:                             # <array 2 of <char>>$/;"	l
+_str_3	test/pfact.mod.s	/^_str_3:                             # <array 16 of <char>>$/;"	l
+_str_4	test/pfact.mod.s	/^_str_4:                             # <array 25 of <char>>$/;"	l
+_str_5	test/pfact.mod.s	/^_str_5:                             # <array 20 of <char>>$/;"	l
+_str_6	test/pfact.mod.s	/^_str_6:                             # <array 3 of <char>>$/;"	l
+l_pfact_exit	test/pfact.mod.s	/^l_pfact_exit:$/;"	l
+l_primefactor_0	test/pfact.mod.s	/^l_primefactor_0:$/;"	l
+l_primefactor_12	test/pfact.mod.s	/^l_primefactor_12:$/;"	l
+l_primefactor_13_while_cond	test/pfact.mod.s	/^l_primefactor_13_while_cond:$/;"	l
+l_primefactor_14_while_body	test/pfact.mod.s	/^l_primefactor_14_while_body:$/;"	l
+l_primefactor_16	test/pfact.mod.s	/^l_primefactor_16:$/;"	l
+l_primefactor_17_if_true	test/pfact.mod.s	/^l_primefactor_17_if_true:$/;"	l
+l_primefactor_18_if_false	test/pfact.mod.s	/^l_primefactor_18_if_false:$/;"	l
+l_primefactor_1_if_true	test/pfact.mod.s	/^l_primefactor_1_if_true:$/;"	l
+l_primefactor_2_if_false	test/pfact.mod.s	/^l_primefactor_2_if_false:$/;"	l
+l_primefactor_5	test/pfact.mod.s	/^l_primefactor_5:$/;"	l
+l_primefactor_6_if_true	test/pfact.mod.s	/^l_primefactor_6_if_true:$/;"	l
+l_primefactor_7_if_false	test/pfact.mod.s	/^l_primefactor_7_if_false:$/;"	l
+l_primefactor_exit	test/pfact.mod.s	/^l_primefactor_exit:$/;"	l
+main	test/pfact.mod.s	/^main:$/;"	l
+n	test/pfact.mod.s	/^n:                                  # <int>$/;"	l
+primefactor	test/pfact.mod.s	/^primefactor:$/;"	l
+CalcPrimes	test/primes.mod.s	/^CalcPrimes:$/;"	l
+PrintPrimes	test/primes.mod.s	/^PrintPrimes:$/;"	l
+_str_1	test/primes.mod.s	/^_str_1:                             # <array 30 of <char>>$/;"	l
+_str_10	test/primes.mod.s	/^_str_10:                            # <array 24 of <char>>$/;"	l
+_str_2	test/primes.mod.s	/^_str_2:                             # <array 4 of <char>>$/;"	l
+_str_3	test/primes.mod.s	/^_str_3:                             # <array 45 of <char>>$/;"	l
+_str_4	test/primes.mod.s	/^_str_4:                             # <array 7 of <char>>$/;"	l
+_str_5	test/primes.mod.s	/^_str_5:                             # <array 7 of <char>>$/;"	l
+_str_6	test/primes.mod.s	/^_str_6:                             # <array 15 of <char>>$/;"	l
+_str_7	test/primes.mod.s	/^_str_7:                             # <array 20 of <char>>$/;"	l
+_str_8	test/primes.mod.s	/^_str_8:                             # <array 3 of <char>>$/;"	l
+_str_9	test/primes.mod.s	/^_str_9:                             # <array 14 of <char>>$/;"	l
+l_CalcPrimes_14	test/primes.mod.s	/^l_CalcPrimes_14:$/;"	l
+l_CalcPrimes_15_while_cond	test/primes.mod.s	/^l_CalcPrimes_15_while_cond:$/;"	l
+l_CalcPrimes_16_while_body	test/primes.mod.s	/^l_CalcPrimes_16_while_body:$/;"	l
+l_CalcPrimes_20	test/primes.mod.s	/^l_CalcPrimes_20:$/;"	l
+l_CalcPrimes_21_while_cond	test/primes.mod.s	/^l_CalcPrimes_21_while_cond:$/;"	l
+l_CalcPrimes_22_while_body	test/primes.mod.s	/^l_CalcPrimes_22_while_body:$/;"	l
+l_CalcPrimes_23	test/primes.mod.s	/^l_CalcPrimes_23:$/;"	l
+l_CalcPrimes_25	test/primes.mod.s	/^l_CalcPrimes_25:$/;"	l
+l_CalcPrimes_26_if_true	test/primes.mod.s	/^l_CalcPrimes_26_if_true:$/;"	l
+l_CalcPrimes_27_if_false	test/primes.mod.s	/^l_CalcPrimes_27_if_false:$/;"	l
+l_CalcPrimes_31	test/primes.mod.s	/^l_CalcPrimes_31:$/;"	l
+l_CalcPrimes_32_if_true	test/primes.mod.s	/^l_CalcPrimes_32_if_true:$/;"	l
+l_CalcPrimes_33_if_false	test/primes.mod.s	/^l_CalcPrimes_33_if_false:$/;"	l
+l_CalcPrimes_37	test/primes.mod.s	/^l_CalcPrimes_37:$/;"	l
+l_CalcPrimes_38_if_true	test/primes.mod.s	/^l_CalcPrimes_38_if_true:$/;"	l
+l_CalcPrimes_39_if_false	test/primes.mod.s	/^l_CalcPrimes_39_if_false:$/;"	l
+l_CalcPrimes_4	test/primes.mod.s	/^l_CalcPrimes_4:$/;"	l
+l_CalcPrimes_44	test/primes.mod.s	/^l_CalcPrimes_44:$/;"	l
+l_CalcPrimes_45_if_true	test/primes.mod.s	/^l_CalcPrimes_45_if_true:$/;"	l
+l_CalcPrimes_46_if_false	test/primes.mod.s	/^l_CalcPrimes_46_if_false:$/;"	l
+l_CalcPrimes_49	test/primes.mod.s	/^l_CalcPrimes_49:$/;"	l
+l_CalcPrimes_50_if_true	test/primes.mod.s	/^l_CalcPrimes_50_if_true:$/;"	l
+l_CalcPrimes_51_if_false	test/primes.mod.s	/^l_CalcPrimes_51_if_false:$/;"	l
+l_CalcPrimes_5_if_true	test/primes.mod.s	/^l_CalcPrimes_5_if_true:$/;"	l
+l_CalcPrimes_6_if_false	test/primes.mod.s	/^l_CalcPrimes_6_if_false:$/;"	l
+l_CalcPrimes_exit	test/primes.mod.s	/^l_CalcPrimes_exit:$/;"	l
+l_PrintPrimes_11	test/primes.mod.s	/^l_PrintPrimes_11:$/;"	l
+l_PrintPrimes_12_if_true	test/primes.mod.s	/^l_PrintPrimes_12_if_true:$/;"	l
+l_PrintPrimes_13_if_false	test/primes.mod.s	/^l_PrintPrimes_13_if_false:$/;"	l
+l_PrintPrimes_4	test/primes.mod.s	/^l_PrintPrimes_4:$/;"	l
+l_PrintPrimes_5_while_cond	test/primes.mod.s	/^l_PrintPrimes_5_while_cond:$/;"	l
+l_PrintPrimes_6_while_body	test/primes.mod.s	/^l_PrintPrimes_6_while_body:$/;"	l
+l_PrintPrimes_exit	test/primes.mod.s	/^l_PrintPrimes_exit:$/;"	l
+l_primes_exit	test/primes.mod.s	/^l_primes_exit:$/;"	l
+main	test/primes.mod.s	/^main:$/;"	l
+n	test/primes.mod.s	/^n:                                  # <int>$/;"	l
+p	test/primes.mod.s	/^p:                                  # <array 1000000 of <int>>$/;"	l
+pn	test/primes.mod.s	/^pn:                                 # <int>$/;"	l
+DIM	test/rte/AMD64/ARRAY.s	/^DIM:$/;"	l
+DOFS	test/rte/AMD64/ARRAY.s	/^DOFS:$/;"	l
+ReadInt	test/rte/AMD64/IO.s	/^ReadInt:$/;"	l
+WriteChar	test/rte/AMD64/IO.s	/^WriteChar:$/;"	l
+WriteInt	test/rte/AMD64/IO.s	/^WriteInt:$/;"	l
+WriteLn	test/rte/AMD64/IO.s	/^WriteLn:$/;"	l
+WriteStr	test/rte/AMD64/IO.s	/^WriteStr:$/;"	l
+CC	test/rte/AMD64/Makefile	/^CC=gcc$/;"	m
+CCFLAGS	test/rte/AMD64/Makefile	/^CCFLAGS=-m64 -march=x86-64 -std=c99 -O1$/;"	m
+RTE_OBJ	test/rte/AMD64/Makefile	/^RTE_OBJ=$(patsubst %.s,%.o,$(RTE_SRC))$/;"	m
+RTE_SRC	test/rte/AMD64/Makefile	/^RTE_SRC=ARRAY.s IO.s$/;"	m
+createSnuPLArray	test/rte/AMD64/snupl.c	/^void* createSnuPLArray(const void *data, size_t elem_size, int dim, ...)$/;"	f
+__SNUPL_H__	test/rte/AMD64/snupl.h	34;"	d
+dump	test/rte/AMD64/test_array.c	/^void dump(void *a)$/;"	f
+main	test/rte/AMD64/test_array.c	/^int main(void)$/;"	f
+main	test/rte/AMD64/test_io.c	/^void main(int argc, char **argv)$/;"	f
+testInput	test/rte/AMD64/test_io.c	/^void testInput(void)$/;"	f
+testOutput	test/rte/AMD64/test_io.c	/^void testOutput(void)$/;"	f
+testWriteChar	test/rte/AMD64/test_io.c	/^void testWriteChar(char c)$/;"	f
+testWriteInt	test/rte/AMD64/test_io.c	/^void testWriteInt(int v)$/;"	f
+testWriteLn	test/rte/AMD64/test_io.c	/^void testWriteLn(void)$/;"	f
+testWriteStr	test/rte/AMD64/test_io.c	/^void testWriteStr(const char *s)$/;"	f
+DIM	test/rte/IA32/ARRAY.s	/^DIM:$/;"	l
+DOFS	test/rte/IA32/ARRAY.s	/^DOFS:$/;"	l
+ReadInt	test/rte/IA32/IO.s	/^ReadInt:$/;"	l
+WriteChar	test/rte/IA32/IO.s	/^WriteChar:$/;"	l
+WriteInt	test/rte/IA32/IO.s	/^WriteInt:$/;"	l
+WriteLn	test/rte/IA32/IO.s	/^WriteLn:$/;"	l
+WriteStr	test/rte/IA32/IO.s	/^WriteStr:$/;"	l
+CC	test/rte/IA32/Makefile	/^CC=gcc$/;"	m
+CCFLAGS	test/rte/IA32/Makefile	/^CCFLAGS=-march=i686 -m32 -std=c99 -O1$/;"	m
+RTE_OBJ	test/rte/IA32/Makefile	/^RTE_OBJ=$(patsubst %.s,%.o,$(RTE_SRC))$/;"	m
+RTE_SRC	test/rte/IA32/Makefile	/^RTE_SRC=ARRAY.s IO.s$/;"	m
+createSnuPLArray	test/rte/IA32/snupl.c	/^void* createSnuPLArray(const void *data, size_t elem_size, int dim, ...)$/;"	f
+__SNUPL_H__	test/rte/IA32/snupl.h	34;"	d
+dump	test/rte/IA32/test_array.c	/^void dump(void *a)$/;"	f
+main	test/rte/IA32/test_array.c	/^int main(void)$/;"	f
+main	test/rte/IA32/test_io.c	/^void main(int argc, char **argv)$/;"	f
+testInput	test/rte/IA32/test_io.c	/^void testInput(void)$/;"	f
+testOutput	test/rte/IA32/test_io.c	/^void testOutput(void)$/;"	f
+testWriteChar	test/rte/IA32/test_io.c	/^void testWriteChar(char c)$/;"	f
+testWriteInt	test/rte/IA32/test_io.c	/^void testWriteInt(int v)$/;"	f
+testWriteLn	test/rte/IA32/test_io.c	/^void testWriteLn(void)$/;"	f
+testWriteStr	test/rte/IA32/test_io.c	/^void testWriteStr(const char *s)$/;"	f
+a	test/test01.mod.s	/^a:                                  # <int>$/;"	l
+b	test/test01.mod.s	/^b:                                  # <int>$/;"	l
+c	test/test01.mod.s	/^c:                                  # <int>$/;"	l
+l_test01_exit	test/test01.mod.s	/^l_test01_exit:$/;"	l
+main	test/test01.mod.s	/^main:$/;"	l
+a	test/test02.mod.s	/^a:                                  # <array 10 of <int>>$/;"	l
+b	test/test02.mod.s	/^b:                                  # <bool>$/;"	l
+c	test/test02.mod.s	/^c:                                  # <array 2 of <bool>>$/;"	l
+i	test/test02.mod.s	/^i:                                  # <int>$/;"	l
+l_test02_10_while_cond	test/test02.mod.s	/^l_test02_10_while_cond:$/;"	l
+l_test02_11_while_body	test/test02.mod.s	/^l_test02_11_while_body:$/;"	l
+l_test02_2	test/test02.mod.s	/^l_test02_2:$/;"	l
+l_test02_3_while_cond	test/test02.mod.s	/^l_test02_3_while_cond:$/;"	l
+l_test02_4_while_body	test/test02.mod.s	/^l_test02_4_while_body:$/;"	l
+l_test02_9	test/test02.mod.s	/^l_test02_9:$/;"	l
+l_test02_exit	test/test02.mod.s	/^l_test02_exit:$/;"	l
+main	test/test02.mod.s	/^main:$/;"	l
+a	test/test03.mod.s	/^a:                                  # <bool>$/;"	l
+b	test/test03.mod.s	/^b:                                  # <bool>$/;"	l
+b1	test/test03.mod.s	/^b1:                                 # <int>$/;"	l
+c	test/test03.mod.s	/^c:                                  # <bool>$/;"	l
+l_test03_13	test/test03.mod.s	/^l_test03_13:$/;"	l
+l_test03_14	test/test03.mod.s	/^l_test03_14:$/;"	l
+l_test03_15	test/test03.mod.s	/^l_test03_15:$/;"	l
+l_test03_17	test/test03.mod.s	/^l_test03_17:$/;"	l
+l_test03_18_if_true	test/test03.mod.s	/^l_test03_18_if_true:$/;"	l
+l_test03_19_if_false	test/test03.mod.s	/^l_test03_19_if_false:$/;"	l
+l_test03_24	test/test03.mod.s	/^l_test03_24:$/;"	l
+l_test03_25	test/test03.mod.s	/^l_test03_25:$/;"	l
+l_test03_27	test/test03.mod.s	/^l_test03_27:$/;"	l
+l_test03_28_if_true	test/test03.mod.s	/^l_test03_28_if_true:$/;"	l
+l_test03_29_if_false	test/test03.mod.s	/^l_test03_29_if_false:$/;"	l
+l_test03_3	test/test03.mod.s	/^l_test03_3:$/;"	l
+l_test03_4	test/test03.mod.s	/^l_test03_4:$/;"	l
+l_test03_5	test/test03.mod.s	/^l_test03_5:$/;"	l
+l_test03_6	test/test03.mod.s	/^l_test03_6:$/;"	l
+l_test03_7	test/test03.mod.s	/^l_test03_7:$/;"	l
+l_test03_8_if_true	test/test03.mod.s	/^l_test03_8_if_true:$/;"	l
+l_test03_9_if_false	test/test03.mod.s	/^l_test03_9_if_false:$/;"	l
+l_test03_exit	test/test03.mod.s	/^l_test03_exit:$/;"	l
+main	test/test03.mod.s	/^main:$/;"	l
+a	test/test04.mod.s	/^a:                                  # <array 10 of <bool>>$/;"	l
+i	test/test04.mod.s	/^i:                                  # <int>$/;"	l
+l_test04_1	test/test04.mod.s	/^l_test04_1:$/;"	l
+l_test04_12	test/test04.mod.s	/^l_test04_12:$/;"	l
+l_test04_13_while_cond	test/test04.mod.s	/^l_test04_13_while_cond:$/;"	l
+l_test04_14_while_body	test/test04.mod.s	/^l_test04_14_while_body:$/;"	l
+l_test04_16	test/test04.mod.s	/^l_test04_16:$/;"	l
+l_test04_17_if_true	test/test04.mod.s	/^l_test04_17_if_true:$/;"	l
+l_test04_18_if_false	test/test04.mod.s	/^l_test04_18_if_false:$/;"	l
+l_test04_2_while_cond	test/test04.mod.s	/^l_test04_2_while_cond:$/;"	l
+l_test04_3_while_body	test/test04.mod.s	/^l_test04_3_while_body:$/;"	l
+l_test04_6	test/test04.mod.s	/^l_test04_6:$/;"	l
+l_test04_7	test/test04.mod.s	/^l_test04_7:$/;"	l
+l_test04_8	test/test04.mod.s	/^l_test04_8:$/;"	l
+l_test04_exit	test/test04.mod.s	/^l_test04_exit:$/;"	l
+main	test/test04.mod.s	/^main:$/;"	l
+a	test/test05.mod.s	/^a:                                  # <array 10 of <int>>$/;"	l
+l_test05_exit	test/test05.mod.s	/^l_test05_exit:$/;"	l
+l_test_10_while_cond	test/test05.mod.s	/^l_test_10_while_cond:$/;"	l
+l_test_11_while_body	test/test05.mod.s	/^l_test_11_while_body:$/;"	l
+l_test_2	test/test05.mod.s	/^l_test_2:$/;"	l
+l_test_3_while_cond	test/test05.mod.s	/^l_test_3_while_cond:$/;"	l
+l_test_4_while_body	test/test05.mod.s	/^l_test_4_while_body:$/;"	l
+l_test_9	test/test05.mod.s	/^l_test_9:$/;"	l
+l_test_exit	test/test05.mod.s	/^l_test_exit:$/;"	l
+main	test/test05.mod.s	/^main:$/;"	l
+test	test/test05.mod.s	/^test:$/;"	l
+a	test/test06.mod.s	/^a:                                  # <array 10 of <bool>>$/;"	l
+l_test06_exit	test/test06.mod.s	/^l_test06_exit:$/;"	l
+l_test_1	test/test06.mod.s	/^l_test_1:$/;"	l
+l_test_12	test/test06.mod.s	/^l_test_12:$/;"	l
+l_test_13_while_cond	test/test06.mod.s	/^l_test_13_while_cond:$/;"	l
+l_test_14_while_body	test/test06.mod.s	/^l_test_14_while_body:$/;"	l
+l_test_16	test/test06.mod.s	/^l_test_16:$/;"	l
+l_test_17_if_true	test/test06.mod.s	/^l_test_17_if_true:$/;"	l
+l_test_18_if_false	test/test06.mod.s	/^l_test_18_if_false:$/;"	l
+l_test_2_while_cond	test/test06.mod.s	/^l_test_2_while_cond:$/;"	l
+l_test_3_while_body	test/test06.mod.s	/^l_test_3_while_body:$/;"	l
+l_test_6	test/test06.mod.s	/^l_test_6:$/;"	l
+l_test_7	test/test06.mod.s	/^l_test_7:$/;"	l
+l_test_8	test/test06.mod.s	/^l_test_8:$/;"	l
+l_test_exit	test/test06.mod.s	/^l_test_exit:$/;"	l
+main	test/test06.mod.s	/^main:$/;"	l
+test	test/test06.mod.s	/^test:$/;"	l
+_str_1	test/test07.mod.s	/^_str_1:                             # <array 14 of <char>>$/;"	l
+l_test07_exit	test/test07.mod.s	/^l_test07_exit:$/;"	l
+main	test/test07.mod.s	/^main:$/;"	l
+l_test08_exit	test/test08.mod.s	/^l_test08_exit:$/;"	l
+l_test_10_while_cond	test/test08.mod.s	/^l_test_10_while_cond:$/;"	l
+l_test_11_while_body	test/test08.mod.s	/^l_test_11_while_body:$/;"	l
+l_test_2	test/test08.mod.s	/^l_test_2:$/;"	l
+l_test_3_while_cond	test/test08.mod.s	/^l_test_3_while_cond:$/;"	l
+l_test_4_while_body	test/test08.mod.s	/^l_test_4_while_body:$/;"	l
+l_test_9	test/test08.mod.s	/^l_test_9:$/;"	l
+l_test_exit	test/test08.mod.s	/^l_test_exit:$/;"	l
+main	test/test08.mod.s	/^main:$/;"	l
+test	test/test08.mod.s	/^test:$/;"	l
+l_test09_exit	test/test09.mod.s	/^l_test09_exit:$/;"	l
+l_test_1	test/test09.mod.s	/^l_test_1:$/;"	l
+l_test_12	test/test09.mod.s	/^l_test_12:$/;"	l
+l_test_13_while_cond	test/test09.mod.s	/^l_test_13_while_cond:$/;"	l
+l_test_14_while_body	test/test09.mod.s	/^l_test_14_while_body:$/;"	l
+l_test_16	test/test09.mod.s	/^l_test_16:$/;"	l
+l_test_17_if_true	test/test09.mod.s	/^l_test_17_if_true:$/;"	l
+l_test_18_if_false	test/test09.mod.s	/^l_test_18_if_false:$/;"	l
+l_test_2_while_cond	test/test09.mod.s	/^l_test_2_while_cond:$/;"	l
+l_test_3_while_body	test/test09.mod.s	/^l_test_3_while_body:$/;"	l
+l_test_6	test/test09.mod.s	/^l_test_6:$/;"	l
+l_test_7	test/test09.mod.s	/^l_test_7:$/;"	l
+l_test_8	test/test09.mod.s	/^l_test_8:$/;"	l
+l_test_exit	test/test09.mod.s	/^l_test_exit:$/;"	l
+main	test/test09.mod.s	/^main:$/;"	l
+test	test/test09.mod.s	/^test:$/;"	l
+ReadNumber	test/test10.mod.s	/^ReadNumber:$/;"	l
+_str_1	test/test10.mod.s	/^_str_1:                             # <array 25 of <char>>$/;"	l
+_str_2	test/test10.mod.s	/^_str_2:                             # <array 29 of <char>>$/;"	l
+_str_3	test/test10.mod.s	/^_str_3:                             # <array 16 of <char>>$/;"	l
+_str_4	test/test10.mod.s	/^_str_4:                             # <array 16 of <char>>$/;"	l
+_str_5	test/test10.mod.s	/^_str_5:                             # <array 16 of <char>>$/;"	l
+_str_6	test/test10.mod.s	/^_str_6:                             # <array 29 of <char>>$/;"	l
+i	test/test10.mod.s	/^i:                                  # <int>$/;"	l
+l_ReadNumber_exit	test/test10.mod.s	/^l_ReadNumber_exit:$/;"	l
+l_sum_alg_exit	test/test10.mod.s	/^l_sum_alg_exit:$/;"	l
+l_sum_iter_2	test/test10.mod.s	/^l_sum_iter_2:$/;"	l
+l_sum_iter_3_while_cond	test/test10.mod.s	/^l_sum_iter_3_while_cond:$/;"	l
+l_sum_iter_4_while_body	test/test10.mod.s	/^l_sum_iter_4_while_body:$/;"	l
+l_sum_iter_exit	test/test10.mod.s	/^l_sum_iter_exit:$/;"	l
+l_sum_rec_0	test/test10.mod.s	/^l_sum_rec_0:$/;"	l
+l_sum_rec_1_if_true	test/test10.mod.s	/^l_sum_rec_1_if_true:$/;"	l
+l_sum_rec_2_if_false	test/test10.mod.s	/^l_sum_rec_2_if_false:$/;"	l
+l_sum_rec_exit	test/test10.mod.s	/^l_sum_rec_exit:$/;"	l
+l_test10_2	test/test10.mod.s	/^l_test10_2:$/;"	l
+l_test10_3_while_cond	test/test10.mod.s	/^l_test10_3_while_cond:$/;"	l
+l_test10_4_while_body	test/test10.mod.s	/^l_test10_4_while_body:$/;"	l
+l_test10_exit	test/test10.mod.s	/^l_test10_exit:$/;"	l
+main	test/test10.mod.s	/^main:$/;"	l
+sum_alg	test/test10.mod.s	/^sum_alg:$/;"	l
+sum_iter	test/test10.mod.s	/^sum_iter:$/;"	l
+sum_rec	test/test10.mod.s	/^sum_rec:$/;"	l
+A	test/test11.mod.s	/^A:                                  # <int>$/;"	l
+B	test/test11.mod.s	/^B:                                  # <bool>$/;"	l
+C	test/test11.mod.s	/^C:                                  # <int>$/;"	l
+D	test/test11.mod.s	/^D:                                  # <char>$/;"	l
+E	test/test11.mod.s	/^E:                                  # <int>$/;"	l
+F	test/test11.mod.s	/^F:                                  # <bool>$/;"	l
+G	test/test11.mod.s	/^G:                                  # <array 10 of <int>>$/;"	l
+H	test/test11.mod.s	/^H:                                  # <bool>$/;"	l
+I	test/test11.mod.s	/^I:                                  # <array 7 of <char>>$/;"	l
+J	test/test11.mod.s	/^J:                                  # <int>$/;"	l
+foo	test/test11.mod.s	/^foo:$/;"	l
+l_foo_exit	test/test11.mod.s	/^l_foo_exit:$/;"	l
+l_test11_exit	test/test11.mod.s	/^l_test11_exit:$/;"	l
+main	test/test11.mod.s	/^main:$/;"	l
+Bool	test/test12.mod.s	/^Bool:$/;"	l
+Char	test/test12.mod.s	/^Char:$/;"	l
+Int	test/test12.mod.s	/^Int:$/;"	l
+Test	test/test12.mod.s	/^Test:$/;"	l
+l_Bool_exit	test/test12.mod.s	/^l_Bool_exit:$/;"	l
+l_Char_exit	test/test12.mod.s	/^l_Char_exit:$/;"	l
+l_Int_exit	test/test12.mod.s	/^l_Int_exit:$/;"	l
+l_Test_exit	test/test12.mod.s	/^l_Test_exit:$/;"	l
+l_test12_exit	test/test12.mod.s	/^l_test12_exit:$/;"	l
+main	test/test12.mod.s	/^main:$/;"	l

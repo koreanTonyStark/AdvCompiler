@@ -1,0 +1,12 @@
+digraph IR {
+  graph [fontname="Times New Roman",fontsize=10];
+  node  [fontname="Courier New",fontsize=10];
+  edge  [fontname="Times New Roman",fontsize=10];
+
+  // scope 'factorial'
+  factorial_cb [label="factorial\r  0:     param  0 <- str\l  1:     call   WriteStr\l  2:     call   t8 <- ReadInt\l  3:     assign i <- t8\l  4:     return i\l",shape=box]
+  // scope 'fact'
+  fact_cb [label="fact\r  0:     if     n <= 0 goto 1_if_true\l  1:     goto   2_if_false\l  2: 1_if_true:\l  3:     return 0\l  4:     goto   0\l  5: 2_if_false:\l  6:     if     n <= 1 goto 6_if_true\l  7:     goto   7_if_false\l  8: 6_if_true:\l  9:     return n\l 10:     goto   5\l 11: 7_if_false:\l 12:     sub    t8 <- n, 1\l 13:     param  0 <- t8\l 14:     call   t9 <- fact\l 15:     mul    t10 <- n, t9\l 16:     return t10\l 17: 5:\l 18: 0:\l",shape=box]
+  // scope 'ReadNumber'
+  ReadNumber_cb [label="ReadNumber\r  0:     param  0 <- str\l  1:     call   WriteStr\l  2:     call   t8 <- ReadInt\l  3:     assign i <- t8\l  4:     return i\l",shape=box]
+}

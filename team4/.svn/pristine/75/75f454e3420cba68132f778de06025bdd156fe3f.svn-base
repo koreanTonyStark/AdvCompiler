@@ -1,0 +1,229 @@
+##################################################
+# pfact
+#
+
+    #-----------------------------------------
+    # text section
+    #
+    .text
+    .align 4
+
+    # entry point and pre-defined functions
+    .global main
+    .extern DIM
+    .extern DOFS
+    .extern ReadInt
+    .extern WriteInt
+    .extern WriteStr
+    .extern WriteChar
+    .extern WriteLn
+
+    # scope primefactor
+primefactor:
+    # stack offsets:
+    #    -16(%ebp)   4  [ $f        <int> %ebp-16 ]
+    #      8(%ebp)   4  [ %n        <int> %ebp+8 ]
+    #    -20(%ebp)   4  [ $t10      <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t5       <ptr(4) to <array 2 of <char>>> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t6       <int> %ebp-28 ]
+    #    -32(%ebp)   4  [ $t7       <int> %ebp-32 ]
+    #    -36(%ebp)   4  [ $t8       <ptr(4) to <array 2 of <char>>> %ebp-36 ]
+    #    -40(%ebp)   4  [ $t9       <int> %ebp-40 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $28, %esp               # make room for locals
+
+    cld                             # memset local stack area to 0
+    xorl    %eax, %eax             
+    movl    $7, %ecx               
+    mov     %esp, %edi             
+    rep     stosl                  
+
+    # function body
+    movl    8(%ebp), %eax           #   0:     if     n < 1 goto 1_if_true
+    movl    $1, %ebx               
+    cmpl    %ebx, %eax             
+    jl      l_primefactor_1_if_true
+    jmp     l_primefactor_2_if_false #   1:     goto   2_if_false
+l_primefactor_1_if_true:
+    jmp     l_primefactor_exit     
+    jmp     l_primefactor_0         #   4:     goto   0
+l_primefactor_2_if_false:
+    movl    8(%ebp), %eax           #   6:     if     n = 1 goto 6_if_true
+    movl    $1, %ebx               
+    cmpl    %ebx, %eax             
+    je      l_primefactor_6_if_true
+    jmp     l_primefactor_7_if_false #   7:     goto   7_if_false
+l_primefactor_6_if_true:
+    movzbl  _str_1, %eax            #   9:     param  0 <- _str_1
+    pushl   %eax                   
+    call    WriteStr                #  10:     call   WriteStr
+    addl    $4, %esp               
+    movl    $1, %eax                #  11:     param  0 <- 1
+    pushl   %eax                   
+    call    WriteInt                #  12:     call   WriteInt
+    addl    $4, %esp               
+    jmp     l_primefactor_5         #  13:     goto   5
+l_primefactor_7_if_false:
+    movl    $2, %eax                #  15:     assign f <- 2
+    movl    %eax, -16(%ebp)        
+l_primefactor_13_while_cond:
+    movl    -16(%ebp), %eax         #  17:     if     f <= n goto 14_while_body
+    movl    8(%ebp), %ebx          
+    cmpl    %ebx, %eax             
+    jle     l_primefactor_14_while_body
+    jmp     l_primefactor_12        #  18:     goto   12
+l_primefactor_14_while_body:
+    movl    -40(%ebp), %eax         #  20:     if     t9 = n goto 17_if_true
+    movl    8(%ebp), %ebx          
+    cmpl    %ebx, %eax             
+    je      l_primefactor_17_if_true
+    jmp     l_primefactor_18_if_false #  21:     goto   18_if_false
+l_primefactor_17_if_true:
+    movzbl  _str_2, %eax            #  23:     param  0 <- _str_2
+    pushl   %eax                   
+    call    WriteStr                #  24:     call   WriteStr
+    addl    $4, %esp               
+    movl    -16(%ebp), %eax         #  25:     param  0 <- f
+    pushl   %eax                   
+    call    WriteInt                #  26:     call   WriteInt
+    addl    $4, %esp               
+    movl    -40(%ebp), %eax         #  27:     div    t9 <- t9, f
+    movl    -16(%ebp), %ebx        
+    cdq                            
+    idivl   %ebx                   
+    movl    %eax, -40(%ebp)        
+    movl    -40(%ebp), %eax         #  28:     assign n <- t9
+    movl    %eax, 8(%ebp)          
+    jmp     l_primefactor_16        #  29:     goto   16
+l_primefactor_18_if_false:
+    movl    -16(%ebp), %eax         #  31:     assign f <- f
+    movl    %eax, -16(%ebp)        
+l_primefactor_16:
+    jmp     l_primefactor_13_while_cond #  33:     goto   13_while_cond
+l_primefactor_12:
+l_primefactor_5:
+l_primefactor_0:
+
+l_primefactor_exit:
+    # epilogue
+    addl    $28, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope pfact
+main:
+    # stack offsets:
+    #    -16(%ebp)   4  [ $t0       <ptr(4) to <array 16 of <char>>> %ebp-16 ]
+    #    -20(%ebp)   4  [ $t1       <ptr(4) to <array 25 of <char>>> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t2       <int> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t3       <ptr(4) to <array 20 of <char>>> %ebp-28 ]
+    #    -32(%ebp)   4  [ $t4       <ptr(4) to <array 3 of <char>>> %ebp-32 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $20, %esp               # make room for locals
+
+    cld                             # memset local stack area to 0
+    xorl    %eax, %eax             
+    movl    $5, %ecx               
+    mov     %esp, %edi             
+    rep     stosl                  
+
+    # function body
+    movzbl  _str_3, %eax            #   0:     param  0 <- _str_3
+    pushl   %eax                   
+    call    WriteStr                #   1:     call   WriteStr
+    addl    $4, %esp               
+    call    WriteLn                 #   2:     call   WriteLn
+    call    WriteLn                 #   3:     call   WriteLn
+    movzbl  _str_4, %eax            #   4:     param  0 <- _str_4
+    pushl   %eax                   
+    call    WriteStr                #   5:     call   WriteStr
+    addl    $4, %esp               
+    movzbl  _str_5, %eax            #   6:     param  0 <- _str_5
+    pushl   %eax                   
+    call    WriteStr                #   7:     call   WriteStr
+    addl    $4, %esp               
+    movl    ReadInt, %eax           #   8:     param  0 <- ReadInt
+    pushl   %eax                   
+    call    WriteInt                #   9:     call   WriteInt
+    addl    $4, %esp               
+    movzbl  _str_6, %eax            #  10:     param  0 <- _str_6
+    pushl   %eax                   
+    call    WriteStr                #  11:     call   WriteStr
+    addl    $4, %esp               
+    movl    ReadInt, %eax           #  12:     param  0 <- ReadInt
+    pushl   %eax                   
+    call    primefactor             #  13:     call   primefactor
+    addl    $4, %esp               
+    call    WriteLn                 #  14:     call   WriteLn
+
+l_pfact_exit:
+    # epilogue
+    addl    $20, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # end of text section
+    #-----------------------------------------
+
+    #-----------------------------------------
+    # global data section
+    #
+    .data
+    .align 4
+
+    # scope: pfact
+_str_1:                             # <array 2 of <char>>
+    .long    1
+    .long    2
+    .asciz " "
+    .align   4
+_str_2:                             # <array 2 of <char>>
+    .long    1
+    .long    2
+    .asciz " "
+    .align   4
+_str_3:                             # <array 16 of <char>>
+    .long    1
+    .long   16
+    .asciz "Prime factoring"
+_str_4:                             # <array 25 of <char>>
+    .long    1
+    .long   25
+    .asciz "Enter number to factor: "
+    .align   4
+_str_5:                             # <array 20 of <char>>
+    .long    1
+    .long   20
+    .asciz "  prime factors of "
+_str_6:                             # <array 3 of <char>>
+    .long    1
+    .long    3
+    .asciz ": "
+    .align   4
+n:                                  # <int>
+    .skip    4
+
+
+    # end of global data section
+    #-----------------------------------------
+
+    .end
+##################################################

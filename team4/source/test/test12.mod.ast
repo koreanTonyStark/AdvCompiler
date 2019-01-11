@@ -1,0 +1,101 @@
+test12.mod:
+    CAstScope: 'test12'
+      symbol table:
+        [[
+          [ *Bool() --> <bool>           ]
+          [ *Char() --> <char>           ]
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *Int() --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *Test() --> <NULL>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ main     <NULL>           ]
+        ]]
+      statement list:
+        call [ *Test() --> <NULL> ] <NULL>
+      nested scopes:
+        CAstScope: 'Int'
+          symbol table:
+            [[
+              [ $i        <int>               ]
+            ]]
+          statement list:
+            := <int>
+              [ $i        <int> ] <int>
+              75 <int>
+            return <int>
+              [ $i        <int> ] <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'Char'
+          symbol table:
+            [[
+              [ $c        <char>               ]
+            ]]
+          statement list:
+            := <char>
+              [ $c        <char> ] <char>
+              66 <char>
+            return <char>
+              [ $c        <char> ] <char>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'Bool'
+          symbol table:
+            [[
+              [ $b        <bool>               ]
+            ]]
+          statement list:
+            := <bool>
+              [ $b        <bool> ] <bool>
+              true <bool>
+            return <bool>
+              [ $b        <bool> ] <bool>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'Test'
+          symbol table:
+            [[
+              [ $b        <bool>               ]
+              [ $c        <char>               ]
+              [ $i        <int>               ]
+            ]]
+          statement list:
+            := <bool>
+              [ $b        <bool> ] <bool>
+              call [ *Bool() --> <bool> ] <bool>
+            := <char>
+              [ $c        <char> ] <char>
+              call [ *Char() --> <char> ] <char>
+            := <int>
+              [ $i        <int> ] <int>
+              call [ *Int() --> <int> ] <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *Bool() --> <bool>       ]
+      [ *Char() --> <char>       ]
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *Int() --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *Test() --> <NULL>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ main     <NULL>       ]
+    ]]
+

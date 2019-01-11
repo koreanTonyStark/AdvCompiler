@@ -1,0 +1,420 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+CAstArrayDesignator	ast.h	/^class CAstArrayDesignator : public CAstDesignator {$/;"	c
+CAstBinaryOp	ast.h	/^class CAstBinaryOp : public CAstOperation {$/;"	c
+CAstConstant	ast.h	/^class CAstConstant : public CAstOperand {$/;"	c
+CAstDesignator	ast.h	/^class CAstDesignator : public CAstOperand {$/;"	c
+CAstExpression	ast.h	/^class CAstExpression : public CAstNode {$/;"	c
+CAstFunctionCall	ast.h	/^class CAstFunctionCall : public CAstExpression {$/;"	c
+CAstModule	ast.h	/^class CAstModule : public CAstScope {$/;"	c
+CAstNode	ast.h	/^class CAstNode {$/;"	c
+CAstOperand	ast.h	/^class CAstOperand : public CAstExpression {$/;"	c
+CAstOperation	ast.h	/^class CAstOperation : public CAstExpression {$/;"	c
+CAstProcedure	ast.h	/^class CAstProcedure : public CAstScope {$/;"	c
+CAstScope	ast.h	/^class CAstScope : public CAstNode {$/;"	c
+CAstSpecialOp	ast.h	/^class CAstSpecialOp : public CAstOperation {$/;"	c
+CAstStatAssign	ast.h	/^class CAstStatAssign : public CAstStatement {$/;"	c
+CAstStatCall	ast.h	/^class CAstStatCall : public CAstStatement {$/;"	c
+CAstStatIf	ast.h	/^class CAstStatIf : public CAstStatement {$/;"	c
+CAstStatReturn	ast.h	/^class CAstStatReturn : public CAstStatement {$/;"	c
+CAstStatWhile	ast.h	/^class CAstStatWhile : public CAstStatement {$/;"	c
+CAstStatement	ast.h	/^class CAstStatement : public CAstNode {$/;"	c
+CAstStringConstant	ast.h	/^class CAstStringConstant : public CAstOperand {$/;"	c
+CAstType	ast.h	/^class CAstType : public CAstNode {$/;"	c
+CAstUnaryOp	ast.h	/^class CAstUnaryOp : public CAstOperation {$/;"	c
+__SnuPL_AST_H__	ast.h	36;"	d
+_addr	ast.h	/^    CTacAddr   *_addr;              \/\/\/< result of this node in three-address$/;"	m	class:CAstNode
+_arg	ast.h	/^    vector<CAstExpression*> _arg;   \/\/\/< parameter list$/;"	m	class:CAstFunctionCall
+_body	ast.h	/^    CAstStatement *_body;           \/\/\/< body$/;"	m	class:CAstStatWhile
+_call	ast.h	/^    CAstFunctionCall *_call;        \/\/\/< call expression$/;"	m	class:CAstStatCall
+_cb	ast.h	/^    CCodeBlock *_cb;                \/\/\/< (entry) code block for this scope$/;"	m	class:CAstScope
+_children	ast.h	/^    vector<CAstScope*> _children;   \/\/\/< subordinate scopes$/;"	m	class:CAstScope
+_cond	ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatIf
+_cond	ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatWhile
+_done	ast.h	/^    bool _done;                     \/\/\/< flag indicating all index expressions$/;"	m	class:CAstArrayDesignator
+_elseBody	ast.h	/^    CAstStatement *_elseBody;       \/\/\/< else body$/;"	m	class:CAstStatIf
+_expr	ast.h	/^    CAstExpression *_expr;          \/\/\/< return expression$/;"	m	class:CAstStatReturn
+_global_id	ast.h	/^    static int _global_id;          \/\/\/< holds the (global) next id$/;"	m	class:CAstNode
+_id	ast.h	/^    int        _id;                 \/\/\/< id of the node$/;"	m	class:CAstNode
+_idx	ast.h	/^    static int       _idx;          \/\/\/< static counter$/;"	m	class:CAstStringConstant
+_idx	ast.h	/^    vector<CAstExpression*> _idx;   \/\/\/< index expressions$/;"	m	class:CAstArrayDesignator
+_ifBody	ast.h	/^    CAstStatement *_ifBody;         \/\/\/< if body$/;"	m	class:CAstStatIf
+_left	ast.h	/^    CAstExpression *_left;          \/\/\/< left operand$/;"	m	class:CAstBinaryOp
+_lhs	ast.h	/^    CAstDesignator *_lhs;           \/\/\/< LHS (designator)$/;"	m	class:CAstStatAssign
+_name	ast.h	/^    string    _name;                \/\/\/< name$/;"	m	class:CAstScope
+_next	ast.h	/^    CAstStatement* _next;           \/\/\/< next statement$/;"	m	class:CAstStatement
+_offset	ast.h	/^    CAstExpression *_offset;        \/\/\/< address computation expression$/;"	m	class:CAstArrayDesignator
+_oper	ast.h	/^    EOperation _oper;               \/\/\/< operation$/;"	m	class:CAstOperation
+_operand	ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstSpecialOp
+_operand	ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstUnaryOp
+_parent	ast.h	/^    CAstScope *_parent;             \/\/\/< superordinate scope$/;"	m	class:CAstScope
+_parenthesized	ast.h	/^    bool       _parenthesized;      \/\/\/< expression was parenthesized$/;"	m	class:CAstExpression
+_rhs	ast.h	/^    CAstExpression *_rhs;           \/\/\/< RHS (expression)$/;"	m	class:CAstStatAssign
+_right	ast.h	/^    CAstExpression *_right;         \/\/\/< right operand$/;"	m	class:CAstBinaryOp
+_scope	ast.h	/^    CAstScope      *_scope;         \/\/\/< enclosing scope$/;"	m	class:CAstStatReturn
+_statseq	ast.h	/^    CAstStatement* _statseq;        \/\/\/< statement sequence$/;"	m	class:CAstScope
+_sym	ast.h	/^    CSymGlobal      *_sym;          \/\/\/< symbol holding the string$/;"	m	class:CAstStringConstant
+_symbol	ast.h	/^    CSymProc *_symbol;              \/\/\/< corresponding symbol$/;"	m	class:CAstProcedure
+_symbol	ast.h	/^    const CSymProc *_symbol;        \/\/\/< symbol$/;"	m	class:CAstFunctionCall
+_symbol	ast.h	/^    const CSymbol *_symbol;         \/\/\/< symbol$/;"	m	class:CAstDesignator
+_symtab	ast.h	/^    CSymtab   *_symtab;             \/\/\/< symbol table$/;"	m	class:CAstScope
+_token	ast.h	/^    CToken     _token;              \/\/\/< token in input stream that triggered$/;"	m	class:CAstNode
+_type	ast.h	/^    const CType     *_type;         \/\/\/< constant type$/;"	m	class:CAstStringConstant
+_type	ast.h	/^    const CType *_type;             \/\/\/< constant type$/;"	m	class:CAstConstant
+_type	ast.h	/^    const CType *_type;             \/\/\/< forced type of this op$/;"	m	class:CAstSpecialOp
+_type	ast.h	/^    const CType *_type;             \/\/\/< type$/;"	m	class:CAstType
+_value	ast.h	/^    CDataInitString *_value;        \/\/\/< data initializer (holds string data)$/;"	m	class:CAstStringConstant
+_value	ast.h	/^    long long _value;               \/\/\/< constant value$/;"	m	class:CAstConstant
+CBackend	backend.cpp	/^CBackend::CBackend(ostream &out)$/;"	f	class:CBackend
+CBackendx86	backend.cpp	/^CBackendx86::CBackendx86(ostream &out)$/;"	f	class:CBackendx86
+ComputeStackOffsets	backend.cpp	/^size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,$/;"	f	class:CBackendx86
+Condition	backend.cpp	/^string CBackendx86::Condition(EOperation cond) const$/;"	f	class:CBackendx86
+Emit	backend.cpp	/^bool CBackend::Emit(CModule *m)$/;"	f	class:CBackend
+EmitCode	backend.cpp	/^void CBackend::EmitCode(void)$/;"	f	class:CBackend
+EmitCode	backend.cpp	/^void CBackendx86::EmitCode(void)$/;"	f	class:CBackendx86
+EmitCodeBlock	backend.cpp	/^void CBackendx86::EmitCodeBlock(CCodeBlock *cb)$/;"	f	class:CBackendx86
+EmitData	backend.cpp	/^void CBackend::EmitData(void)$/;"	f	class:CBackend
+EmitData	backend.cpp	/^void CBackendx86::EmitData(void)$/;"	f	class:CBackendx86
+EmitFooter	backend.cpp	/^void CBackend::EmitFooter(void)$/;"	f	class:CBackend
+EmitFooter	backend.cpp	/^void CBackendx86::EmitFooter(void)$/;"	f	class:CBackendx86
+EmitGlobalData	backend.cpp	/^void CBackendx86::EmitGlobalData(CScope *scope)$/;"	f	class:CBackendx86
+EmitHeader	backend.cpp	/^void CBackend::EmitHeader(void)$/;"	f	class:CBackend
+EmitHeader	backend.cpp	/^void CBackendx86::EmitHeader(void)$/;"	f	class:CBackendx86
+EmitInstruction	backend.cpp	/^void CBackendx86::EmitInstruction(CTacInstr *i)$/;"	f	class:CBackendx86
+EmitInstruction	backend.cpp	/^void CBackendx86::EmitInstruction(string mnemonic, string args, string comment)$/;"	f	class:CBackendx86
+EmitLocalData	backend.cpp	/^void CBackendx86::EmitLocalData(CScope *scope)$/;"	f	class:CBackendx86
+EmitScope	backend.cpp	/^void CBackendx86::EmitScope(CScope *scope)$/;"	f	class:CBackendx86
+GetScope	backend.cpp	/^CScope* CBackendx86::GetScope(void) const$/;"	f	class:CBackendx86
+Imm	backend.cpp	/^string CBackendx86::Imm(int value) const$/;"	f	class:CBackendx86
+Label	backend.cpp	/^string CBackendx86::Label(const CTacLabel* label) const$/;"	f	class:CBackendx86
+Label	backend.cpp	/^string CBackendx86::Label(string label) const$/;"	f	class:CBackendx86
+Load	backend.cpp	/^void CBackendx86::Load(CTacAddr *src, string dst, string comment)$/;"	f	class:CBackendx86
+Operand	backend.cpp	/^string CBackendx86::Operand(const CTac *op)$/;"	f	class:CBackendx86
+OperandSize	backend.cpp	/^int CBackendx86::OperandSize(CTac *t) const$/;"	f	class:CBackendx86
+SetScope	backend.cpp	/^void CBackendx86::SetScope(CScope *scope)$/;"	f	class:CBackendx86
+Store	backend.cpp	/^void CBackendx86::Store(CTac *dst, char src_base, string comment)$/;"	f	class:CBackendx86
+~CBackend	backend.cpp	/^CBackend::~CBackend(void)$/;"	f	class:CBackend
+~CBackendx86	backend.cpp	/^CBackendx86::~CBackendx86(void)$/;"	f	class:CBackendx86
+CBackend	backend.h	/^class CBackend {$/;"	c
+CBackendx86	backend.h	/^class CBackendx86 : public CBackend {$/;"	c
+__SnuPL_BACKEND_H__	backend.h	36;"	d
+_curr_scope	backend.h	/^    CScope *_curr_scope;            \/\/\/< current scope$/;"	m	class:CBackendx86
+_ind	backend.h	/^    string _ind;                    \/\/\/< indentation$/;"	m	class:CBackendx86
+_m	backend.h	/^    CModule *_m;                    \/\/\/< module$/;"	m	class:CBackend
+_out	backend.h	/^    ostream &_out;                  \/\/\/< output stream$/;"	m	class:CBackend
+CDataInitString	data.h	/^class CDataInitString : public CDataInitializer {$/;"	c
+CDataInitializer	data.h	/^class CDataInitializer {$/;"	c
+__SnuPL_DATA_H__	data.h	34;"	d
+_data	data.h	/^    const string   _data;         \/\/\/< string data$/;"	m	class:CDataInitString
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+AddInstr	ir.cpp	/^CTacInstr* CCodeBlock::AddInstr(CTacInstr *instr)$/;"	f	class:CCodeBlock
+AddReference	ir.cpp	/^int CTacLabel::AddReference(int ofs)$/;"	f	class:CTacLabel
+CCodeBlock	ir.cpp	/^CCodeBlock::CCodeBlock(CScope *owner)$/;"	f	class:CCodeBlock
+CModule	ir.cpp	/^CModule::CModule(CAstNode *ast)$/;"	f	class:CModule
+CProcedure	ir.cpp	/^CProcedure::CProcedure(CAstNode *ast, CScope *parent)$/;"	f	class:CProcedure
+CScope	ir.cpp	/^CScope::CScope(CAstNode *ast, CScope *parent)$/;"	f	class:CScope
+CTac	ir.cpp	/^CTac::CTac(void)$/;"	f	class:CTac
+CTacAddr	ir.cpp	/^CTacAddr::CTacAddr(void)$/;"	f	class:CTacAddr
+CTacConst	ir.cpp	/^CTacConst::CTacConst(int value)$/;"	f	class:CTacConst
+CTacInstr	ir.cpp	/^CTacInstr::CTacInstr(EOperation op, CTac *dst, CTacAddr *src1, CTacAddr *src2)$/;"	f	class:CTacInstr
+CTacInstr	ir.cpp	/^CTacInstr::CTacInstr(string name)$/;"	f	class:CTacInstr
+CTacLabel	ir.cpp	/^CTacLabel::CTacLabel(const string label)$/;"	f	class:CTacLabel
+CTacName	ir.cpp	/^CTacName::CTacName(const CSymbol *symbol)$/;"	f	class:CTacName
+CTacReference	ir.cpp	/^CTacReference::CTacReference(const CSymbol *symbol, const CSymbol *deref)$/;"	f	class:CTacReference
+CTacTemp	ir.cpp	/^CTacTemp::CTacTemp(const CSymbol *symbol)$/;"	f	class:CTacTemp
+CleanupControlFlow	ir.cpp	/^void CCodeBlock::CleanupControlFlow(void)$/;"	f	class:CCodeBlock
+CreateLabel	ir.cpp	/^CTacLabel* CCodeBlock::CreateLabel(const char *hint)$/;"	f	class:CCodeBlock
+CreateLabel	ir.cpp	/^CTacLabel* CScope::CreateLabel(const char *hint)$/;"	f	class:CScope
+CreateTemp	ir.cpp	/^CTacTemp* CCodeBlock::CreateTemp(const CType *type)$/;"	f	class:CCodeBlock
+CreateTemp	ir.cpp	/^CTacTemp* CScope::CreateTemp(const CType *type)$/;"	f	class:CScope
+EOperationName	ir.cpp	/^char EOperationName[][OPERATION_STRLEN] = {$/;"	v
+GetCodeBlock	ir.cpp	/^CCodeBlock* CScope::GetCodeBlock(void) const$/;"	f	class:CScope
+GetDeclaration	ir.cpp	/^CSymbol* CModule::GetDeclaration(void) const$/;"	f	class:CModule
+GetDeclaration	ir.cpp	/^CSymbol* CProcedure::GetDeclaration(void) const$/;"	f	class:CProcedure
+GetDerefSymbol	ir.cpp	/^const CSymbol* CTacReference::GetDerefSymbol(void) const$/;"	f	class:CTacReference
+GetDest	ir.cpp	/^CTac* CTacInstr::GetDest(void) const$/;"	f	class:CTacInstr
+GetId	ir.cpp	/^unsigned int CTacInstr::GetId(void) const$/;"	f	class:CTacInstr
+GetInstr	ir.cpp	/^const list<CTacInstr*>& CCodeBlock::GetInstr(void) const$/;"	f	class:CCodeBlock
+GetLabel	ir.cpp	/^const string CTacLabel::GetLabel(void) const$/;"	f	class:CTacLabel
+GetName	ir.cpp	/^string CCodeBlock::GetName(void) const$/;"	f	class:CCodeBlock
+GetName	ir.cpp	/^string CScope::GetName(void) const$/;"	f	class:CScope
+GetNumSrc	ir.cpp	/^unsigned int CTacInstr::GetNumSrc(void) const$/;"	f	class:CTacInstr
+GetOperation	ir.cpp	/^EOperation CTacInstr::GetOperation(void) const$/;"	f	class:CTacInstr
+GetOwner	ir.cpp	/^CScope* CCodeBlock::GetOwner(void) const$/;"	f	class:CCodeBlock
+GetParent	ir.cpp	/^CScope* CScope::GetParent(void) const$/;"	f	class:CScope
+GetRefCnt	ir.cpp	/^int CTacLabel::GetRefCnt(void) const$/;"	f	class:CTacLabel
+GetSrc	ir.cpp	/^CTacAddr* CTacInstr::GetSrc(int index) const$/;"	f	class:CTacInstr
+GetSubscopes	ir.cpp	/^const vector<CScope*>& CScope::GetSubscopes(void) const$/;"	f	class:CScope
+GetSymbol	ir.cpp	/^const CSymbol* CTacName::GetSymbol(void) const$/;"	f	class:CTacName
+GetSymbolTable	ir.cpp	/^CSymtab* CScope::GetSymbolTable(void) const$/;"	f	class:CScope
+GetValue	ir.cpp	/^int CTacConst::GetValue(void) const$/;"	f	class:CTacConst
+IsBranch	ir.cpp	/^bool CTacInstr::IsBranch(void) const$/;"	f	class:CTacInstr
+IsRelOp	ir.cpp	/^bool IsRelOp(EOperation t)$/;"	f
+OPERATION_STRLEN	ir.cpp	48;"	d	file:
+SetDest	ir.cpp	/^void CTacInstr::SetDest(CTac* dst)$/;"	f	class:CTacInstr
+SetId	ir.cpp	/^void CTacInstr::SetId(unsigned int id)$/;"	f	class:CTacInstr
+dotAttr	ir.cpp	/^string CCodeBlock::dotAttr(void) const$/;"	f	class:CCodeBlock
+dotID	ir.cpp	/^string CCodeBlock::dotID(void) const$/;"	f	class:CCodeBlock
+dotID	ir.cpp	/^string CScope::dotID(void) const$/;"	f	class:CScope
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, EOperation t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock &t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock *t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CScope &t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CScope *t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CTac &t)$/;"	f
+operator <<	ir.cpp	/^ostream& operator<<(ostream &out, const CTac *t)$/;"	f
+print	ir.cpp	/^ostream& CCodeBlock::print(ostream &out, int indent) const$/;"	f	class:CCodeBlock
+print	ir.cpp	/^ostream& CModule::print(ostream &out, int indent) const$/;"	f	class:CModule
+print	ir.cpp	/^ostream& CProcedure::print(ostream &out, int indent) const$/;"	f	class:CProcedure
+print	ir.cpp	/^ostream& CScope::print(ostream &out, int indent) const$/;"	f	class:CScope
+print	ir.cpp	/^ostream& CTacConst::print(ostream &out, int indent) const$/;"	f	class:CTacConst
+print	ir.cpp	/^ostream& CTacInstr::print(ostream &out, int indent) const$/;"	f	class:CTacInstr
+print	ir.cpp	/^ostream& CTacLabel::print(ostream &out, int indent) const$/;"	f	class:CTacLabel
+print	ir.cpp	/^ostream& CTacName::print(ostream &out, int indent) const$/;"	f	class:CTacName
+print	ir.cpp	/^ostream& CTacReference::print(ostream &out, int indent) const$/;"	f	class:CTacReference
+toDot	ir.cpp	/^void CCodeBlock::toDot(ostream &out, int indent) const$/;"	f	class:CCodeBlock
+toDot	ir.cpp	/^void CScope::toDot(ostream &out, int indent) const$/;"	f	class:CScope
+~CCodeBlock	ir.cpp	/^CCodeBlock::~CCodeBlock(void)$/;"	f	class:CCodeBlock
+~CModule	ir.cpp	/^CModule::~CModule(void)$/;"	f	class:CModule
+~CProcedure	ir.cpp	/^CProcedure::~CProcedure(void)$/;"	f	class:CProcedure
+~CScope	ir.cpp	/^CScope::~CScope(void)$/;"	f	class:CScope
+~CTac	ir.cpp	/^CTac::~CTac(void)$/;"	f	class:CTac
+~CTacAddr	ir.cpp	/^CTacAddr::~CTacAddr(void)$/;"	f	class:CTacAddr
+~CTacInstr	ir.cpp	/^CTacInstr::~CTacInstr(void)$/;"	f	class:CTacInstr
+~CTacLabel	ir.cpp	/^CTacLabel::~CTacLabel(void)$/;"	f	class:CTacLabel
+CCodeBlock	ir.h	/^class CCodeBlock {$/;"	c
+CModule	ir.h	/^class CModule : public CScope {$/;"	c
+CProcedure	ir.h	/^class CProcedure : public CScope {$/;"	c
+CScope	ir.h	/^class CScope {$/;"	c
+CTac	ir.h	/^class CTac {$/;"	c
+CTacAddr	ir.h	/^class CTacAddr : public CTac {$/;"	c
+CTacConst	ir.h	/^class CTacConst : public CTacAddr {$/;"	c
+CTacInstr	ir.h	/^class CTacInstr : public CTac {$/;"	c
+CTacLabel	ir.h	/^class CTacLabel : public CTacInstr {$/;"	c
+CTacName	ir.h	/^class CTacName : public CTacAddr {$/;"	c
+CTacReference	ir.h	/^class CTacReference: public CTacName {$/;"	c
+CTacTemp	ir.h	/^class CTacTemp: public CTacName {$/;"	c
+EOperation	ir.h	/^enum EOperation {$/;"	g
+__SnuPL_IR_H__	ir.h	38;"	d
+_ast	ir.h	/^    CAstNode *_ast;                  \/\/\/< abstract syntax tree$/;"	m	class:CScope
+_cb	ir.h	/^    CCodeBlock* _cb;                 \/\/\/< list of code blocks$/;"	m	class:CScope
+_children	ir.h	/^    vector<CScope*> _children;       \/\/\/< list of functions$/;"	m	class:CScope
+_deref	ir.h	/^    const CSymbol *_deref;           \/\/\/< symbol this reference is pointing to$/;"	m	class:CTacReference
+_dst	ir.h	/^    CTac          *_dst;             \/\/\/< destination operand$/;"	m	class:CTacInstr
+_id	ir.h	/^    unsigned int   _id;              \/\/\/< unique instruction id$/;"	m	class:CTacInstr
+_inst_id	ir.h	/^    unsigned int _inst_id;           \/\/\/< next id for instructions$/;"	m	class:CCodeBlock
+_label	ir.h	/^    const string _label;             \/\/\/< label$/;"	m	class:CTacLabel
+_label_id	ir.h	/^    unsigned int _label_id;          \/\/\/< next id for labels$/;"	m	class:CScope
+_name	ir.h	/^    string         _name;            \/\/\/< name (for debugging purposes)$/;"	m	class:CTacInstr
+_name	ir.h	/^    string _name;                    \/\/\/< name$/;"	m	class:CScope
+_op	ir.h	/^    EOperation     _op;              \/\/\/< opcode$/;"	m	class:CTacInstr
+_ops	ir.h	/^    list<CTacInstr*> _ops;           \/\/\/< operation list$/;"	m	class:CCodeBlock
+_owner	ir.h	/^    CScope *_owner;                  \/\/\/< block owner$/;"	m	class:CCodeBlock
+_parent	ir.h	/^    CScope *_parent;                 \/\/\/< superordinate scope$/;"	m	class:CScope
+_refcnt	ir.h	/^    int _refcnt;                     \/\/\/< reference counter$/;"	m	class:CTacLabel
+_src1	ir.h	/^    CTacAddr      *_src1;            \/\/\/< source operand 1$/;"	m	class:CTacInstr
+_src2	ir.h	/^    CTacAddr      *_src2;            \/\/\/< source operand 2$/;"	m	class:CTacInstr
+_symbol	ir.h	/^    const CSymbol *_symbol;          \/\/\/< symbol$/;"	m	class:CTacName
+_symtab	ir.h	/^    CSymtab *_symtab;                \/\/\/< symbol table$/;"	m	class:CScope
+_temp_id	ir.h	/^    unsigned int _temp_id;           \/\/\/< next id for temporaries$/;"	m	class:CScope
+_value	ir.h	/^    int _value;                      \/\/\/< constant value$/;"	m	class:CTacConst
+opAdd	ir.h	/^  opAdd=0,                          \/\/\/< +  addition$/;"	e	enum:EOperation
+opAddress	ir.h	/^  opAddress,                        \/\/\/< reference: dst = &src1$/;"	e	enum:EOperation
+opAnd	ir.h	/^  opAnd,                            \/\/\/< && binary and$/;"	e	enum:EOperation
+opAssign	ir.h	/^  opAssign,                         \/\/\/< assignment$/;"	e	enum:EOperation
+opBiggerEqual	ir.h	/^  opBiggerEqual,                    \/\/\/< >= bigger or equal$/;"	e	enum:EOperation
+opBiggerThan	ir.h	/^  opBiggerThan,                     \/\/\/< >  bigger than$/;"	e	enum:EOperation
+opCall	ir.h	/^  opCall,                           \/\/\/< call:  dst = call src1$/;"	e	enum:EOperation
+opCast	ir.h	/^  opCast,                           \/\/\/< type cast: dst = (type)src1$/;"	e	enum:EOperation
+opDeref	ir.h	/^  opDeref,                          \/\/\/< dereference: dst = *src1$/;"	e	enum:EOperation
+opDiv	ir.h	/^  opDiv,                            \/\/\/< \/  division$/;"	e	enum:EOperation
+opEqual	ir.h	/^  opEqual,                          \/\/\/< =  equal$/;"	e	enum:EOperation
+opGoto	ir.h	/^  opGoto,                           \/\/\/< dst = target$/;"	e	enum:EOperation
+opLabel	ir.h	/^  opLabel,                          \/\/\/< jump label; no arguments$/;"	e	enum:EOperation
+opLessEqual	ir.h	/^  opLessEqual,                      \/\/\/< <= less or equal$/;"	e	enum:EOperation
+opLessThan	ir.h	/^  opLessThan,                       \/\/\/< <  less than$/;"	e	enum:EOperation
+opMul	ir.h	/^  opMul,                            \/\/\/< *  multiplication$/;"	e	enum:EOperation
+opNeg	ir.h	/^  opNeg,                            \/\/\/< -  negation$/;"	e	enum:EOperation
+opNop	ir.h	/^  opNop,                            \/\/\/< no operation$/;"	e	enum:EOperation
+opNot	ir.h	/^  opNot,                            \/\/\/< !  binary not$/;"	e	enum:EOperation
+opNotEqual	ir.h	/^  opNotEqual,                       \/\/\/< #  not equal$/;"	e	enum:EOperation
+opOr	ir.h	/^  opOr,                             \/\/\/< || binary or$/;"	e	enum:EOperation
+opParam	ir.h	/^  opParam,                          \/\/\/< parameter: dst = index,src1 = parameter$/;"	e	enum:EOperation
+opPos	ir.h	/^  opPos,                            \/\/\/< +  unary +$/;"	e	enum:EOperation
+opReturn	ir.h	/^  opReturn,                         \/\/\/< return: return optional src1$/;"	e	enum:EOperation
+opSub	ir.h	/^  opSub,                            \/\/\/< -  subtraction$/;"	e	enum:EOperation
+CParser	parser.h	/^class CParser {$/;"	c
+HasError	parser.h	/^    bool HasError(void) const { return _abort; };$/;"	f	class:CParser
+__SnuPL_PARSER_H__	parser.h	36;"	d
+_abort	parser.h	/^    bool          _abort;         \/\/\/< error flag$/;"	m	class:CParser
+_error_token	parser.h	/^    CToken        _error_token;   \/\/\/< error token$/;"	m	class:CParser
+_message	parser.h	/^    string        _message;       \/\/\/< error message$/;"	m	class:CParser
+_module	parser.h	/^    CAstModule   *_module;        \/\/\/< root node of the program$/;"	m	class:CParser
+_scanner	parser.h	/^    CScanner     *_scanner;       \/\/\/< CScanner instance$/;"	m	class:CParser
+_token	parser.h	/^    CToken        _token;         \/\/\/< current token$/;"	m	class:CParser
+CScanner	scanner.h	/^class CScanner {$/;"	c
+CToken	scanner.h	/^class CToken {$/;"	c
+ECharacter	scanner.h	/^    enum ECharacter {$/;"	g	class:CScanner
+EToken	scanner.h	/^enum EToken {$/;"	g
+GetCharPosition	scanner.h	/^    int GetCharPosition() const { return _char; };$/;"	f	class:CScanner
+GetCharPosition	scanner.h	/^    int GetCharPosition(void) const { return _char; };$/;"	f	class:CToken
+GetLineNumber	scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CScanner
+GetLineNumber	scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CToken
+GetType	scanner.h	/^    EToken GetType(void) const { return _type; };$/;"	f	class:CToken
+GetValue	scanner.h	/^    string GetValue(void) const { return _value; };$/;"	f	class:CToken
+Good	scanner.h	/^    bool Good(void) const { return _good; };$/;"	f	class:CScanner
+__SnuPL_SCANNER_H__	scanner.h	37;"	d
+_char	scanner.h	/^    int     _char;                  \/\/\/< current stream position (character pos)$/;"	m	class:CScanner
+_char	scanner.h	/^    int    _char;                   \/\/\/< input stream position (character pos)$/;"	m	class:CToken
+_delete_in	scanner.h	/^    bool    _delete_in;             \/\/\/< delete input stream upon destruction$/;"	m	class:CScanner
+_good	scanner.h	/^    bool    _good;                  \/\/\/< scanner status flag$/;"	m	class:CScanner
+_in	scanner.h	/^    istream *_in;                   \/\/\/< input stream$/;"	m	class:CScanner
+_line	scanner.h	/^    int     _line;                  \/\/\/< current stream position (line)$/;"	m	class:CScanner
+_line	scanner.h	/^    int    _line;                   \/\/\/< input stream position (line)$/;"	m	class:CToken
+_saved_char	scanner.h	/^    int     _saved_char;            \/\/\/< saved stream position (character pos)$/;"	m	class:CScanner
+_saved_line	scanner.h	/^    int     _saved_line;            \/\/\/< saved stream position (line)$/;"	m	class:CScanner
+_token	scanner.h	/^    CToken *_token;                 \/\/\/< next token in input stream$/;"	m	class:CScanner
+_type	scanner.h	/^    EToken _type;                   \/\/\/< token type$/;"	m	class:CToken
+_value	scanner.h	/^    string _value;                  \/\/\/< token value$/;"	m	class:CToken
+cEOF	scanner.h	/^      cEOF,                         \/\/\/< input stream EoF$/;"	e	enum:CScanner::ECharacter
+cIOError	scanner.h	/^      cIOError,                     \/\/\/< input stream error$/;"	e	enum:CScanner::ECharacter
+cInvChar	scanner.h	/^      cInvChar,                     \/\/\/< invalid character$/;"	e	enum:CScanner::ECharacter
+cInvEnc	scanner.h	/^      cInvEnc,                      \/\/\/< invalid escape sequence$/;"	e	enum:CScanner::ECharacter
+cOkay	scanner.h	/^      cOkay =0,                     \/\/\/< character parsed$/;"	e	enum:CScanner::ECharacter
+keywords	scanner.h	/^    static map<string, EToken> keywords;\/\/\/< reserved keywords with corr. tokens$/;"	m	class:CScanner
+tAnd	scanner.h	/^  tAnd,                             \/\/\/< '&&'$/;"	e	enum:EToken
+tAssign	scanner.h	/^  tAssign,                          \/\/\/< assignment operator$/;"	e	enum:EToken
+tBegin	scanner.h	/^  tBegin,                           \/\/\/< 'begin'$/;"	e	enum:EToken
+tBoolConst	scanner.h	/^  tBoolConst,                       \/\/\/< boolean constant$/;"	e	enum:EToken
+tBoolean	scanner.h	/^  tBoolean,                         \/\/\/< 'boolean'$/;"	e	enum:EToken
+tChar	scanner.h	/^  tChar,                            \/\/\/< 'char'$/;"	e	enum:EToken
+tCharConst	scanner.h	/^  tCharConst,                       \/\/\/< character constant$/;"	e	enum:EToken
+tColon	scanner.h	/^  tColon,                           \/\/\/< a colon$/;"	e	enum:EToken
+tComma	scanner.h	/^  tComma,                           \/\/\/< a comma$/;"	e	enum:EToken
+tComment	scanner.h	/^  tComment,                         \/\/\/< comment ('\/\/ .... \\n')$/;"	e	enum:EToken
+tDo	scanner.h	/^  tDo,                              \/\/\/< 'do'$/;"	e	enum:EToken
+tDot	scanner.h	/^  tDot,                             \/\/\/< a dot$/;"	e	enum:EToken
+tEOF	scanner.h	/^  tEOF,                             \/\/\/< end of file$/;"	e	enum:EToken
+tElse	scanner.h	/^  tElse,                            \/\/\/< 'else'$/;"	e	enum:EToken
+tEnd	scanner.h	/^  tEnd,                             \/\/\/< 'end'$/;"	e	enum:EToken
+tFunction	scanner.h	/^  tFunction,                        \/\/\/< 'function'$/;"	e	enum:EToken
+tIOError	scanner.h	/^  tIOError,                         \/\/\/< I\/O error$/;"	e	enum:EToken
+tIdent	scanner.h	/^  tIdent=0,                         \/\/\/< ident$/;"	e	enum:EToken
+tIf	scanner.h	/^  tIf,                              \/\/\/< 'if'$/;"	e	enum:EToken
+tInteger	scanner.h	/^  tInteger,                         \/\/\/< 'integer'$/;"	e	enum:EToken
+tLBrak	scanner.h	/^  tLBrak,                           \/\/\/< a left bracket$/;"	e	enum:EToken
+tLParens	scanner.h	/^  tLParens,                         \/\/\/< a left parenthesis$/;"	e	enum:EToken
+tModule	scanner.h	/^  tModule,                          \/\/\/< 'module'$/;"	e	enum:EToken
+tMulDiv	scanner.h	/^  tMulDiv,                          \/\/\/< '*' or '\/'$/;"	e	enum:EToken
+tNot	scanner.h	/^  tNot,                             \/\/\/< '!'$/;"	e	enum:EToken
+tNumber	scanner.h	/^  tNumber,                          \/\/\/< number$/;"	e	enum:EToken
+tOr	scanner.h	/^  tOr,                              \/\/\/< '||'$/;"	e	enum:EToken
+tPlusMinus	scanner.h	/^  tPlusMinus,                       \/\/\/< '+' or '-'$/;"	e	enum:EToken
+tProcedure	scanner.h	/^  tProcedure,                       \/\/\/< 'procedure'$/;"	e	enum:EToken
+tRBrak	scanner.h	/^  tRBrak,                           \/\/\/< a right bracket$/;"	e	enum:EToken
+tRParens	scanner.h	/^  tRParens,                         \/\/\/< a right parenthesis$/;"	e	enum:EToken
+tRelOp	scanner.h	/^  tRelOp,                           \/\/\/< relational operator$/;"	e	enum:EToken
+tReturn	scanner.h	/^  tReturn,                          \/\/\/< 'return'$/;"	e	enum:EToken
+tSemicolon	scanner.h	/^  tSemicolon,                       \/\/\/< a semicolon$/;"	e	enum:EToken
+tString	scanner.h	/^  tString,                          \/\/\/< string constant$/;"	e	enum:EToken
+tThen	scanner.h	/^  tThen,                            \/\/\/< 'then'$/;"	e	enum:EToken
+tUndefined	scanner.h	/^  tUndefined,                       \/\/\/< undefined$/;"	e	enum:EToken
+tVarDecl	scanner.h	/^  tVarDecl,                         \/\/\/< 'var'$/;"	e	enum:EToken
+tWhile	scanner.h	/^  tWhile,                           \/\/\/< 'while'$/;"	e	enum:EToken
+DumpAST	snuplc.cpp	/^void DumpAST(string file, CAstModule *ast)$/;"	f
+DumpTAC	snuplc.cpp	/^void DumpTAC(string file, CModule *m)$/;"	f
+ParseArgs	snuplc.cpp	/^void ParseArgs(int argc, char *argv[])$/;"	f
+RunCompile	snuplc.cpp	/^void RunCompile(string file)$/;"	f
+RunDOT	snuplc.cpp	/^void RunDOT(string file)$/;"	f
+Syntax	snuplc.cpp	/^void Syntax(string msg)$/;"	f
+dump_asm	snuplc.cpp	/^bool dump_asm = true;$/;"	v
+dump_dot	snuplc.cpp	/^bool dump_dot = true;$/;"	v
+dump_tac	snuplc.cpp	/^bool dump_tac = true;$/;"	v
+files	snuplc.cpp	/^vector<string> files;$/;"	v
+main	snuplc.cpp	/^int main(int argc, char *argv[])$/;"	f
+rte_path	snuplc.cpp	/^string rte_path = "rte\/IA32\/";$/;"	v
+run_dot	snuplc.cpp	/^bool run_dot  = true;$/;"	v
+run_gcc	snuplc.cpp	/^bool run_gcc  = false;$/;"	v
+CSymGlobal	symtab.h	/^class CSymGlobal : public CSymbol {$/;"	c
+CSymLocal	symtab.h	/^class CSymLocal : public CSymbol {$/;"	c
+CSymParam	symtab.h	/^class CSymParam : public CSymLocal {$/;"	c
+CSymProc	symtab.h	/^class CSymProc : public CSymbol {$/;"	c
+CSymbol	symtab.h	/^class CSymbol {$/;"	c
+CSymtab	symtab.h	/^class CSymtab {$/;"	c
+EScope	symtab.h	/^enum EScope {$/;"	g
+ESymbolType	symtab.h	/^enum ESymbolType {$/;"	g
+__SnuPL_SYMTAB_H__	symtab.h	34;"	d
+_data	symtab.h	/^    const CDataInitializer *_data;\/\/\/< data initializer$/;"	m	class:CSymbol
+_datatype	symtab.h	/^    const CType   *_datatype;     \/\/\/< data type$/;"	m	class:CSymbol
+_index	symtab.h	/^    int            _index;        \/\/\/< index$/;"	m	class:CSymParam
+_name	symtab.h	/^    string         _name;         \/\/\/< name$/;"	m	class:CSymbol
+_offset	symtab.h	/^    int            _offset;       \/\/\/< offset$/;"	m	class:CSymbol
+_param	symtab.h	/^    vector<CSymParam*> _param;      \/\/\/< parameter list$/;"	m	class:CSymProc
+_parent	symtab.h	/^    CSymtab       *_parent;       \/\/\/< parent$/;"	m	class:CSymtab
+_rbase	symtab.h	/^    string         _rbase;        \/\/\/< base register$/;"	m	class:CSymbol
+_symboltype	symtab.h	/^    ESymbolType    _symboltype;   \/\/\/< symbol type$/;"	m	class:CSymbol
+_symtab	symtab.h	/^    CSymtab       *_symtab;       \/\/\/< symbol table owning this symbol$/;"	m	class:CSymbol
+_symtab	symtab.h	/^    map<string, CSymbol*> _symtab;\/\/\/< local symbol table$/;"	m	class:CSymtab
+sGlobal	symtab.h	/^  sGlobal,                        \/\/\/< global$/;"	e	enum:EScope
+sLocal	symtab.h	/^  sLocal,                         \/\/\/< local$/;"	e	enum:EScope
+stGlobal	symtab.h	/^  stGlobal,         \/\/\/< global symbol$/;"	e	enum:ESymbolType
+stLocal	symtab.h	/^  stLocal,          \/\/\/< local symbol$/;"	e	enum:ESymbolType
+stParam	symtab.h	/^  stParam,          \/\/\/< parameter symbol$/;"	e	enum:ESymbolType
+stProcedure	symtab.h	/^  stProcedure,      \/\/\/< procedure symbol$/;"	e	enum:ESymbolType
+stReserved	symtab.h	/^  stReserved,       \/\/\/< reserved names$/;"	e	enum:ESymbolType
+CArrayType	type.h	/^class CArrayType : public CType {$/;"	c
+CBoolType	type.h	/^class CBoolType : public CScalarType {$/;"	c
+CCharType	type.h	/^class CCharType : public CScalarType {$/;"	c
+CIntType	type.h	/^class CIntType : public CScalarType {$/;"	c
+CNullType	type.h	/^class CNullType : public CScalarType {$/;"	c
+CPointerType	type.h	/^class CPointerType : public CScalarType {$/;"	c
+CScalarType	type.h	/^class CScalarType : public CType {$/;"	c
+CType	type.h	/^class CType {$/;"	c
+CTypeManager	type.h	/^class CTypeManager {$/;"	c
+GetAlign	type.h	/^    virtual int GetAlign(void) const { return 0; };$/;"	f	class:CNullType
+GetAlign	type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CBoolType
+GetAlign	type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CCharType
+GetAlign	type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CIntType
+GetAlign	type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CPointerType
+GetBaseType	type.h	/^    const CType* GetBaseType(void) const { return _basetype; };$/;"	f	class:CPointerType
+GetInnerType	type.h	/^    const CType* GetInnerType(void) const { return _innertype; };$/;"	f	class:CArrayType
+GetNElem	type.h	/^    int GetNElem(void) const { return _nelem; };$/;"	f	class:CArrayType
+GetSize	type.h	/^    virtual unsigned int GetSize(void) const { return 0; };$/;"	f	class:CNullType
+GetSize	type.h	/^    virtual unsigned int GetSize(void) const { return 1; };$/;"	f	class:CBoolType
+GetSize	type.h	/^    virtual unsigned int GetSize(void) const { return 1; };$/;"	f	class:CCharType
+GetSize	type.h	/^    virtual unsigned int GetSize(void) const { return 4; };$/;"	f	class:CIntType
+GetSize	type.h	/^    virtual unsigned int GetSize(void) const { return 4; };$/;"	f	class:CPointerType
+IsArray	type.h	/^    virtual bool IsArray(void) const { return false; };$/;"	f	class:CType
+IsArray	type.h	/^    virtual bool IsArray(void) const { return true; };$/;"	f	class:CArrayType
+IsBoolean	type.h	/^    virtual bool IsBoolean(void) const { return false; };$/;"	f	class:CType
+IsBoolean	type.h	/^    virtual bool IsBoolean(void) const { return true; };$/;"	f	class:CBoolType
+IsChar	type.h	/^    virtual bool IsChar(void) const { return false; };$/;"	f	class:CType
+IsChar	type.h	/^    virtual bool IsChar(void) const { return true; };$/;"	f	class:CCharType
+IsInt	type.h	/^    virtual bool IsInt(void) const { return false; };$/;"	f	class:CType
+IsInt	type.h	/^    virtual bool IsInt(void) const { return true; };$/;"	f	class:CIntType
+IsNull	type.h	/^    virtual bool IsNull(void) const { return false; };$/;"	f	class:CType
+IsNull	type.h	/^    virtual bool IsNull(void) const { return true; };$/;"	f	class:CNullType
+IsPointer	type.h	/^    virtual bool IsPointer(void) const { return false; };$/;"	f	class:CType
+IsPointer	type.h	/^    virtual bool IsPointer(void) const { return true; };$/;"	f	class:CPointerType
+IsScalar	type.h	/^    virtual bool IsScalar(void) const { return false; };$/;"	f	class:CType
+IsScalar	type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CBoolType
+IsScalar	type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CCharType
+IsScalar	type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CIntType
+IsScalar	type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CPointerType
+MAX_SIZE	type.h	/^    const static unsigned long long MAX_SIZE = INT_MAX; \/\/\/< max. size of array$/;"	m	class:CArrayType
+OPEN	type.h	/^    const static int OPEN = -1;   \/\/\/< open array (dimensions unspecified)$/;"	m	class:CArrayType
+__SnuPL_TYPE_H__	type.h	35;"	d
+_array	type.h	/^    vector<CArrayType*> _array;   \/\/\/< array types$/;"	m	class:CTypeManager
+_basetype	type.h	/^    const CType   *_basetype;     \/\/\/< base type$/;"	m	class:CPointerType
+_boolean	type.h	/^    CBoolType     *_boolean;      \/\/\/< boolean base type$/;"	m	class:CTypeManager
+_char	type.h	/^    CCharType     *_char;         \/\/\/< char base type$/;"	m	class:CTypeManager
+_global_tm	type.h	/^    static CTypeManager *_global_tm; \/\/\/< global type manager instance$/;"	m	class:CTypeManager
+_innertype	type.h	/^    const CType   *_innertype;    \/\/\/< inner type$/;"	m	class:CArrayType
+_integer	type.h	/^    CIntType      *_integer;      \/\/\/< integer base type$/;"	m	class:CTypeManager
+_nelem	type.h	/^    int            _nelem;        \/\/\/< element count$/;"	m	class:CArrayType
+_null	type.h	/^    CNullType     *_null;         \/\/\/< null base type$/;"	m	class:CTypeManager
+_ptr	type.h	/^    vector<CPointerType*> _ptr;   \/\/\/< pointer types$/;"	m	class:CTypeManager
+_voidptr	type.h	/^    CPointerType  *_voidptr;      \/\/\/< void pointer type$/;"	m	class:CTypeManager

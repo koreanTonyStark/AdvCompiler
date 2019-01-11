@@ -1,0 +1,31 @@
+digraph CFG {
+  graph [fontname="Times New Roman",fontsize=10];
+  node  [fontname="Courier New",fontsize=10];
+  edge  [fontname="Times New Roman",fontsize=10];
+// scope 'test12'
+node0 [label=" ENTER test12\r   0:     call   Test\l",shape=box];
+// scope 'Int'
+node1 [label=" ENTER Int\r   0:     assign i <- 75\l",shape=box];
+node1 -> node2;
+node2 [label=" EXIT Int\r   1:     return i\l",shape=box];
+// scope 'Char'
+node3 [label=" ENTER Char\r   0:     assign c <- 66\l",shape=box];
+node3 -> node4;
+node4 [label=" EXIT Char\r   1:     return c\l",shape=box];
+// scope 'Bool'
+node5 [label=" ENTER Bool\r   0:     assign b <- 1\l",shape=box];
+node5 -> node6;
+node6 [label=" EXIT Bool\r   1:     return b\l",shape=box];
+// scope 'Test'
+node7 [label=" ENTER Test\r   0:     call   t0 <- Bool\l",shape=box];
+node7 -> node8;
+node8 [label="  1:     assign b <- t0\l",shape=box];
+node8 -> node9;
+node9 [label="  2:     call   t1 <- Char\l",shape=box];
+node9 -> node10;
+node10 [label="  3:     assign c <- t1\l",shape=box];
+node10 -> node11;
+node11 [label="  4:     call   t2 <- Int\l",shape=box];
+node11 -> node12;
+node12 [label=" EXIT Test\r   5:     assign i <- t2\l",shape=box];
+}

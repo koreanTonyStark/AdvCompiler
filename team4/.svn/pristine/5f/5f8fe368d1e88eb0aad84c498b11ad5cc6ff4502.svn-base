@@ -1,0 +1,714 @@
+/* Constant-Propagation based on CFG
+ * Author : team4 
+ * Key Concept : changing .mod (with constant propagation)
+ * Basic : skip array first (in implementation)
+ */ 
+
+//constant propagation 
+//what about copy-propagation ?
+//common sub-expression elimination 
+
+#include <vector>
+#include <memory>
+#include <cassert>
+#include <iostream>
+
+#include "constant_propagation.h"
+
+using namespace std;
+
+using citCfgNode = list<shared_ptr<CfgNode>>::const_iterator;
+using itCfgNode = list<shared_ptr<CfgNode>>::iterator;
+using itCfgProc = vector<shared_ptr<CfgProc>>::iterator;
+
+C_Propagation::C_Propagation(CfgInterProc *cfg)
+{
+	_cfg = cfg;
+	_num_of_int  = 0;
+	_num_of_bool = 0;
+	_num_of_char = 0;
+	_isExistConstFunc=false;
+	_m = cfg->GetCModule(); 
+	_symtab = _m->GetSymbolTable();	
+	_procs = cfg->GetProcs();
+	for(int i=0; i<_procs.size();++i)
+		_num_of_code_lines+=_procs[i]->GetNodeCnt();
+	cntNumOfVariables();
+	//do constant propagation first 
+	//second erase the code line by dead-code elimination
+	doConstantPropagation();
+	//doInterProceduralConstantPropagation();
+	//if(_isExistConstFunc)
+	//	doConstantPropagation();
+}
+
+int C_Propagation::returnInstanceTypeForCTacAddr(CTacAddr *addr)
+{
+	// enum Type{
+	// 	NAME=0,
+	// 	CONSTANT=1,
+	// 	LABEL,
+	// };
+
+	if(CTacName* v =dynamic_cast<CTacName*>(addr)){
+		/*
+		// check if array
+		const CSymbol* symbol = v->GetSymbol();
+		CType* dataType = const_cast<CType*>(symbol->GetDataType());
+		if (dynamic_cast<CArrayType*>(dataType) == NULL)
+		*/
+			return NAME;
+	}
+	else if(CTacConst* v =dynamic_cast<CTacConst*>(addr))
+		return CONSTANT;
+	else
+		return LABEL;
+}
+
+/* @Brief : check a node has only one reachable line 
+ * 
+ * 
+ * 
+ */
+
+shared_ptr<CfgNode> C_Propagation::hasOnlyOneReachbleLine(shared_ptr<CfgNode>& node, int idx)
+{
+	
+	CfgNode::REACH &reach = node->GetReachInfo();
+	set<shared_ptr<CfgNode>>::iterator it = reach._reachIn.begin();
+	int cnt=0;
+	size_t line_number=-1;
+	shared_ptr<CfgNode> target_node;
+	while(it!=reach._reachIn.end())
+	{
+		 
+		CTacInstr *inst      = const_cast<CTacInstr*>(node->GetInstr());
+		CTacName *name       = dynamic_cast<CTacName*>(inst->GetSrc(idx));
+		CSymbol *symbol      = const_cast<CSymbol*>(name->GetSymbol());
+		string symbol_name   = symbol->GetName();
+
+		
+		CTacInstr *comp_inst = const_cast<CTacInstr*>((*it)->GetInstr());
+		if(comp_inst==nullptr) continue;
+		//cout<<comp_inst->GetId()<< " ";
+		CTacName *comp       = dynamic_cast<CTacName*>(comp_inst->GetDest());
+		CSymbol *comp_symbol = const_cast<CSymbol*>(comp->GetSymbol());
+		//have to check whether this line has  CTacConstant 
+		string comp_name     = comp_symbol->GetName();
+		cout<<endl;
+		cout<<" my : "<<symbol_name<<" target : "<<comp_name<<" ( in line "<<comp_inst->GetId()<<") "<<endl;
+		if(symbol_name == comp_name)
+		{
+				target_node = *it;
+			//if(comp_inst!=nullptr){
+				line_number=comp_inst->GetId();
+				//cout<<"matched : "<<line_number;
+				cnt++;
+			//}
+			//cnt++;
+		}
+		it++;
+	}
+	//cout<<" cnt: "<<cnt<<" ";
+	if(cnt==1)
+		return target_node;
+	
+	else
+		return nullptr;
+}
+
+//inter
+//void C_Propagation::ChnageToConstLine(CTacInstr *target_inst, )
+
+
+//intra 
+void C_Propagation::ChangeToConstInOneLine(CTacInstr *target_inst, shared_ptr<CfgNode>& node, int idx)
+{
+	//size_t target_line = hasOnlyOneReachbleLine(node, idx);
+	shared_ptr<CfgNode> target_node = hasOnlyOneReachbleLine(node, idx);
+	if(target_node==nullptr)
+		return;
+	CTacInstr *target_instr = const_cast<CTacInstr*>(target_node->GetInstr());
+
+	size_t     my_line = target_inst->GetId();
+	CCodeBlock *cb = node->GetOwner()->GetCCodeBlock();
+	//cb->setInstr(my_line, target_line, idx);
+	cb->setInstr(my_line, target_instr, idx);
+}
+
+//binary operation 
+int C_Propagation::GetOperationResult(EOperation target_op, int val1, int val2)
+{
+	
+	int result;
+	switch(target_op)
+	{
+		case opAdd:
+			result = val1 + val2;
+			break;
+		case opSub:
+			result = val1 - val2;
+			break;
+		case opMul:
+			result = val1 * val2;
+			break;
+		case opDiv:
+			result = val1 / val2;
+			break;
+		case opAnd:
+			result = val1 & val2;
+			break;
+		case opOr:
+			result = val1 | val2;
+			break;
+		default:
+			break;
+	}
+	return result;
+}
+
+//unary operation 
+int C_Propagation::GetOperationResult(EOperation target_op, int val1)
+{
+	int result;
+	switch(target_op)
+	{
+		case opNeg:
+			result = -val1;
+			break;
+		case opPos:
+			result = +val1;
+			break;
+		case opNot:
+			result = ~val1;
+			break;
+		default:
+			break;
+	}
+	return result;
+}
+
+
+void C_Propagation::doConstantPropagation(void)
+{
+	//reaching definition -> in, out stores code line number 
+	//simple algorithm -> very intuitive 
+	/* if we have assignee in any node,
+	(which means assignment block and we have to modfiy variable to constant)
+	   we check that assignee's variable name and check whether there exists 
+	   only 1 code_line(definition of assignee) for that assignee
+	   then we can change it to constant through that line's constant 
+	 */
+	//No opSym in .mod 
+
+	itCfgProc proc_it = _procs.begin();
+	for(;proc_it<_procs.end();++proc_it)
+	{
+		const list<shared_ptr<CfgNode>>& nodeList_perProc = (*proc_it)->GetNodes();
+		citCfgNode cit = nodeList_perProc.cbegin();
+
+		while(cit!= nodeList_perProc.cend())
+		{
+			shared_ptr<CfgNode> node = (*cit);
+			//only check has assignment to some variable 
+			if(!(*cit)->GetUse().empty())
+			{
+				CTacInstr *target_inst= const_cast<CTacInstr*>(node->GetInstr());
+				CTacAddr *src1 = target_inst->GetSrc(1);
+				CTacAddr *src2 = target_inst->GetSrc(2);
+				int num_src=target_inst->GetNumSrc();
+				//# of src 0 : label
+				//# of src 1 : unary operation and etc..(find it)
+				//# of src 2 : binary operation 
+				//binary operation :
+				if(num_src==2)
+				{
+					cout<<(*proc_it)->GetName();
+					cout<<" code line num : "<<target_inst->GetId();
+					//if src is already const, then we don't need to handle about it
+					//src1 is CTacName(CTacTemp , not CTacReference) -> must handle later
+					if(src1->GetType()==CTacNameType)
+					//if(returnInstanceTypeForCTacAddr(src1)==NAME)
+					{
+
+						//if(hasOnlyOneReachbleLine(node,1)!=nullptr)
+						//{
+							CTacName *src1_name = dynamic_cast<CTacName*>(src1);
+							if(!src1_name->GetSymbol()->GetDataType()->IsArray() && 
+								!src1_name->GetSymbol()->GetDataType()->IsPointer())
+								ChangeToConstInOneLine(target_inst, node, 1);
+						//}
+					} 
+					if(src2->GetType()==CTacNameType)
+					{
+						//if(hasOnlyOneReachbleLine(node,2)!=nullptr)
+						//{
+							CTacName *src2_name = dynamic_cast<CTacName*>(src2);
+							if(!src2_name->GetSymbol()->GetDataType()->IsArray() &&
+								!src2_name->GetSymbol()->GetDataType()->IsPointer())
+								ChangeToConstInOneLine(target_inst, node, 2);
+						//}		
+					}
+					//ChangeToConst
+					//conversion to assign operation 
+					size_t my_id = target_inst->GetId();
+					CTacAddr *new_src1= target_inst->GetSrc(1);
+					CTacAddr *new_src2= target_inst->GetSrc(2);
+					//src2 is CTacName;
+					//Both operand 1,2 is const, we can compute in compile time
+					EOperation target_op = target_inst->GetOperation();
+					if(target_op<=opOr)
+					{
+						if(returnInstanceTypeForCTacAddr(new_src1)==CONSTANT 
+							&& returnInstanceTypeForCTacAddr(new_src2)==CONSTANT)
+						{
+							//EOperation target_op = target_inst->GetOperation();
+							CTacConst *op1_instance = dynamic_cast<CTacConst*>(new_src1);
+							CTacConst *op2_instance = dynamic_cast<CTacConst*>(new_src2);
+							int val1 = op1_instance->GetValue();
+							int val2 = op2_instance->GetValue();
+							int result = GetOperationResult(target_op, val1, val2);
+							
+							cout<<"[val1 : "<<val1<<" val2: "<<val2<<" result :"<<result<<"]";
+							
+							//make EOperation type to opAssign(9) 
+							target_inst->SetOperation(opAssign);
+							CTacAddr *newConst = new CTacConst(result);
+							target_inst->SetSrc1(newConst);
+							target_inst->SetSrc2(nullptr);
+						}
+					}
+				}
+				//unary operation or assign or pointer operation 
+				else if(num_src==1)
+				{
+					//constant propagation 
+					CTacAddr *src1 = target_inst->GetSrc(1);
+					cout<<"code line num : "<<target_inst->GetId();
+					//name
+					if(returnInstanceTypeForCTacAddr(src1)==NAME)
+					{
+						//if(hasOnlyOneReachbleLine(node,1)!=nullptr)
+						//{
+							CTacName *src1_name = dynamic_cast<CTacName*>(src1);
+							if(!src1_name->GetSymbol()->GetDataType()->IsArray() &&
+								!src1_name->GetSymbol()->GetDataType()->IsPointer())
+								ChangeToConstInOneLine(target_inst, node, 1);
+						//}
+					}
+
+					EOperation target_op = target_inst->GetOperation();
+					if(target_op<=8)  // means unary operation 
+					{
+						CTacAddr *new_src1 = target_inst->GetSrc(1);
+						//check whether operand is constant 
+						//if it's true than compute it on compile time and change it to assign operation 
+						if(returnInstanceTypeForCTacAddr(new_src1)==CONSTANT)
+						{
+							CTacConst *op1_instance = dynamic_cast<CTacConst*>(new_src1);
+							int val1 = op1_instance->GetValue();
+							int result = GetOperationResult(target_op, val1);
+
+							cout<<"[val1 : "<<val1<<" result: "<<result<<"]";
+							//if(target_op!=opReturn)
+							target_inst->SetOperation(opAssign);
+							//make EOPeration type to opAssign(9)
+							
+							CTacAddr *newConst = new CTacConst(result);
+							target_inst->SetSrc1(newConst);
+							target_inst->SetSrc2(nullptr);
+						}
+					}
+				}
+				cout<<endl;
+			}
+			cit++;
+		}
+	}
+}
+
+
+void C_Propagation::findConstantFunction(void)
+{
+
+	//main function's name 
+	string main_func_name = _cfg->GetName();
+	//cout<<main_func_name<<endl;
+
+	
+	int val = INT_MIN;
+	//int val=-99999;
+	//int tmp=0;
+
+	itCfgProc proc_it = _procs.begin();
+	for(;proc_it<_procs.end();++proc_it)
+	{
+		//find a function that returns constant -> changing flag 
+
+		//tmp++;
+		int cnt = 0;	
+		string target_name = (*proc_it)->GetName();
+		
+		
+		//skip if procedure is main procedure 
+		if(main_func_name==target_name)
+			continue;
+		//cout<<target_name<<endl;
+
+		const list<shared_ptr<CfgNode>>& nodeList_perProc=(*proc_it)->GetNodes();
+		citCfgNode cit = nodeList_perProc.cbegin();
+
+		//traverse each procedure using instruction with incrementing 1
+		while(cit!=nodeList_perProc.cend())
+		{
+			shared_ptr<CfgNode> node = *cit;
+
+			CTacInstr *instr = const_cast<CTacInstr*>(node->GetInstr());
+
+			if(instr->GetOperation()==opReturn)
+			{	
+				//case of opReturn 
+				//we know it has only 1 src operand 
+				CTacAddr * operand = instr->GetSrc(1);
+				//not just case of return; 
+				if(operand!=nullptr)
+				{
+					if(returnInstanceTypeForCTacAddr(operand)==CONSTANT)
+					{
+						cnt++;
+						CTacConst* const_instance=dynamic_cast<CTacConst*>(operand);
+						val = const_instance->GetValue();
+						if(cnt==1)
+						{
+							_isExistConstFunc=true;
+							(*proc_it)->SetReturnsConst(true);
+							(*proc_it)->SetReturnVal(val);
+							//cout<<target_name<<endl;
+
+						}
+						//cases of return CONST more than 1
+						if(cnt>1 && val!=const_instance->GetValue())
+							(*proc_it)->SetReturnsConst(false);
+					}
+					else
+					{
+						_isExistConstFunc=false;
+						break;
+					}
+				}	
+			}
+			cit++;
+		}
+	}	
+}
+
+
+void C_Propagation::doInterProceduralConstantPropagation(void)
+{
+	findConstantFunction();
+	if(_isExistConstFunc)
+	{
+		itCfgProc proc_it = _procs.begin();
+		string main_func_name = _cfg->GetName();
+
+		//cout<<main_func_name<<endl;
+		int cnt=0;
+		//erase that function 
+		for(;proc_it<_procs.end();++proc_it)
+		{
+
+			string target_name=(*proc_it)->GetName();
+			cout<<target_name<<" ";
+			if((*proc_it)->GetReturnsConst())
+			{
+				int val = (*proc_it)->GetReturnVal();
+				CScope *parent = (*proc_it)->GetCCodeBlock()->GetOwner()->GetParent();
+				cout<<parent->GetName()<<endl;
+				vector<CScope*>& child = const_cast<vector<CScope*>&>(parent->GetSubscopes());
+				
+				//erase function block first
+				for(int i=0; i<child.size();++i)
+				{
+					cout<<child[i]->GetName()<<endl;
+					if(target_name==child[i]->GetName())
+					{
+						child.erase(child.begin()+i);
+						break;
+					}
+
+				}
+
+				vector<CScope*>& new_child = const_cast<vector<CScope*>&>(parent->GetSubscopes());
+				
+				for(int i=0; i<new_child.size();++i)
+				{
+					//change it it's main function del param and change opCall to opAssign
+					//CCodeBlock * cb = parent->GetCodeBlock();
+					//cout<<cb->GetName()<<endl;
+					CCodeBlock *cb = new_child[i]->GetCodeBlock();
+					list<CTacInstr*> instr_list = const_cast<list<CTacInstr*>&>(cb->GetInstr());
+					//list<CTacInstr*> instr_list = const_cast<list<CTacInstr*>&>(cb->GetInstr());
+
+					list<CTacInstr*>::reverse_iterator rit = instr_list.rbegin();
+					bool find_function=false;
+					while(rit!=instr_list.rend())
+					{
+						CTacInstr *inst = *rit;
+						if(find_function==false)
+						{
+							if(inst->GetOperation()==opCall)
+							{
+								//cout<<inst<<endl;
+								
+								CTacAddr* function_name = inst->GetSrc(1);
+								if(returnInstanceTypeForCTacAddr(function_name)==NAME)
+								{
+									CTacName* comp_name = dynamic_cast<CTacName*>(function_name);
+									CSymbol* comp_symbol = const_cast<CSymbol*>(comp_name->GetSymbol());
+									string   comp_string = comp_symbol->GetName();
+									if(target_name==comp_string)
+									{
+										inst->SetOperation(opAssign);
+										CTacAddr *newConst = new CTacConst(val);
+										inst->SetSrc1(newConst);
+										inst->SetSrc2(nullptr);
+										find_function=true;
+										rit++;
+										continue;
+									}
+								}
+							}
+						}
+
+						if(find_function==true)
+						{
+							if(inst->GetOperation()==opParam)
+							{
+								//list<CTacInstr*>::reverse_iterator tmp = rit;
+								//instr_list.remove(inst);
+								//rit--;
+								cout<<inst->GetId()<<endl;
+								cb->DelInstr(inst->GetId());			
+							}
+							else
+								find_function=false;
+
+						}
+						rit++;
+					}
+				}
+			}
+			cnt++;
+		}
+	}	
+}
+
+
+C_Propagation::~C_Propagation()
+{
+}
+
+
+
+void C_Propagation::showNumOfPrimitive(void) const
+{
+	cout<<"number of INT  variable : "<<_num_of_int<<endl;
+	cout<<"number of BOOL variable : "<<_num_of_bool<<endl;
+	cout<<"number of CHAR variable : "<<_num_of_char<<endl;
+}
+
+CfgInterProc* C_Propagation::getCFG(void) const
+{
+	return _cfg;
+}
+
+const CSymtab* C_Propagation::getCSymtab(void) const
+{
+	return _symtab;
+}
+
+size_t C_Propagation::getNumOfInt(void) const
+{
+	return _num_of_int;
+} 
+
+size_t C_Propagation::getNumOfBool(void) const
+{
+	return _num_of_bool;
+} 
+size_t C_Propagation::getNumOfChar(void) const
+{
+	return _num_of_char;
+} 
+size_t C_Propagation::getNumOfCodeBlocks(void) const
+{
+	return _num_of_code_lines;
+}
+
+void C_Propagation::cntNumOfVariables(void)
+{
+	const vector<CSymbol*> &list = _symtab->GetSymbols();
+	for(int i=0; i<list.size(); ++i)
+	{
+		
+		const CType* type = list[i]->GetDataType();
+		if(type->IsBoolean())
+			_num_of_bool++;
+		else if(type->IsChar())
+			_num_of_char++;
+		else if(type->IsInt())
+			_num_of_int++;
+
+		//cout<<"name: "<<list[i]->GetName()<<" ";
+		//cout<<"symbol type: "<<list[i]->GetSymbolType()<<" ";
+		//cout<<list[i]->GetDataType()<<" ";
+		//cout<<"data : ";
+		//if(list[i]->GetData()!=nullptr)
+		//	cout<<"data type: "<<list[i]->GetData();
+		//cout<<"base register: "<<list[i]->GetBaseRegister()<<" ";
+		//cout<<"offset: "<<list[i]->GetOffset()<<endl;
+
+	}
+}
+
+
+
+// void C_Propagation::doDeadCodeElimination(void)
+// {
+// 	//store list of instructions which is definition 
+// 	//we can check a<-b if a is in LiveOut on that list 
+// 	//if not, then erase, if is then live 
+// 	// no use but keep for urgency: list<shared_ptr<CfgNode>> def_list;
+// 	itCfgProc proc_it = _procs.begin();
+// 	for(;proc_it<_procs.end();++proc_it)
+// 	{
+// 		const list<shared_ptr<CfgNode>>& nodeList_perProc = (*proc_it)->GetNodes();
+// 		citCfgNode cit = nodeList_perProc.cbegin();
+// 		while(cit!= nodeList_perProc.cend())
+// 		{
+// 			const shared_ptr<CfgNode> &node = (*cit);
+// 			//cout<<node->GetId()<<" ";
+// 			//only check has assignment to some variable 
+// 			if((*cit)->GetDef()!=nullptr)
+// 			{
+// 				//cout<<"def is not null :";
+// 				CTacAddr *var = const_cast<CTacAddr*>(node->GetDef());
+// 				CfgNode::LIVE &live = node->GetLiveInfo();
+// 				//cout<<var<<endl;
+// 				//dead-code found
+// 				if(live._liveOut.find(var) == live._liveOut.end())
+// 				{
+// 					//first : erase CTacInstr* in that proc 
+// 					cout<<"dead-code found on line number"<< node->GetId()<<endl;
+// 					CTacInstr* target = const_cast<CTacInstr*>(node->GetInstr());
+// 					size_t target_id = target->GetId();
+// 					//don't touch the structure of InterCfgProc 
+// 					//just access to CModule directly, after erasing then, data structure of InterCfgProc 
+// 					//will be changed too, cz it's connected with pointers 
+// 					//code_block for each prodecure(include main function)
+// 					(*proc_it)->DelNode(node);//not works properly
+// 					//cout<<target_id<<endl;
+// 					CCodeBlock* cb = (*proc_it)->GetCCodeBlock();
+// 					//erasing it from CCodeBlock 
+// 					//implemented on CCodeBlock class in ir.h and ir.cpp 
+// 					cb->DelInstr(target_id);
+// 					/*erase that list 
+// 					list<CTacInstr*> inst_list = cb->GetInstr();
+// 					list<CTacInstr*>::const_iterator fuck = inst_list.begin();
+// 					 while(fuck!=inst_list.end())
+// 					{
+// 						cout<<(*fuck)<<endl;
+// 						fuck++;
+// 					}
+// 					*/
+// 					//second : erase it from Symbol Table 
+// 					//issue : if one variable def in 1, that is used in 2, and dead in 3
+// 					//do we need to erase it from symbol table? 
+// 					//thing to check : can be executed if d exists in symtab, but no exist in code line 
+// 					//how to convert .s -> to binary file 
+// 				}
+// 			}
+
+// 			cit++;
+// 		}
+
+// 	}
+
+
+// 	//issue : can we modify .tac file's data-structure? 
+// }
+
+
+// size_t C_Propagation::hasOnlyOneReachbleLinePtr(shared_ptr<CfgNode>& node, int idx)
+// {
+// 	CfgNode::REACH &reach = node->GetReachInfo();
+// 	set<shared_ptr<CfgNode>>::iterator it = reach._liveIn.begin();
+// 	size_t line_number=-1;
+
+// 	const vector<CTacAddr*> &use = node->GetUse();
+// 	const CTacName *addr = dynamic_cast<CTacName*>(use[0]);
+// 	if(addr->GetSymbol()->GetDataType()->IsArray()){
+// 		while(it!=reach._liveIn.end())
+// 		{
+// 			const CTacName *ptr = dynamic_cast<CTacName*>((*it)->GetDef());
+// 			if(ptr->GetSymbol()->GetDataType()->IsPointer()){
+// 				const vector<CTacAddr*> &prev_use = (*it)->GetUse();
+// 				const CTacName *prev_addr = dynamic_cast<CTacName*>(prev_use[0]);
+// 				if(prev_addr->GetSymbol()->GetDataType()->IsArray()){
+// 					if(addr->equal_to(*prev_addr)){
+// 						line_number = (*it)->GetInstr()->GetId();
+// 						return line_number;
+// 					}
+// 				}
+// 			}
+// 			it++;
+// 		}
+// 	}
+// 	return line_number;
+// }
+
+// void C_Propagation::ChangeToConstInOneLinePtr(CTacInstr *target_inst, shared_ptr<CfgNode>& node, int idx)
+// {
+// 	size_t target_line = hasOnlyOneReachbleLine(node, idx);
+// 	size_t     my_line = target_inst->GetId();
+// 	CCodeBlock *cb = node->GetOwner()->GetCCodeBlock();
+// 	cb->setInstr(my_line, target_line, 1);
+// }
+
+
+
+// hasOnlyOneReachableLine
+// CfgNode::REACH &reach = node->GetReachInfo();
+	// set<shared_ptr<CfgNode>>::iterator it = reach._reachIn.begin();
+	// int cnt=0;
+	// size_t line_number=-1;
+	
+	// while(it!=reach._reachIn.end())
+	// {
+		 
+	// 	CTacInstr *inst      = const_cast<CTacInstr*>(node->GetInstr());
+	// 	CTacName *name       = dynamic_cast<CTacName*>(inst->GetSrc(idx));
+	// 	CSymbol *symbol      = const_cast<CSymbol*>(name->GetSymbol());
+	// 	string symbol_name   = symbol->GetName();
+
+	// 	shared_ptr<CfgNode> target_node = *it;
+	// 	CTacInstr *comp_inst = const_cast<CTacInstr*>((*it)->GetInstr());
+	// 	CTacName *comp       = dynamic_cast<CTacName*>(comp_inst->GetDest());
+	// 	CSymbol *comp_symbol = const_cast<CSymbol*>(comp->GetSymbol());
+	// 	//have to check whether this line has  CTacConstant 
+	// 	string comp_name     = comp_symbol->GetName();
+	// 	if(symbol_name == comp_name)
+	// 	{
+	// 		if(comp_inst!=nullptr)
+	// 			line_number=comp_inst->GetId();
+	// 		cnt++;
+	// 	}
+	// 	it++;
+	// }
+	// if(cnt==1)
+	// 	return line_number;
+	// else
+	// 	return -1;
+
+
+

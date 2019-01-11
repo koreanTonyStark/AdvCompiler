@@ -1,0 +1,17 @@
+ROOT=..
+
+%: %.mod
+	$(ROOT)/snuplc/snuplc --ast --tac --cfg --const --dead $<
+	gcc -static -m32 -o $@ $<.s $(ROOT)/rte/IA32/IO.s $(ROOT)/rte/IA32/ARRAY.s
+	gcc -static -m32 -o $@.const $<.const.s $(ROOT)/rte/IA32/IO.s $(ROOT)/rte/IA32/ARRAY.s
+	gcc -static -m32 -o $@.const.dead $<.const.dead.s $(ROOT)/rte/IA32/IO.s $(ROOT)/rte/IA32/ARRAY.s
+
+all:
+	@for i in *.mod; do \
+		make $${i%%.mod}; \
+	done
+
+clean:
+	@for i in *.mod; do \
+		rm -f $${i%%.mod} $${i%%.mod}.const $${i%%.mod}.const.dead $${i%%.mod}.dead $${i}*.s $${i}*.tac $${i}*.ast $${i}*.dot $${i}*.pdf; \
+	done

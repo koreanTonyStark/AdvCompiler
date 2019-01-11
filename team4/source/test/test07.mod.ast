@@ -1,0 +1,39 @@
+test07.mod:
+    CAstScope: 'test07'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @_str_1   <array 14 of <char>>           ]
+            [ data: 'Hello, world!' ]
+          [ main     <NULL>           ]
+        ]]
+      statement list:
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 14 of <char>>>
+            "Hello, world!" <array 14 of <char>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+      nested scopes:
+        empty.
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @_str_1   <array 14 of <char>>       ]
+        [ data: 'Hello, world!' ]
+      [ main     <NULL>       ]
+    ]]
+

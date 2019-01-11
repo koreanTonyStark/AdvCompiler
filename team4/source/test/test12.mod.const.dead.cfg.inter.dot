@@ -1,0 +1,27 @@
+digraph CfgInterProc {
+  graph [fontname="Times New Roman",fontsize=10];
+  node  [fontname="Courier New",fontsize=10];
+  edge  [fontname="Times New Roman",fontsize=10];
+// scope 'test12'
+node0 [label=" ENTER test12\r   0:     call   Test\l",shape=box];
+node0 -> node7;
+// scope 'Int'
+node2 [label=" ENTER Int\r   0:     return 75\l",shape=box];
+node2 -> node11;
+// scope 'Char'
+node4 [label=" ENTER Char\r   0:     return 66\l",shape=box];
+node4 -> node9;
+// scope 'Bool'
+node6 [label=" ENTER Bool\r   0:     return 1\l",shape=box];
+node6 -> node7;
+// scope 'Test'
+node7 [label=" ENTER Test\r   0:     assign t0 <- 1\l",shape=box];
+node7 -> node6;
+node7 -> node9;
+node9 [label="  0:     assign t1 <- 66\l",shape=box];
+node9 -> node4;
+node9 -> node11;
+node11 [label=" EXIT Test\r   0:     assign t2 <- 75\l",shape=box];
+node11 -> node2;
+node11 -> node0;
+}

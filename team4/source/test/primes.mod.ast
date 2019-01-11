@@ -1,0 +1,319 @@
+primes.mod:
+    CAstScope: 'primes'
+      symbol table:
+        [[
+          [ *CalcPrimes(<ptr(4) to <array of <int>>>,<int>) --> <int>           ]
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *PrintPrimes(<ptr(4) to <array of <int>>>,<int>,<int>) --> <NULL>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @_str_1   <array 30 of <char>>           ]
+            [ data: '  computing primes from 1 to ' ]
+          [ @_str_10  <array 24 of <char>>           ]
+            [ data: 'Compute primes up to : ' ]
+          [ @_str_2   <array 4 of <char>>           ]
+            [ data: '...' ]
+          [ @_str_3   <array 45 of <char>>           ]
+            [ data: 'WARNING: array too small to hold all primes.' ]
+          [ @_str_4   <array 7 of <char>>           ]
+            [ data: 'ERROR.' ]
+          [ @_str_5   <array 7 of <char>>           ]
+            [ data: 'done. ' ]
+          [ @_str_6   <array 15 of <char>>           ]
+            [ data: ' primes found.' ]
+          [ @_str_7   <array 20 of <char>>           ]
+            [ data: 'Prime numbers 1 to ' ]
+          [ @_str_8   <array 3 of <char>>           ]
+            [ data: '  ' ]
+          [ @_str_9   <array 14 of <char>>           ]
+            [ data: 'Prime numbers' ]
+          [ main     <NULL>           ]
+          [ @n        <int>           ]
+          [ @p        <array 1000000 of <int>>           ]
+          [ @pn       <int>           ]
+        ]]
+      statement list:
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 14 of <char>>>
+            "Prime numbers" <array 14 of <char>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 24 of <char>>>
+            "Compute primes up to : " <array 24 of <char>>
+        := <int>
+          [ @n        <int> ] <int>
+          call [ *ReadInt() --> <int> ] <int>
+        := <int>
+          [ @pn       <int> ] <int>
+          call [ *CalcPrimes(<ptr(4) to <array of <int>>>,<int>) --> <int> ] <int>
+            &() <ptr(4) to <array 1000000 of <int>>>
+              [ @p        <array 1000000 of <int>> ] <array 1000000 of <int>>
+            [ @n        <int> ] <int>
+        call [ *PrintPrimes(<ptr(4) to <array of <int>>>,<int>,<int>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 1000000 of <int>>>
+            [ @p        <array 1000000 of <int>> ] <array 1000000 of <int>>
+          [ @n        <int> ] <int>
+          [ @pn       <int> ] <int>
+      nested scopes:
+        CAstScope: 'CalcPrimes'
+          symbol table:
+            [[
+              [ $N        <int>               ]
+              [ $i        <int>               ]
+              [ $isprime  <bool>               ]
+              [ %n        <int>               ]
+              [ %p        <ptr(4) to <array of <int>>>               ]
+              [ $pidx     <int>               ]
+              [ $psqrt    <int>               ]
+              [ $v        <int>               ]
+            ]]
+          statement list:
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 30 of <char>>>
+                "  computing primes from 1 to " <array 30 of <char>>
+            call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+              [ %n        <int> ] <int>
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 4 of <char>>>
+                "..." <array 4 of <char>>
+            := <int>
+              [ $N        <int> ] <int>
+              call [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int> ] <int>
+                [ %p        <ptr(4) to <array of <int>>> ] <ptr(4) to <array of <int>>>
+                1 <int>
+            if cond
+              < <bool>
+                [ $N        <int> ] <int>
+                1 <int>
+            if-body
+              return <int>
+                0 <int>
+            else-body
+              empty.
+            := <int>
+              [ %p        <ptr(4) to <array of <int>>> ] <int>
+                0 <int>
+              1 <int>
+            := <int>
+              [ %p        <ptr(4) to <array of <int>>> ] <int>
+                1 <int>
+              2 <int>
+            := <int>
+              [ $pidx     <int> ] <int>
+              2 <int>
+            := <int>
+              [ $psqrt    <int> ] <int>
+              1 <int>
+            := <int>
+              [ $v        <int> ] <int>
+              3 <int>
+            while cond
+              <= <bool>
+                [ $v        <int> ] <int>
+                [ %n        <int> ] <int>
+            while-body
+              := <bool>
+                [ $isprime  <bool> ] <bool>
+                true <bool>
+              := <int>
+                [ $i        <int> ] <int>
+                1 <int>
+              while cond
+                and <bool>
+                  [ $isprime  <bool> ] <bool>
+                  <= <bool>
+                    [ $i        <int> ] <int>
+                    [ $psqrt    <int> ] <int>
+              while-body
+                if cond
+                  = <bool>
+                    mul <int>
+                      div <int>
+                        [ $v        <int> ] <int>
+                        [ %p        <ptr(4) to <array of <int>>> ] <int>
+                          [ $i        <int> ] <int>
+                      [ %p        <ptr(4) to <array of <int>>> ] <int>
+                        [ $i        <int> ] <int>
+                    [ $v        <int> ] <int>
+                if-body
+                  := <bool>
+                    [ $isprime  <bool> ] <bool>
+                    false <bool>
+                else-body
+                  empty.
+                := <int>
+                  [ $i        <int> ] <int>
+                  add <int>
+                    [ $i        <int> ] <int>
+                    1 <int>
+              if cond
+                = <bool>
+                  [ $isprime  <bool> ] <bool>
+                  true <bool>
+              if-body
+                := <int>
+                  [ %p        <ptr(4) to <array of <int>>> ] <int>
+                    [ $pidx     <int> ] <int>
+                  [ $v        <int> ] <int>
+                := <int>
+                  [ $pidx     <int> ] <int>
+                  add <int>
+                    [ $pidx     <int> ] <int>
+                    1 <int>
+                if cond
+                  = <bool>
+                    [ $pidx     <int> ] <int>
+                    [ $N        <int> ] <int>
+                if-body
+                  call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+                    &() <ptr(4) to <array 45 of <char>>>
+                      "WARNING: array too small to hold all primes." <array 45 of <char>>
+                  := <int>
+                    [ %n        <int> ] <int>
+                    0 <int>
+                else-body
+                  empty.
+              else-body
+                empty.
+              := <int>
+                [ $v        <int> ] <int>
+                add <int>
+                  [ $v        <int> ] <int>
+                  2 <int>
+              if cond
+                > <bool>
+                  [ $v        <int> ] <int>
+                  mul <int>
+                    [ %p        <ptr(4) to <array of <int>>> ] <int>
+                      [ $psqrt    <int> ] <int>
+                    [ %p        <ptr(4) to <array of <int>>> ] <int>
+                      [ $psqrt    <int> ] <int>
+              if-body
+                := <int>
+                  [ $psqrt    <int> ] <int>
+                  add <int>
+                    [ $psqrt    <int> ] <int>
+                    1 <int>
+                if cond
+                  >= <bool>
+                    [ $psqrt    <int> ] <int>
+                    [ $pidx     <int> ] <int>
+                if-body
+                  call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+                    &() <ptr(4) to <array 7 of <char>>>
+                      "ERROR." <array 7 of <char>>
+                  := <int>
+                    [ %n        <int> ] <int>
+                    0 <int>
+                else-body
+                  empty.
+              else-body
+                empty.
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 7 of <char>>>
+                "done. " <array 7 of <char>>
+            call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+              [ $pidx     <int> ] <int>
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 15 of <char>>>
+                " primes found." <array 15 of <char>>
+            call [ *WriteLn() --> <NULL> ] <NULL>
+            return <int>
+              [ $pidx     <int> ] <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'PrintPrimes'
+          symbol table:
+            [[
+              [ $i        <int>               ]
+              [ %n        <int>               ]
+              [ %p        <ptr(4) to <array of <int>>>               ]
+              [ %pn       <int>               ]
+            ]]
+          statement list:
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 20 of <char>>>
+                "Prime numbers 1 to " <array 20 of <char>>
+            call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+              [ %n        <int> ] <int>
+            call [ *WriteLn() --> <NULL> ] <NULL>
+            := <int>
+              [ $i        <int> ] <int>
+              0 <int>
+            while cond
+              < <bool>
+                [ $i        <int> ] <int>
+                [ %pn       <int> ] <int>
+            while-body
+              call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+                &() <ptr(4) to <array 3 of <char>>>
+                  "  " <array 3 of <char>>
+              call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                [ %p        <ptr(4) to <array of <int>>> ] <int>
+                  [ $i        <int> ] <int>
+              := <int>
+                [ $i        <int> ] <int>
+                add <int>
+                  [ $i        <int> ] <int>
+                  1 <int>
+              if cond
+                = <bool>
+                  mul <int>
+                    div <int>
+                      [ $i        <int> ] <int>
+                      8 <int>
+                    8 <int>
+                  [ $i        <int> ] <int>
+              if-body
+                call [ *WriteLn() --> <NULL> ] <NULL>
+              else-body
+                empty.
+            call [ *WriteLn() --> <NULL> ] <NULL>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *CalcPrimes(<ptr(4) to <array of <int>>>,<int>) --> <int>       ]
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *PrintPrimes(<ptr(4) to <array of <int>>>,<int>,<int>) --> <NULL>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @_str_1   <array 30 of <char>>       ]
+        [ data: '  computing primes from 1 to ' ]
+      [ @_str_10  <array 24 of <char>>       ]
+        [ data: 'Compute primes up to : ' ]
+      [ @_str_2   <array 4 of <char>>       ]
+        [ data: '...' ]
+      [ @_str_3   <array 45 of <char>>       ]
+        [ data: 'WARNING: array too small to hold all primes.' ]
+      [ @_str_4   <array 7 of <char>>       ]
+        [ data: 'ERROR.' ]
+      [ @_str_5   <array 7 of <char>>       ]
+        [ data: 'done. ' ]
+      [ @_str_6   <array 15 of <char>>       ]
+        [ data: ' primes found.' ]
+      [ @_str_7   <array 20 of <char>>       ]
+        [ data: 'Prime numbers 1 to ' ]
+      [ @_str_8   <array 3 of <char>>       ]
+        [ data: '  ' ]
+      [ @_str_9   <array 14 of <char>>       ]
+        [ data: 'Prime numbers' ]
+      [ main     <NULL>       ]
+      [ @n        <int>       ]
+      [ @p        <array 1000000 of <int>>       ]
+      [ @pn       <int>       ]
+    ]]
+

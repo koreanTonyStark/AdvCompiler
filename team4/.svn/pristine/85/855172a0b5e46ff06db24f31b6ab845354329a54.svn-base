@@ -1,0 +1,119 @@
+factorial.mod:
+[[ module: factorial
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 11 of <char>>>
+      <ptr(4) to <array 29 of <char>>>
+      <ptr(4) to <array 5 of <char>>>
+    array types:
+      <array of <char>>
+      <array 11 of <char>>
+      <array 29 of <char>>
+      <array 5 of <char>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *ReadNumber(<ptr(4) to <array of <char>>>) --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @_str_1   <array 11 of <char>>     ]
+      [ data: 'Factorials' ]
+    [ @_str_2   <array 29 of <char>>     ]
+      [ data: 'Enter a number (0 to exit): ' ]
+    [ @_str_3   <array 11 of <char>>     ]
+      [ data: 'factorial(' ]
+    [ @_str_4   <array 5 of <char>>     ]
+      [ data: ') = ' ]
+    [ @_str_5   <array 29 of <char>>     ]
+      [ data: 'Enter a number (0 to exit): ' ]
+    [ *fact(<int>) --> <int>     ]
+    [ @i        <int>     ]
+    [ main     <NULL>     ]
+    [ $t0       <ptr(4) to <array 11 of <char>>>     ]
+    [ $t1       <ptr(4) to <array 29 of <char>>>     ]
+    [ $t2       <int>     ]
+    [ $t3       <ptr(4) to <array 11 of <char>>>     ]
+    [ $t4       <ptr(4) to <array 5 of <char>>>     ]
+    [ $t5       <int>     ]
+    [ $t6       <ptr(4) to <array 29 of <char>>>     ]
+    [ $t7       <int>     ]
+  ]]
+  [[ factorial
+      0:     param  0 <- _str_1
+      1:     call   WriteStr
+      2:     call   WriteLn
+      3:     call   WriteLn
+      4:     param  0 <- _str_2
+      5:     assign i <- ReadNumber
+      6: 5_while_cond:
+      7:     if     i > 0 goto 6_while_body
+      8:     goto   4
+      9: 6_while_body:
+     10:     param  0 <- _str_3
+     11:     call   WriteStr
+     12:     param  0 <- i
+     13:     call   WriteInt
+     14:     param  0 <- _str_4
+     15:     call   WriteStr
+     16:     param  0 <- i
+     17:     param  0 <- fact
+     18:     call   WriteInt
+     19:     call   WriteLn
+     20:     param  0 <- _str_5
+     21:     assign i <- ReadNumber
+     22:     goto   5_while_cond
+     23: 4:
+  ]]
+
+  [[ procedure: fact
+    [[
+      [ %n        <int>       ]
+      [ $t10      <int>       ]
+      [ $t8       <int>       ]
+      [ $t9       <int>       ]
+    ]]
+    [[ fact
+        0:     if     n <= 0 goto 1_if_true
+        1:     goto   2_if_false
+        2: 1_if_true:
+        3:     return 0
+        4:     goto   0
+        5: 2_if_false:
+        6:     if     n <= 1 goto 6_if_true
+        7:     goto   7_if_false
+        8: 6_if_true:
+        9:     return n
+       10:     goto   5
+       11: 7_if_false:
+       12:     param  0 <- n
+       13:     return n
+       14: 5:
+       15: 0:
+    ]]
+  ]]
+
+  [[ procedure: ReadNumber
+    [[
+      [ $i        <int>       ]
+      [ %str      <ptr(4) to <array of <char>>>       ]
+      [ $t8       <int>       ]
+    ]]
+    [[ ReadNumber
+        0:     param  0 <- str
+        1:     call   WriteStr
+        2:     return ReadInt
+    ]]
+  ]]
+]]

@@ -1,0 +1,133 @@
+/* Constant-Propagation based on CFG
+ * Author : team4 
+ * Key Concept : changing .mod (with constant propagation)
+ * Basic : skip array first (in implementation)
+ */ 
+
+//constant propagation 
+//common-subexpression elimination 
+//  ls
+
+#include "constant_propagation.h"
+
+using citCfgNode = list<shared_ptr<CfgNode>>::const_iterator;
+
+using namespace std;
+
+C_Propagation::C_Propagation(CfgInterProc *cfg)
+{
+	_cfg = cfg;
+	_num_of_int  = 0;
+	_num_of_bool = 0;
+	_num_of_char = 0;
+	_m = cfg->GetCModule(); 
+	_symtab = _m->GetSymbolTable();	
+	_procs = cfg->GetProcs();
+	for(int i=0; i<_procs.size();++i)
+		_num_of_code_lines+=_procs[i]->GetNodeCnt();
+	cntNumOfVariables();
+
+	//showNumOfPrimitive();
+	
+
+	
+}
+
+void C_Propagation::doDeadCodeElimination(void)
+{
+	//store list of instructions which is definition 
+	//we can check a<-b if a is in LiveOut on that list 
+	//if not, then erase, if is then live 
+
+	citCfgNode cit = _list.cbegin();
+	for(;cit<_list.cend();it++)
+	{
+		//get variable which is about to be assigned 
+		//check liveOut whether that variable exists or not 
+	}
+
+	//issue : can we modify .tac file's data-structure? 
+}
+
+void C_Propagation::doConstantPropagation(void)
+{
+	//liveness -> in, out stores variable name
+	//reaching definition -> in, out stores code line number 
+	//simple algorithm -> very intuitive 
+	/* if we have assignee in any node,
+	(which means assignment block and we have to modfiy variable to constant)
+	   we check that assignee's variable name and check whether there exists 
+	   only 1 code_line(definition of assignee) for that assignee
+	   then we can change it to constant through that line's constant  
+
+
+
+
+	 */
+
+
+}
+
+C_Propagation::~C_Propagation()
+{
+}
+
+void C_Propagation::showNumOfPrimitive(void) const
+{
+	cout<<"number of INT  variable : "<<_num_of_int<<endl;
+	cout<<"number of BOOL variable : "<<_num_of_bool<<endl;
+	cout<<"number of CHAR variable : "<<_num_of_char<<endl;
+}
+
+CfgInterProc* C_Propagation::getCFG(void) const
+{
+	return _cfg;
+}
+
+const CSymtab* C_Propagation::getCSymtab(void) const
+{
+	return _symtab;
+}
+
+size_t C_Propagation::getNumOfInt(void) const
+{
+	return _num_of_int;
+} 
+
+size_t C_Propagation::getNumOfBool(void) const
+{
+	return _num_of_bool;
+} 
+size_t C_Propagation::getNumOfChar(void) const
+{
+	return _num_of_char;
+} 
+size_t C_Propagation::getNumOfCodeBlocks(void) const
+{
+	return _num_of_code_lines;
+}
+
+void C_Propagation::cntNumOfVariables(void)
+{
+	const vector<CSymbol*> &list = _symtab->GetSymbols();
+	for(int i=0; i<list.size(); ++i)
+	{
+		//cout<<"name: "<<list[i]->GetName()<<" ";
+		//cout<<"symbol type: "<<list[i]->GetSymbolType()<<" ";
+		//cout<<list[i]->GetDataType()<<" ";
+		const CType* type = list[i]->GetDataType();
+		if(type->IsBoolean())
+			_num_of_bool++;
+		else if(type->IsChar())
+			_num_of_char++;
+		else if(type->IsInt())
+			_num_of_int++;
+		//cout<<"data : ";
+		//if(list[i]->GetData()!=nullptr)
+		//	cout<<"data type: "<<list[i]->GetData();
+		//cout<<"base register: "<<list[i]->GetBaseRegister()<<" ";
+		//cout<<"offset: "<<list[i]->GetOffset()<<endl;
+
+	}
+}
+

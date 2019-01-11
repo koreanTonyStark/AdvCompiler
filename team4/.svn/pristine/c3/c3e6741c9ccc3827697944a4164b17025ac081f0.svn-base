@@ -1,0 +1,333 @@
+##################################################
+# test10
+#
+
+    #-----------------------------------------
+    # text section
+    #
+    .text
+    .align 4
+
+    # entry point and pre-defined functions
+    .global main
+    .extern DIM
+    .extern DOFS
+    .extern ReadInt
+    .extern WriteInt
+    .extern WriteStr
+    .extern WriteChar
+    .extern WriteLn
+
+    # scope sum_rec
+sum_rec:
+    # stack offsets:
+    #      8(%ebp)   4  [ %n        <int> %ebp+8 ]
+    #    -16(%ebp)   4  [ $t11      <int> %ebp-16 ]
+    #    -20(%ebp)   4  [ $t12      <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t13      <int> %ebp-24 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $12, %esp               # make room for locals
+
+    xorl    %eax, %eax              # memset local stack area to 0
+    movl    %eax, 8(%esp)          
+    movl    %eax, 4(%esp)          
+    movl    %eax, 0(%esp)          
+
+    # function body
+    movl    8(%ebp), %eax           #   0:     if     n > 0 goto 1_if_true
+    movl    $0, %ebx               
+    cmpl    %ebx, %eax             
+    jg      l_sum_rec_1_if_true    
+    jmp     l_sum_rec_2_if_false    #   1:     goto   2_if_false
+l_sum_rec_1_if_true:
+    movl    8(%ebp), %eax           #   3:     param  0 <- n
+    pushl   %eax                   
+    movl    8(%ebp), %eax           #   4:     return n
+    jmp     l_sum_rec_exit         
+    jmp     l_sum_rec_0             #   5:     goto   0
+l_sum_rec_2_if_false:
+    movl    $0, %eax                #   7:     return 0
+    jmp     l_sum_rec_exit         
+l_sum_rec_0:
+
+l_sum_rec_exit:
+    # epilogue
+    addl    $12, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope sum_iter
+sum_iter:
+    # stack offsets:
+    #    -16(%ebp)   4  [ $i        <int> %ebp-16 ]
+    #      8(%ebp)   4  [ %n        <int> %ebp+8 ]
+    #    -20(%ebp)   4  [ $sum      <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t11      <int> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t12      <int> %ebp-28 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $16, %esp               # make room for locals
+
+    xorl    %eax, %eax              # memset local stack area to 0
+    movl    %eax, 12(%esp)         
+    movl    %eax, 8(%esp)          
+    movl    %eax, 4(%esp)          
+    movl    %eax, 0(%esp)          
+
+    # function body
+    movl    $0, %eax                #   0:     assign sum <- 0
+    movl    %eax, -20(%ebp)        
+    movl    $0, %eax                #   1:     assign i <- 0
+    movl    %eax, -16(%ebp)        
+l_sum_iter_3_while_cond:
+    movl    -16(%ebp), %eax         #   3:     if     i <= n goto 4_while_body
+    movl    8(%ebp), %ebx          
+    cmpl    %ebx, %eax             
+    jle     l_sum_iter_4_while_body
+    jmp     l_sum_iter_2            #   4:     goto   2
+l_sum_iter_4_while_body:
+    movl    -20(%ebp), %eax         #   6:     assign sum <- sum
+    movl    %eax, -20(%ebp)        
+    movl    -16(%ebp), %eax         #   7:     assign i <- i
+    movl    %eax, -16(%ebp)        
+    jmp     l_sum_iter_3_while_cond #   8:     goto   3_while_cond
+l_sum_iter_2:
+    movl    -20(%ebp), %eax         #  10:     return sum
+    jmp     l_sum_iter_exit        
+
+l_sum_iter_exit:
+    # epilogue
+    addl    $16, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope sum_alg
+sum_alg:
+    # stack offsets:
+    #      8(%ebp)   4  [ %n        <int> %ebp+8 ]
+    #    -16(%ebp)   4  [ $t11      <int> %ebp-16 ]
+    #    -20(%ebp)   4  [ $t12      <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t13      <int> %ebp-24 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $12, %esp               # make room for locals
+
+    xorl    %eax, %eax              # memset local stack area to 0
+    movl    %eax, 8(%esp)          
+    movl    %eax, 4(%esp)          
+    movl    %eax, 0(%esp)          
+
+    # function body
+    movl    8(%ebp), %eax           #   0:     return n
+    jmp     l_sum_alg_exit         
+
+l_sum_alg_exit:
+    # epilogue
+    addl    $12, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope ReadNumber
+ReadNumber:
+    # stack offsets:
+    #    -16(%ebp)   4  [ $i        <int> %ebp-16 ]
+    #      8(%ebp)   4  [ %str      <ptr(4) to <array of <char>>> %ebp+8 ]
+    #    -20(%ebp)   4  [ $t11      <int> %ebp-20 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $8, %esp                # make room for locals
+
+    xorl    %eax, %eax              # memset local stack area to 0
+    movl    %eax, 4(%esp)          
+    movl    %eax, 0(%esp)          
+
+    # function body
+    movl    8(%ebp), %eax           #   0:     param  0 <- str
+    pushl   %eax                   
+    call    WriteStr                #   1:     call   WriteStr
+    addl    $4, %esp               
+    movl    ReadInt, %eax           #   2:     return ReadInt
+    jmp     l_ReadNumber_exit      
+
+l_ReadNumber_exit:
+    # epilogue
+    addl    $8, %esp                # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope test10
+main:
+    # stack offsets:
+    #    -16(%ebp)   4  [ $t0       <ptr(4) to <array 25 of <char>>> %ebp-16 ]
+    #    -20(%ebp)   4  [ $t1       <ptr(4) to <array 29 of <char>>> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t10      <int> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t2       <int> %ebp-28 ]
+    #    -32(%ebp)   4  [ $t3       <ptr(4) to <array 16 of <char>>> %ebp-32 ]
+    #    -36(%ebp)   4  [ $t4       <int> %ebp-36 ]
+    #    -40(%ebp)   4  [ $t5       <ptr(4) to <array 16 of <char>>> %ebp-40 ]
+    #    -44(%ebp)   4  [ $t6       <int> %ebp-44 ]
+    #    -48(%ebp)   4  [ $t7       <ptr(4) to <array 16 of <char>>> %ebp-48 ]
+    #    -52(%ebp)   4  [ $t8       <int> %ebp-52 ]
+    #    -56(%ebp)   4  [ $t9       <ptr(4) to <array 29 of <char>>> %ebp-56 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $44, %esp               # make room for locals
+
+    cld                             # memset local stack area to 0
+    xorl    %eax, %eax             
+    movl    $11, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
+
+    # function body
+    movzbl  _str_1, %eax            #   0:     param  0 <- _str_1
+    pushl   %eax                   
+    call    WriteStr                #   1:     call   WriteStr
+    addl    $4, %esp               
+    movzbl  _str_2, %eax            #   2:     param  0 <- _str_2
+    pushl   %eax                   
+    movl    ReadNumber, %eax        #   3:     assign i <- ReadNumber
+    movl    %eax, i                
+l_test10_3_while_cond:
+    movl    i, %eax                 #   5:     if     i > 0 goto 4_while_body
+    movl    $0, %ebx               
+    cmpl    %ebx, %eax             
+    jg      l_test10_4_while_body  
+    jmp     l_test10_2              #   6:     goto   2
+l_test10_4_while_body:
+    movzbl  _str_3, %eax            #   8:     param  0 <- _str_3
+    pushl   %eax                   
+    call    WriteStr                #   9:     call   WriteStr
+    addl    $4, %esp               
+    movl    i, %eax                 #  10:     param  0 <- i
+    pushl   %eax                   
+    movl    sum_rec, %eax           #  11:     param  0 <- sum_rec
+    pushl   %eax                   
+    call    WriteInt                #  12:     call   WriteInt
+    addl    $4, %esp               
+    call    WriteLn                 #  13:     call   WriteLn
+    movzbl  _str_4, %eax            #  14:     param  0 <- _str_4
+    pushl   %eax                   
+    call    WriteStr                #  15:     call   WriteStr
+    addl    $4, %esp               
+    movl    i, %eax                 #  16:     param  0 <- i
+    pushl   %eax                   
+    movl    sum_iter, %eax          #  17:     param  0 <- sum_iter
+    pushl   %eax                   
+    call    WriteInt                #  18:     call   WriteInt
+    addl    $4, %esp               
+    call    WriteLn                 #  19:     call   WriteLn
+    movzbl  _str_5, %eax            #  20:     param  0 <- _str_5
+    pushl   %eax                   
+    call    WriteStr                #  21:     call   WriteStr
+    addl    $4, %esp               
+    movl    i, %eax                 #  22:     param  0 <- i
+    pushl   %eax                   
+    movl    sum_alg, %eax           #  23:     param  0 <- sum_alg
+    pushl   %eax                   
+    call    WriteInt                #  24:     call   WriteInt
+    addl    $4, %esp               
+    call    WriteLn                 #  25:     call   WriteLn
+    movzbl  _str_6, %eax            #  26:     param  0 <- _str_6
+    pushl   %eax                   
+    movl    ReadNumber, %eax        #  27:     assign i <- ReadNumber
+    movl    %eax, i                
+    jmp     l_test10_3_while_cond   #  28:     goto   3_while_cond
+l_test10_2:
+
+l_test10_exit:
+    # epilogue
+    addl    $44, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # end of text section
+    #-----------------------------------------
+
+    #-----------------------------------------
+    # global data section
+    #
+    .data
+    .align 4
+
+    # scope: test10
+_str_1:                             # <array 25 of <char>>
+    .long    1
+    .long   25
+    .asciz "Sum of natural numbers\n\n"
+    .align   4
+_str_2:                             # <array 29 of <char>>
+    .long    1
+    .long   29
+    .asciz "Enter a number (0 to exit): "
+    .align   4
+_str_3:                             # <array 16 of <char>>
+    .long    1
+    .long   16
+    .asciz " recursive   : "
+_str_4:                             # <array 16 of <char>>
+    .long    1
+    .long   16
+    .asciz " iterative   : "
+_str_5:                             # <array 16 of <char>>
+    .long    1
+    .long   16
+    .asciz " algorithmic : "
+_str_6:                             # <array 29 of <char>>
+    .long    1
+    .long   29
+    .asciz "Enter a number (0 to exit): "
+    .align   4
+i:                                  # <int>
+    .skip    4
+
+
+
+
+
+    # end of global data section
+    #-----------------------------------------
+
+    .end
+##################################################

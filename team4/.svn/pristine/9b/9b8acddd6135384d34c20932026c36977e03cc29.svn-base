@@ -1,0 +1,96 @@
+/*
+ * cfg.h
+ *
+ *      Author: team4
+ */
+
+#ifndef __SnuPL_CFG_H__
+#define __SnuPL_CFG_H__
+
+#include <iostream>
+#include <memory>
+#include <list>
+#include <vector>
+
+#include "ir.h"
+
+using namespace std;
+
+class CfgProc;
+
+class CfgNode {
+public:
+	CfgNode(CfgProc *owner, CTacInstr *instr);
+	virtual ~CfgNode(void);
+	const CfgProc* GetOwner(void) const;
+	const size_t GetId(void) const;
+	const CTacInstr* GetInstr(void) const;
+	const list<shared_ptr<CfgNode>> &GetSuccs(void) const;
+	const list<shared_ptr<CfgNode>> &GetPreds(void) const;
+	void GetAdj(list<shared_ptr<CfgNode>> &adj) const;
+	const size_t InDegree(void) const;
+	const size_t OutDegree(void) const;
+	const size_t Degree(void) const;
+	bool GoesTo(const shared_ptr<CfgNode> &n) const;
+	bool ComesFrom(const shared_ptr<CfgNode> &n) const;
+	bool IsAdj(const shared_ptr<CfgNode> &n) const;
+	void AddSucc(const shared_ptr<CfgNode> &n);
+	void AddPred(const shared_ptr<CfgNode> &n);
+	void RmSucc(const shared_ptr<CfgNode> &n);
+	void RmPred(const shared_ptr<CfgNode> &n);
+protected:
+	CfgProc* _owner;
+	size_t _id;
+	CTacInstr* _instr;
+	list<shared_ptr<CfgNode>> _succs;
+	list<shared_ptr<CfgNode>> _preds;
+};
+
+class CfgProc {
+public:
+	CfgProc(CCodeBlock *cb, size_t offset);
+	virtual ~CfgProc(void);
+	const string &GetName(void) const;
+	const list<shared_ptr<CfgNode>> &GetNodes(void) const;
+	const size_t GetNodeCnt(void) const;
+	const size_t GetOffset(void) const;
+	const shared_ptr<CfgNode> FindNode(const CTacInstr *instr) const;
+	void AddEdge(const shared_ptr<CfgNode> &from,
+			const shared_ptr<CfgNode> &to);
+	void RmEdge(const shared_ptr<CfgNode> &from, const shared_ptr<CfgNode> &to);
+	void DelNode(const shared_ptr<CfgNode> &n);
+	void toDot(ostream &out) const;
+protected:
+	CCodeBlock* _cb;
+	string _name;
+	list<shared_ptr<CfgNode>> _nodes; // todo: make map, key = CTacInsrt*, val = shared_ptr<CfgNode>
+	size_t _offset;
+	void MakeNodes(void);
+	void MakeEdges(void);
+};
+
+class CfgIntraProc {
+public:
+	CfgIntraProc(CModule *m);
+	virtual ~CfgIntraProc(void);
+	CModule* GetCModule() const;
+	const string &GetName(void) const;
+	const vector<shared_ptr<CfgProc>> &GetProcs(void) const;
+	const shared_ptr<CfgProc> FindProc(const string &name) const;
+	void toDot(ostream &out) const;
+protected:
+	CModule* _m;
+	string _name;
+	vector<shared_ptr<CfgProc>> _procs; // todo: make map, key = proc name, val = shared_ptr<CfgProc>
+	size_t MakeProc(CCodeBlock *cb, size_t offset);
+};
+
+class CfgInterProc: public CfgIntraProc {
+public:
+	CfgInterProc(CModule *m);
+	virtual ~CfgInterProc(void);
+protected:
+	void MakeGraph(void);
+};
+
+#endif /* __SnuPL_CFG_H__ */

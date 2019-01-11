@@ -1,0 +1,171 @@
+/*
+ * liveness.cpp
+ *
+ *      Author: team4
+ */
+
+#include <cassert>
+#include <algorithm>
+
+#include "liveness.h"
+
+LiveNode::LiveNode(CfgProc *owner, CTacInstr *instr) :
+		CfgNode(owner, instr), _def(nullptr) {
+	assert(owner != NULL);
+	assert(instr != NULL);
+	if (!owner || !instr)
+		return;
+	InitLiveNode();
+}
+
+LiveNode::LiveNode(const CfgNode &cfgNode) :
+		CfgNode(cfgNode), _def(nullptr) {
+	InitLiveNode();
+}
+
+LiveNode::~LiveNode(void) {
+
+}
+
+const pair<CTacAddr*, CTacAddr*> &LiveNode::GetUse(void) const {
+	return _use;
+}
+
+const CTacAddr* LiveNode::GetDef(void) const {
+	return _def;
+}
+
+const list<CTacAddr*> &LiveNode::GetIn(void) const {
+	return _in;
+}
+const list<CTacAddr*> &LiveNode::GetOut(void) const {
+	return _out;
+}
+
+bool LiveNode::IsLiveIn(const CTacAddr* var) const {
+	if (find(_in.begin(), _in.end(), var) != _in.end())
+		return true;
+	return false;
+}
+bool LiveNode::IsLiveOut(const CTacAddr* var) const {
+	if (find(_out.begin(), _out.end(), var) != _out.end())
+		return true;
+	return false;
+}
+
+bool LiveNode::IsLive(const CTacAddr* var) const {
+	if (IsLiveIn(var) || IsLiveOut(var)) {
+		return true;
+	}
+	return false;
+}
+
+void LiveNode::AddIn(CTacAddr* var) {
+	if (!IsLiveIn(var))
+		_in.push_back(var);
+}
+
+void LiveNode::AddOut(CTacAddr* var) {
+	_out.push_back(var);
+}
+
+void LiveNode::InitLiveNode(void) {
+	unsigned int numSrc = _instr->GetNumSrc();
+	switch (numSrc) {
+	case 1:
+		_use = make_pair(_instr->GetSrc(1), _instr->GetSrc(2));
+		break;
+	case 2:
+		_use = make_pair(_instr->GetSrc(1), nullptr);
+		break;
+	default:
+		_use = make_pair(nullptr, nullptr);
+	}
+
+	_def = dynamic_cast<CTacAddr*>(_instr->GetDest());
+
+	EOperation op = _instr->GetOperation();
+	switch (op) {
+	case opParam:
+		_def = nullptr;
+		break; // we don't need parameter in _use
+	case opGoto: {
+		if (!IsRelOp(op))
+			_def = nullptr; // we don't need jump label in _use
+		break;
+	}
+	case opCall:
+		_use = make_pair(nullptr, nullptr); // todo: do we need func name in _use?
+	}
+	// todo: how to handle opAddress, opDeref, opCast?
+	// todo: special treatment of opAssign in liveness analysis (textbook)
+}
+
+LiveProc::LiveProc(CCodeBlock *cb, size_t offset) :
+		CfgProc(cb, offset) {
+	assert(cb != NULL);
+	if (!cb)
+		return;
+	MakeLiveNodes();
+}
+
+LiveProc::LiveProc(const CfgProc &cfgProc) : CfgProc(cfgProc){
+	MakeLiveNodes();
+}
+
+const list<shared_ptr<LiveNode> > &LiveProc::GetNodes(void) const {
+	return _liveNodes;
+}
+
+LiveProc::~LiveProc(void) {
+
+}
+
+void LiveProc::MakeLiveNodes(void){
+	list<shared_ptr<CfgNode>>::const_iterator it = _nodes.begin();
+	while (it != _nodes.end()) {
+		const shared_ptr<CfgNode> &cfgNode = *it++;
+		shared_ptr<LiveNode> liveNode(new LiveNode(*cfgNode));
+		_liveNodes.push_back(liveNode);
+	}
+}
+void LiveProc::LiveAnalysis(void) {
+	// backward analysis
+	list<shared_ptr<LiveNode>>::reverse_iterator rit = _liveNodes.rbegin();
+	while(rit != _liveNodes.rend()){
+		shared_ptr<LiveNode> &node = *rit++;
+		const list<shared_ptr<CfgNode>> &succs = node->GetSuccs();
+		// todo: succs list has to contain liveNodes here, not cfgNodes...
+	}
+}
+
+LiveIntraProc::LiveIntraProc(CModule *m) :
+		CfgIntraProc(m) {
+	assert(m != NULL);
+	if (!m)
+		return;
+	for (size_t p = 0; p < _procs.size(); p++) {
+		shared_ptr<LiveProc> liveProc(new LiveProc(_procs[p]));
+		_liveProcs.push_back(liveProc);
+	}
+}
+
+LiveIntraProc::~LiveIntraProc(void) {
+
+}
+
+LiveInterProc::LiveInterProc(CModule *m) :
+		CfgInterProc(m) {
+	assert(m != NULL);
+	if (!m)
+		return;
+	for (size_t p = 0; p < _procs.size(); p++) {
+		shared_ptr<LiveProc> liveProc(new LiveProc(_procs[p]));
+		_liveProcs.push_back(liveProc);
+	}
+}
+
+LiveInterProc::~LiveInterProc(void) {
+
+}
+

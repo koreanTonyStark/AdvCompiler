@@ -1,0 +1,92 @@
+test03.mod:
+[[ module: test03
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+    array types:
+      <array of <char>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @a        <bool>     ]
+    [ @b        <bool>     ]
+    [ @b1       <int>     ]
+    [ @c        <bool>     ]
+    [ main     <NULL>     ]
+    [ $t0       <bool>     ]
+    [ $t1       <bool>     ]
+    [ $t2       <bool>     ]
+  ]]
+  [[ test03
+      0:     if     1 = 1 goto 6
+      1:     goto   4
+      2: 6:
+      3:     if     0 = 1 goto 3
+      4:     goto   4
+      5: 3:
+      6:     assign t0 <- 1
+      7:     goto   5
+      8: 4:
+      9:     assign t0 <- 0
+     10: 5:
+     11:     if     t0 = 1 goto 8_if_true
+     12:     goto   9_if_false
+     13: 8_if_true:
+     14:     param  0 <- 1
+     15:     call   WriteInt
+     16:     goto   7
+     17: 9_if_false:
+     18:     param  0 <- 0
+     19:     call   WriteInt
+     20: 7:
+     21:     if     1 = 1 goto 13
+     22:     if     0 = 1 goto 13
+     23:     goto   14
+     24: 13:
+     25:     assign t1 <- 1
+     26:     goto   15
+     27: 14:
+     28:     assign t1 <- 0
+     29: 15:
+     30:     if     t1 = 1 goto 18_if_true
+     31:     goto   19_if_false
+     32: 18_if_true:
+     33:     param  0 <- 1
+     34:     call   WriteInt
+     35:     goto   17
+     36: 19_if_false:
+     37:     param  0 <- 0
+     38:     call   WriteInt
+     39: 17:
+     40:     if     1 = 1 goto 24
+     41:     if     0 = 1 goto 24
+     42:     assign t2 <- 1
+     43:     goto   25
+     44: 24:
+     45:     assign t2 <- 0
+     46: 25:
+     47:     if     t2 = 1 goto 28_if_true
+     48:     goto   29_if_false
+     49: 28_if_true:
+     50:     param  0 <- 1
+     51:     call   WriteInt
+     52:     goto   27
+     53: 29_if_false:
+     54:     param  0 <- 0
+     55:     call   WriteInt
+     56: 27:
+  ]]
+]]

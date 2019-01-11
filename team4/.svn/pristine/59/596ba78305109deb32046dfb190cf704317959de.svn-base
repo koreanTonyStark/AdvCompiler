@@ -1,0 +1,124 @@
+pfact.mod:
+[[ module: pfact
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 16 of <char>>>
+      <ptr(4) to <array 25 of <char>>>
+      <ptr(4) to <array 20 of <char>>>
+      <ptr(4) to <array 3 of <char>>>
+      <ptr(4) to <array 2 of <char>>>
+    array types:
+      <array of <char>>
+      <array 2 of <char>>
+      <array 16 of <char>>
+      <array 25 of <char>>
+      <array 20 of <char>>
+      <array 3 of <char>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @_str_1   <array 2 of <char>>     ]
+      [ data: ' ' ]
+    [ @_str_2   <array 2 of <char>>     ]
+      [ data: ' ' ]
+    [ @_str_3   <array 16 of <char>>     ]
+      [ data: 'Prime factoring' ]
+    [ @_str_4   <array 25 of <char>>     ]
+      [ data: 'Enter number to factor: ' ]
+    [ @_str_5   <array 20 of <char>>     ]
+      [ data: '  prime factors of ' ]
+    [ @_str_6   <array 3 of <char>>     ]
+      [ data: ': ' ]
+    [ main     <NULL>     ]
+    [ @n        <int>     ]
+    [ *primefactor(<int>) --> <NULL>     ]
+    [ $t0       <ptr(4) to <array 16 of <char>>>     ]
+    [ $t1       <ptr(4) to <array 25 of <char>>>     ]
+    [ $t2       <int>     ]
+    [ $t3       <ptr(4) to <array 20 of <char>>>     ]
+    [ $t4       <ptr(4) to <array 3 of <char>>>     ]
+  ]]
+  [[ pfact
+      0:     param  0 <- _str_3
+      1:     call   WriteStr
+      2:     call   WriteLn
+      3:     call   WriteLn
+      4:     param  0 <- _str_4
+      5:     call   WriteStr
+      6:     param  0 <- _str_5
+      7:     call   WriteStr
+      8:     param  0 <- ReadInt
+      9:     call   WriteInt
+     10:     param  0 <- _str_6
+     11:     call   WriteStr
+     12:     param  0 <- ReadInt
+     13:     call   primefactor
+     14:     call   WriteLn
+  ]]
+
+  [[ procedure: primefactor
+    [[
+      [ $f        <int>       ]
+      [ %n        <int>       ]
+      [ $t10      <int>       ]
+      [ $t5       <ptr(4) to <array 2 of <char>>>       ]
+      [ $t6       <int>       ]
+      [ $t7       <int>       ]
+      [ $t8       <ptr(4) to <array 2 of <char>>>       ]
+      [ $t9       <int>       ]
+    ]]
+    [[ primefactor
+        0:     if     n < 1 goto 1_if_true
+        1:     goto   2_if_false
+        2: 1_if_true:
+        3:     return 
+        4:     goto   0
+        5: 2_if_false:
+        6:     if     n = 1 goto 6_if_true
+        7:     goto   7_if_false
+        8: 6_if_true:
+        9:     param  0 <- _str_1
+       10:     call   WriteStr
+       11:     param  0 <- 1
+       12:     call   WriteInt
+       13:     goto   5
+       14: 7_if_false:
+       15:     assign f <- 2
+       16: 13_while_cond:
+       17:     if     f <= n goto 14_while_body
+       18:     goto   12
+       19: 14_while_body:
+       20:     if     t9 = n goto 17_if_true
+       21:     goto   18_if_false
+       22: 17_if_true:
+       23:     param  0 <- _str_2
+       24:     call   WriteStr
+       25:     param  0 <- f
+       26:     call   WriteInt
+       27:     div    t9 <- t9, f
+       28:     assign n <- t9
+       29:     goto   16
+       30: 18_if_false:
+       31:     assign f <- f
+       32: 16:
+       33:     goto   13_while_cond
+       34: 12:
+       35: 5:
+       36: 0:
+    ]]
+  ]]
+]]

@@ -1,0 +1,83 @@
+test04.mod:
+[[ module: test04
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 10 of <bool>>>
+    array types:
+      <array of <char>>
+      <array 10 of <bool>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @a        <array 10 of <bool>>     ]
+    [ @i        <int>     ]
+    [ main     <NULL>     ]
+    [ $t0       <bool>     ]
+    [ $t1       <ptr(4) to <array 10 of <bool>>>     ]
+    [ $t10      <ptr(4) to <array 10 of <bool>>>     ]
+    [ $t11      <int>     ]
+    [ $t12      <int>     ]
+    [ $t13      <int>     ]
+    [ $t14      <int>     ]
+    [ $t2       <int>     ]
+    [ $t3       <ptr(4) to <array 10 of <bool>>>     ]
+    [ $t4       <int>     ]
+    [ $t5       <int>     ]
+    [ $t6       <int>     ]
+    [ $t7       <int>     ]
+    [ $t8       <ptr(4) to <array 10 of <bool>>>     ]
+    [ $t9       <int>     ]
+  ]]
+  [[ test04
+      0:     assign i <- 0
+      1: 2_while_cond:
+      2:     if     i < 10 goto 3_while_body
+      3:     goto   1
+      4: 3_while_body:
+      5:     if     i > 2 goto 6
+      6:     goto   7
+      7: 6:
+      8:     assign t0 <- 1
+      9:     goto   8
+     10: 7:
+     11:     assign t0 <- 0
+     12: 8:
+     13:     param  0 <- a
+     14:     assign i <- i
+     15:     goto   2_while_cond
+     16: 1:
+     17:     assign i <- 0
+     18: 13_while_cond:
+     19:     if     i < 10 goto 14_while_body
+     20:     goto   12
+     21: 14_while_body:
+     22:     param  0 <- a
+     23:     if     a = 1 goto 17_if_true
+     24:     goto   18_if_false
+     25: 17_if_true:
+     26:     param  0 <- 1
+     27:     call   WriteInt
+     28:     goto   16
+     29: 18_if_false:
+     30:     param  0 <- 0
+     31:     call   WriteInt
+     32: 16:
+     33:     assign i <- i
+     34:     goto   13_while_cond
+     35: 12:
+  ]]
+]]

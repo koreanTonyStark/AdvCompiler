@@ -1,0 +1,72 @@
+test11.mod:
+    CAstScope: 'test11'
+      symbol table:
+        [[
+          [ @A        <int>           ]
+          [ @B        <bool>           ]
+          [ @C        <int>           ]
+          [ @D        <char>           ]
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ @E        <int>           ]
+          [ @F        <bool>           ]
+          [ @G        <array 10 of <int>>           ]
+          [ @H        <bool>           ]
+          [ @I        <array 7 of <char>>           ]
+          [ @J        <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ *foo() --> <NULL>           ]
+          [ main     <NULL>           ]
+        ]]
+      statement list:
+        empty.
+      nested scopes:
+        CAstScope: 'foo'
+          symbol table:
+            [[
+              [ $a        <int>               ]
+              [ $b        <bool>               ]
+              [ $c        <int>               ]
+              [ $d        <char>               ]
+              [ $e        <int>               ]
+              [ $f        <bool>               ]
+              [ $g        <array 10 of <int>>               ]
+              [ $h        <bool>               ]
+              [ $i        <array 7 of <char>>               ]
+              [ $j        <int>               ]
+            ]]
+          statement list:
+            empty.
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ @A        <int>       ]
+      [ @B        <bool>       ]
+      [ @C        <int>       ]
+      [ @D        <char>       ]
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ @E        <int>       ]
+      [ @F        <bool>       ]
+      [ @G        <array 10 of <int>>       ]
+      [ @H        <bool>       ]
+      [ @I        <array 7 of <char>>       ]
+      [ @J        <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ *foo() --> <NULL>       ]
+      [ main     <NULL>       ]
+    ]]
+

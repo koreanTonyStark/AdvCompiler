@@ -1,0 +1,147 @@
+##################################################
+# test04
+#
+
+    #-----------------------------------------
+    # text section
+    #
+    .text
+    .align 4
+
+    # entry point and pre-defined functions
+    .global main
+    .extern DIM
+    .extern DOFS
+    .extern ReadInt
+    .extern WriteInt
+    .extern WriteStr
+    .extern WriteChar
+    .extern WriteLn
+
+    # scope test04
+main:
+    # stack offsets:
+    #    -13(%ebp)   1  [ $t0       <bool> %ebp-13 ]
+    #    -20(%ebp)   4  [ $t1       <ptr(4) to <array 10 of <bool>>> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t10      <ptr(4) to <array 10 of <bool>>> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t11      <int> %ebp-28 ]
+    #    -32(%ebp)   4  [ $t12      <int> %ebp-32 ]
+    #    -36(%ebp)   4  [ $t13      <int> %ebp-36 ]
+    #    -40(%ebp)   4  [ $t14      <int> %ebp-40 ]
+    #    -44(%ebp)   4  [ $t2       <int> %ebp-44 ]
+    #    -48(%ebp)   4  [ $t3       <ptr(4) to <array 10 of <bool>>> %ebp-48 ]
+    #    -52(%ebp)   4  [ $t4       <int> %ebp-52 ]
+    #    -56(%ebp)   4  [ $t5       <int> %ebp-56 ]
+    #    -60(%ebp)   4  [ $t6       <int> %ebp-60 ]
+    #    -64(%ebp)   4  [ $t7       <int> %ebp-64 ]
+    #    -68(%ebp)   4  [ $t8       <ptr(4) to <array 10 of <bool>>> %ebp-68 ]
+    #    -72(%ebp)   4  [ $t9       <int> %ebp-72 ]
+
+    # prologue
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                    # save callee saved registers
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $60, %esp               # make room for locals
+
+    cld                             # memset local stack area to 0
+    xorl    %eax, %eax             
+    movl    $15, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
+
+    # function body
+    movl    $0, %eax                #   0:     assign i <- 0
+    movl    %eax, i                
+l_test04_2_while_cond:
+    movl    i, %eax                 #   2:     if     i < 10 goto 3_while_body
+    movl    $10, %ebx              
+    cmpl    %ebx, %eax             
+    jl      l_test04_3_while_body  
+    jmp     l_test04_1              #   3:     goto   1
+l_test04_3_while_body:
+    movl    i, %eax                 #   5:     if     i > 2 goto 6
+    movl    $2, %ebx               
+    cmpl    %ebx, %eax             
+    jg      l_test04_6             
+    jmp     l_test04_7              #   6:     goto   7
+l_test04_6:
+    movl    $1, %eax                #   8:     assign t0 <- 1
+    movb    %al, -13(%ebp)         
+    jmp     l_test04_8              #   9:     goto   8
+l_test04_7:
+    movl    $0, %eax                #  11:     assign t0 <- 0
+    movb    %al, -13(%ebp)         
+l_test04_8:
+    movzbl  a, %eax                 #  13:     param  0 <- a
+    pushl   %eax                   
+    movl    i, %eax                 #  14:     assign i <- i
+    movl    %eax, i                
+    jmp     l_test04_2_while_cond   #  15:     goto   2_while_cond
+l_test04_1:
+    movl    $0, %eax                #  17:     assign i <- 0
+    movl    %eax, i                
+l_test04_13_while_cond:
+    movl    i, %eax                 #  19:     if     i < 10 goto 14_while_body
+    movl    $10, %ebx              
+    cmpl    %ebx, %eax             
+    jl      l_test04_14_while_body 
+    jmp     l_test04_12             #  20:     goto   12
+l_test04_14_while_body:
+    movzbl  a, %eax                 #  22:     param  0 <- a
+    pushl   %eax                   
+    movzbl  a, %eax                 #  23:     if     a = 1 goto 17_if_true
+    movl    $1, %ebx               
+    cmpl    %ebx, %eax             
+    je      l_test04_17_if_true    
+    jmp     l_test04_18_if_false    #  24:     goto   18_if_false
+l_test04_17_if_true:
+    movl    $1, %eax                #  26:     param  0 <- 1
+    pushl   %eax                   
+    call    WriteInt                #  27:     call   WriteInt
+    addl    $4, %esp               
+    jmp     l_test04_16             #  28:     goto   16
+l_test04_18_if_false:
+    movl    $0, %eax                #  30:     param  0 <- 0
+    pushl   %eax                   
+    call    WriteInt                #  31:     call   WriteInt
+    addl    $4, %esp               
+l_test04_16:
+    movl    i, %eax                 #  33:     assign i <- i
+    movl    %eax, i                
+    jmp     l_test04_13_while_cond  #  34:     goto   13_while_cond
+l_test04_12:
+
+l_test04_exit:
+    # epilogue
+    addl    $60, %esp               # remove locals
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # end of text section
+    #-----------------------------------------
+
+    #-----------------------------------------
+    # global data section
+    #
+    .data
+    .align 4
+
+    # scope: test04
+a:                                  # <array 10 of <bool>>
+    .long    1
+    .long   10
+    .skip   10
+    .align   4
+i:                                  # <int>
+    .skip    4
+
+    # end of global data section
+    #-----------------------------------------
+
+    .end
+##################################################

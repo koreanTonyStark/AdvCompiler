@@ -1,0 +1,311 @@
+gcd.mod:
+[[ module: gcd
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 2 of <int>>>
+      <ptr(4) to <array 25 of <char>>>
+      <ptr(4) to <array 14 of <char>>>
+      <ptr(4) to <array 22 of <char>>>
+    array types:
+      <array of <char>>
+      <array 2 of <int>>
+      <array 22 of <char>>
+      <array 25 of <char>>
+      <array 14 of <char>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *ReadNumbers(<ptr(4) to <array 2 of <int>>>) --> <NULL>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @_str_1   <array 22 of <char>>     ]
+      [ data: 'Enter first number : ' ]
+    [ @_str_2   <array 22 of <char>>     ]
+      [ data: 'Enter second number: ' ]
+    [ @_str_3   <array 25 of <char>>     ]
+      [ data: 'Greatest commond divisor' ]
+    [ @_str_4   <array 14 of <char>>     ]
+      [ data: ' subtract  : ' ]
+    [ @_str_5   <array 14 of <char>>     ]
+      [ data: ' divide    : ' ]
+    [ @_str_6   <array 14 of <char>>     ]
+      [ data: ' recursive : ' ]
+    [ *gcd_iter(<ptr(4) to <array 2 of <int>>>) --> <int>     ]
+    [ *gcd_mod(<ptr(4) to <array 2 of <int>>>) --> <int>     ]
+    [ *gcd_rec(<ptr(4) to <array 2 of <int>>>) --> <int>     ]
+    [ main     <NULL>     ]
+    [ @n        <array 2 of <int>>     ]
+    [ $t0       <ptr(4) to <array 25 of <char>>>     ]
+    [ $t1       <ptr(4) to <array 2 of <int>>>     ]
+    [ $t10      <int>     ]
+    [ $t2       <ptr(4) to <array 14 of <char>>>     ]
+    [ $t3       <ptr(4) to <array 2 of <int>>>     ]
+    [ $t4       <int>     ]
+    [ $t5       <ptr(4) to <array 14 of <char>>>     ]
+    [ $t6       <ptr(4) to <array 2 of <int>>>     ]
+    [ $t7       <int>     ]
+    [ $t8       <ptr(4) to <array 14 of <char>>>     ]
+    [ $t9       <ptr(4) to <array 2 of <int>>>     ]
+  ]]
+  [[ gcd
+      0:     param  0 <- _str_3
+      1:     call   WriteStr
+      2:     call   WriteLn
+      3:     call   WriteLn
+      4:     param  0 <- n
+      5:     call   ReadNumbers
+      6:     param  0 <- _str_4
+      7:     call   WriteStr
+      8:     param  0 <- n
+      9:     param  0 <- gcd_iter
+     10:     call   WriteInt
+     11:     call   WriteLn
+     12:     param  0 <- _str_5
+     13:     call   WriteStr
+     14:     param  0 <- n
+     15:     param  0 <- gcd_mod
+     16:     call   WriteInt
+     17:     call   WriteLn
+     18:     param  0 <- _str_6
+     19:     call   WriteStr
+     20:     param  0 <- n
+     21:     param  0 <- gcd_rec
+     22:     call   WriteInt
+     23:     call   WriteLn
+  ]]
+
+  [[ procedure: gcd_iter
+    [[
+      [ %a        <ptr(4) to <array 2 of <int>>>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <int>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+      [ $t23      <int>       ]
+      [ $t24      <int>       ]
+      [ $t25      <int>       ]
+      [ $t26      <int>       ]
+      [ $t27      <int>       ]
+      [ $t28      <int>       ]
+      [ $t29      <int>       ]
+      [ $t30      <int>       ]
+      [ $t31      <int>       ]
+      [ $t32      <int>       ]
+      [ $t33      <int>       ]
+      [ $t34      <int>       ]
+      [ $t35      <int>       ]
+      [ $t36      <int>       ]
+      [ $t37      <int>       ]
+      [ $t38      <int>       ]
+      [ $t39      <int>       ]
+      [ $t40      <int>       ]
+      [ $t41      <int>       ]
+      [ $t42      <int>       ]
+      [ $t43      <int>       ]
+      [ $t44      <int>       ]
+      [ $t45      <int>       ]
+      [ $t46      <int>       ]
+      [ $t47      <int>       ]
+      [ $t48      <int>       ]
+      [ $t49      <int>       ]
+      [ $t50      <int>       ]
+      [ $t51      <int>       ]
+      [ $t52      <int>       ]
+      [ $t53      <int>       ]
+      [ $t54      <int>       ]
+      [ $t55      <int>       ]
+      [ $t56      <int>       ]
+    ]]
+    [[ gcd_iter
+        0: 1_while_cond:
+        1:     param  0 <- a
+        2:     param  0 <- a
+        3:     add    t18 <- a, 4
+        4:     if     a # @a goto 2_while_body
+        5:     goto   0
+        6: 2_while_body:
+        7:     param  0 <- a
+        8:     param  0 <- a
+        9:     add    t26 <- a, 4
+       10:     if     a > @a goto 5_if_true
+       11:     goto   6_if_false
+       12: 5_if_true:
+       13:     param  0 <- a
+       14:     param  0 <- a
+       15:     param  0 <- a
+       16:     goto   4
+       17: 6_if_false:
+       18:     param  0 <- a
+       19:     param  0 <- a
+       20:     param  0 <- a
+       21: 4:
+       22:     goto   1_while_cond
+       23: 0:
+       24:     param  0 <- a
+       25:     return a
+    ]]
+  ]]
+
+  [[ procedure: gcd_mod
+    [[
+      [ %a        <ptr(4) to <array 2 of <int>>>       ]
+      [ $t        <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <int>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+      [ $t23      <int>       ]
+      [ $t24      <int>       ]
+      [ $t25      <int>       ]
+      [ $t26      <int>       ]
+      [ $t27      <int>       ]
+      [ $t28      <int>       ]
+      [ $t29      <int>       ]
+      [ $t30      <int>       ]
+      [ $t31      <int>       ]
+      [ $t32      <int>       ]
+      [ $t33      <int>       ]
+      [ $t34      <int>       ]
+      [ $t35      <int>       ]
+      [ $t36      <int>       ]
+      [ $t37      <int>       ]
+      [ $t38      <int>       ]
+      [ $t39      <int>       ]
+      [ $t40      <int>       ]
+      [ $t41      <int>       ]
+    ]]
+    [[ gcd_mod
+        0: 1_while_cond:
+        1:     param  0 <- a
+        2:     if     a # 0 goto 2_while_body
+        3:     goto   0
+        4: 2_while_body:
+        5:     param  0 <- a
+        6:     param  0 <- a
+        7:     param  0 <- a
+        8:     param  0 <- a
+        9:     param  0 <- a
+       10:     goto   1_while_cond
+       11: 0:
+       12:     param  0 <- a
+       13:     return a
+    ]]
+  ]]
+
+  [[ procedure: gcd_rec
+    [[
+      [ %a        <ptr(4) to <array 2 of <int>>>       ]
+      [ $t        <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <int>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+      [ $t23      <int>       ]
+      [ $t24      <int>       ]
+      [ $t25      <int>       ]
+      [ $t26      <int>       ]
+      [ $t27      <int>       ]
+      [ $t28      <int>       ]
+      [ $t29      <int>       ]
+      [ $t30      <int>       ]
+      [ $t31      <int>       ]
+      [ $t32      <int>       ]
+      [ $t33      <int>       ]
+      [ $t34      <int>       ]
+      [ $t35      <int>       ]
+      [ $t36      <int>       ]
+      [ $t37      <int>       ]
+      [ $t38      <int>       ]
+      [ $t39      <int>       ]
+      [ $t40      <int>       ]
+      [ $t41      <int>       ]
+      [ $t42      <int>       ]
+      [ $t43      <int>       ]
+      [ $t44      <int>       ]
+      [ $t45      <int>       ]
+      [ $t46      <int>       ]
+    ]]
+    [[ gcd_rec
+        0:     param  0 <- a
+        1:     if     a = 0 goto 1_if_true
+        2:     goto   2_if_false
+        3: 1_if_true:
+        4:     param  0 <- a
+        5:     return a
+        6:     goto   0
+        7: 2_if_false:
+        8:     param  0 <- a
+        9:     param  0 <- a
+       10:     param  0 <- a
+       11:     param  0 <- a
+       12:     param  0 <- a
+       13:     param  0 <- a
+       14:     param  0 <- a
+       15:     return gcd_rec
+       16: 0:
+    ]]
+  ]]
+
+  [[ procedure: ReadNumbers
+    [[
+      [ $i        <int>       ]
+      [ %n        <ptr(4) to <array 2 of <int>>>       ]
+      [ $t11      <ptr(4) to <array 22 of <char>>>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <ptr(4) to <array 22 of <char>>>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+    ]]
+    [[ ReadNumbers
+        0:     param  0 <- _str_1
+        1:     call   WriteStr
+        2:     param  0 <- n
+        3:     param  0 <- _str_2
+        4:     call   WriteStr
+        5:     param  0 <- n
+    ]]
+  ]]
+]]

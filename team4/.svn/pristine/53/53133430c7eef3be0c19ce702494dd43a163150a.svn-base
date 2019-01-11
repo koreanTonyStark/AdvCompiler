@@ -1,0 +1,350 @@
+/*
+ * cfg.cpp
+ *
+ *      Author: team4
+ */
+
+#include <cassert>
+#include <algorithm>
+
+#include "cfg.h"
+
+using node_iterator = list<shared_ptr<CfgNode>>::const_iterator;
+
+CfgNode::CfgNode(CfgProc *owner, CTacInstr *instr) :
+		_succs(), _preds() {
+	assert(owner != NULL);
+	if (!owner || !instr)
+		return;
+	_owner = owner;
+	_id = owner->GetNodeCnt();
+	_instr = instr;
+}
+
+CfgNode::~CfgNode(void) {
+
+}
+
+const CfgProc* CfgNode::GetOwner(void) const {
+	return _owner;
+}
+
+const size_t CfgNode::GetId(void) const {
+	return _id;
+}
+
+const CTacInstr* CfgNode::GetInstr(void) const {
+	return _instr;
+}
+
+const list<shared_ptr<CfgNode>> &CfgNode::GetSuccs(void) const {
+	return _succs;
+}
+
+const list<shared_ptr<CfgNode>> &CfgNode::GetPreds(void) const {
+	return _preds;
+}
+
+void CfgNode::GetAdj(list<shared_ptr<CfgNode>> &adj) const {
+	adj.insert(adj.begin(), _succs.begin(), _succs.end());
+	adj.insert(adj.end(), _preds.begin(), _preds.end());
+}
+
+const size_t CfgNode::InDegree(void) const {
+	return _preds.size();
+}
+
+const size_t CfgNode::OutDegree(void) const {
+	return _succs.size();
+}
+
+const size_t CfgNode::Degree(void) const {
+	return InDegree() + OutDegree();
+}
+
+bool CfgNode::GoesTo(const shared_ptr<CfgNode> &n) const {
+	if (find(_succs.begin(), _succs.end(), n) != _succs.end())
+		return true;
+	return false;
+}
+
+bool CfgNode::ComesFrom(const shared_ptr<CfgNode> &n) const {
+	if (find(_preds.begin(), _preds.end(), n) != _preds.end())
+		return true;
+	return false;
+}
+
+bool CfgNode::IsAdj(const shared_ptr<CfgNode> &n) const {
+	if (GoesTo(n) || ComesFrom(n))
+		return true;
+	return false;
+}
+
+void CfgNode::AddSucc(const shared_ptr<CfgNode> &n) {
+	if (!GoesTo(n))
+		_succs.push_back(n);
+}
+
+void CfgNode::AddPred(const shared_ptr<CfgNode> &n) {
+	if (!ComesFrom(n))
+		_preds.push_back(n);
+}
+
+void CfgNode::RmSucc(const shared_ptr<CfgNode> &n) {
+	if (GoesTo(n))
+		_succs.remove(n);
+}
+
+void CfgNode::RmPred(const shared_ptr<CfgNode> &n) {
+	if (ComesFrom(n))
+		_preds.remove(n);
+}
+
+CfgProc::CfgProc(CCodeBlock *cb, size_t offset) :
+		_nodes(), _offset(offset) {
+	assert(cb != NULL);
+	if (!cb)
+		return;
+	_cb = cb;
+	_name = cb->GetName();
+	MakeNodes();
+	MakeEdges();
+}
+
+CfgProc::~CfgProc(void) {
+
+}
+
+const string &CfgProc::GetName(void) const {
+	return _name;
+}
+
+const list<shared_ptr<CfgNode>> &CfgProc::GetNodes(void) const {
+	return _nodes;
+}
+
+const size_t CfgProc::GetNodeCnt(void) const {
+	return _nodes.size();
+}
+
+const size_t CfgProc::GetOffset(void) const {
+	return _offset;
+}
+
+const shared_ptr<CfgNode> CfgProc::FindNode(const CTacInstr *instr) const {
+	node_iterator it = _nodes.begin();
+	while (it != _nodes.end()) {
+		const shared_ptr<CfgNode> &n = *it++;
+		if (n->GetInstr() == instr)
+			return n;
+	}
+	return nullptr;
+}
+
+void CfgProc::AddEdge(const shared_ptr<CfgNode> &from,
+		const shared_ptr<CfgNode> &to) {
+	to->AddPred(from);
+	from->AddSucc(to);
+}
+
+void CfgProc::RmEdge(const shared_ptr<CfgNode> &from,
+		const shared_ptr<CfgNode> &to) {
+	to->RmPred(from);
+	from->RmSucc(to);
+}
+
+void CfgProc::DelNode(const shared_ptr<CfgNode> &n) {
+	if (n->GetOwner() == this) {
+		if (n->InDegree() == 1 && n->OutDegree() == 1) {
+			const list<shared_ptr<CfgNode>> &preds = n->GetPreds();
+			const shared_ptr<CfgNode> &from = preds.front();
+			const list<shared_ptr<CfgNode>> &succs = n->GetSuccs();
+			const shared_ptr<CfgNode> &to = succs.front();
+			RmEdge(from, n);
+			RmEdge(n, to);
+			_nodes.remove(n);
+			AddEdge(from, to);
+		}
+	}
+}
+
+void CfgProc::toDot(ostream &out) const { // todo: make it prettier
+	out << "// scope '" << _name << "'" << endl;
+	node_iterator it = _nodes.begin();
+	while (it != _nodes.end()) {
+		const shared_ptr<CfgNode> &n = *it++;
+
+		// offset id for interproc cfg
+		size_t id = n->GetId() + _offset;
+
+		const CTacInstr *instr = n->GetInstr();
+		out << "node" << id << " [label=\"";
+		if (n == _nodes.front()) {
+			out << " ENTER " << _name << "\\r ";
+		} else if (n == _nodes.back()) {
+			out << " EXIT " << _name << "\\r ";
+		}
+		out << instr << "\\l\",shape=box];" << endl;
+
+		const size_t degree = n->OutDegree();
+		if (degree > 0) {
+			const list<shared_ptr<CfgNode>> &succs = n->GetSuccs();
+			node_iterator nit = succs.begin();
+			while (nit != succs.end()) {
+				const shared_ptr<CfgNode> &next = *nit++;
+				// offset next id for interproc cfg
+				size_t nid = next->GetId() + next->GetOwner()->GetOffset();
+				out << "node" << id << " -> " << "node" << nid << ";" << endl;
+			}
+		}
+	}
+}
+
+void CfgProc::MakeNodes(void) {
+	const list<CTacInstr*> &ops = _cb->GetInstr();
+	list<CTacInstr*>::const_iterator it = ops.begin();
+	while (it != ops.end()) {
+		CTacInstr *instr = *it++;
+		shared_ptr<CfgNode> n(new CfgNode(this, instr));
+		_nodes.push_back(n);
+	}
+}
+
+void CfgProc::MakeEdges(void) {
+	node_iterator it = _nodes.begin();
+	while (it != _nodes.end()) {
+		const shared_ptr<CfgNode> &n = *it++;
+		if (it != _nodes.end()) {
+			// get next node (fall through case)
+			const shared_ptr<CfgNode> &next = *it;
+			const CTacInstr *instr = n->GetInstr();
+			// get dest instr (jump case)
+			const CTacInstr *dest =
+					dynamic_cast<const CTacInstr*>(instr->GetDest());
+			if (!dest) {
+				AddEdge(n, next);	// fall through
+				continue;
+			}
+			// get dest node (jump case)
+			const shared_ptr<CfgNode> target = FindNode(dest);
+			if (!target) {
+				cout << "Node not found at instr_id : " << dest->GetId()
+						<< endl;
+				continue;
+			}
+			// "if true goto" or just "goto"
+			AddEdge(n, target); 	// jump
+			// "if false goto"
+			if (IsRelOp(instr->GetOperation())) {
+				AddEdge(n, next);	// fall through
+			}
+		}
+	}
+}
+
+CfgIntraProc::CfgIntraProc(CModule *m) :
+		_procs() {
+	assert(m != NULL);
+	if (!m)
+		return;
+	_m = m;
+	_name = m->GetName();
+	// initial proc cfg offset
+	size_t offset = 0;
+	CCodeBlock *cb = _m->GetCodeBlock();
+	// increment offset for next proc cfg
+	offset += MakeProc(cb, offset);
+	const vector<CScope*> &proc = _m->GetSubscopes();
+	for (size_t p = 0; p < proc.size(); p++) {
+		cb = proc[p]->GetCodeBlock();
+		// increment offset for next proc cfg
+		offset += MakeProc(cb, offset);
+	}
+}
+
+CfgIntraProc::~CfgIntraProc(void) {
+
+}
+
+const string &CfgIntraProc::GetName(void) const {
+	return _name;
+}
+
+const vector<shared_ptr<CfgProc>> &CfgIntraProc::GetProcs(void) const {
+	return _procs;
+}
+
+const shared_ptr<CfgProc> CfgIntraProc::FindProc(const string &name) const {
+	for (size_t p = 0; p < _procs.size(); p++) {
+		if (_procs[p]->GetName() == name)
+			return _procs[p];
+	}
+	return nullptr;
+}
+
+void CfgIntraProc::toDot(ostream &out) const {
+	for (size_t p = 0; p < _procs.size(); p++) {
+		_procs[p]->toDot(out);
+	}
+}
+
+size_t CfgIntraProc::MakeProc(CCodeBlock *cb, size_t offset) {
+	shared_ptr<CfgProc> proc(new CfgProc(cb, offset));
+	_procs.push_back(proc);
+	return proc->GetNodeCnt();
+}
+
+CfgInterProc::CfgInterProc(CModule *m) :
+		CfgIntraProc(m) {
+	assert(m != NULL);
+	if (!m)
+		return;
+	MakeGraph();
+}
+
+CfgInterProc::~CfgInterProc(void) {
+
+}
+
+void CfgInterProc::MakeGraph() {
+	for (size_t p = 0; p < _procs.size(); p++) {
+		const list<shared_ptr<CfgNode>> &nodes = _procs[p]->GetNodes();
+		node_iterator it = nodes.begin();
+		while (it != nodes.end()) {
+			const shared_ptr<CfgNode> &node = *it++;
+			const CTacInstr *instr = node->GetInstr();
+			EOperation op = instr->GetOperation();
+			// make edges between procs for func calls
+			if (op == opCall) {
+				const CTacName *func =
+						dynamic_cast<const CTacName*>(instr->GetSrc(1));
+				if (!func) {
+					cout << "Called function not found at instr_id : "
+							<< instr->GetId() << endl;
+					continue;
+				}
+				const string &name = func->GetSymbol()->GetName();
+				const shared_ptr<CfgProc> &dest = FindProc(name);
+				if (!dest) {
+					list<string> io_funcs = { "WriteInt", "WriteStr",
+							"WriteChar", "WriteLn", "ReadInt" };
+					if (!(find(io_funcs.begin(), io_funcs.end(), name)
+							!= io_funcs.end())) {
+						cout << "Function [" << name << "] not found in : "
+								<< _name << ".mod" << endl;
+					}
+					continue;
+				}
+				const list<shared_ptr<CfgNode>> &target = dest->GetNodes();
+				if (target.empty()) {
+					cout << "Function [" << name << "] nodes not found" << endl;
+					continue;
+				}
+				// edge from func call to func
+				_procs[p]->AddEdge(node, target.front());
+				// edge from func return to func call
+				dest->AddEdge(target.back(), node);
+			}
+		}
+	}
+}

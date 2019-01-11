@@ -1,0 +1,58 @@
+Liveness analysis of test01
+Iteration : 0
+NodeId	use	def	succs	out	in
+Node14	NULL	NULL	NULL	NULL	NULL
+Node13	c	NULL	14	NULL	NULL
+Node12	t3	c	13	NULL	NULL
+Node11	t2, a	t3	12	NULL	NULL
+Node10	b	t2	11	NULL	NULL
+Node9	NULL	NULL	10	NULL	NULL
+Node8	c	NULL	9	NULL	NULL
+Node7	t1	c	8	NULL	NULL
+Node6	a, b	t1	7	NULL	NULL
+Node5	NULL	NULL	6	NULL	NULL
+Node4	c	NULL	5	NULL	NULL
+Node3	t0	c	4	NULL	NULL
+Node2	a, b	t0	3	NULL	NULL
+Node1	5	b	2	NULL	NULL
+Node0	2	a	1	NULL	NULL
+
+
+Liveness analysis of test01
+Iteration : 1
+NodeId	use	def	succs	out	in
+Node14	NULL	NULL	NULL	NULL	NULL
+Node13	c	NULL	14	NULL	c
+Node12	t3	c	13	c	t3
+Node11	t2, a	t3	12	t3	t2, a
+Node10	b	t2	11	t2, a	b
+Node9	NULL	NULL	10	b	b
+Node8	c	NULL	9	b	c
+Node7	t1	c	8	c	t1
+Node6	a, b	t1	7	t1	a, b
+Node5	NULL	NULL	6	a, b	a, b
+Node4	c	NULL	5	a, b	c
+Node3	t0	c	4	c	t0
+Node2	a, b	t0	3	t0	a, b
+Node1	5	b	2	a, b	5
+Node0	2	a	1	5	2
+
+
+Liveness analysis of test01
+Iteration : 2
+NodeId	use	def	succs	out	in
+Node14	NULL	NULL	NULL	NULL	NULL
+Node13	c	NULL	14	NULL	c
+Node12	t3	c	13	c	t3
+Node11	t2, a	t3	12	t3	t2, a
+Node10	b	t2	11	t2, a	b
+Node9	NULL	NULL	10	b	b
+Node8	c	NULL	9	b	c
+Node7	t1	c	8	c	t1
+Node6	a, b	t1	7	t1	a, b
+Node5	NULL	NULL	6	a, b	a, b
+Node4	c	NULL	5	a, b	c
+Node3	t0	c	4	c	t0
+Node2	a, b	t0	3	t0	a, b
+Node1	5	b	2	a, b	5
+Node0	2	a	1	5	2

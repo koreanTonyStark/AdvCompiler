@@ -1,0 +1,246 @@
+gcd.mod:
+    CAstScope: 'gcd'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *ReadNumbers(<ptr(4) to <array 2 of <int>>>) --> <NULL>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @_str_1   <array 22 of <char>>           ]
+            [ data: 'Enter first number : ' ]
+          [ @_str_2   <array 22 of <char>>           ]
+            [ data: 'Enter second number: ' ]
+          [ @_str_3   <array 25 of <char>>           ]
+            [ data: 'Greatest commond divisor' ]
+          [ @_str_4   <array 14 of <char>>           ]
+            [ data: ' subtract  : ' ]
+          [ @_str_5   <array 14 of <char>>           ]
+            [ data: ' divide    : ' ]
+          [ @_str_6   <array 14 of <char>>           ]
+            [ data: ' recursive : ' ]
+          [ *gcd_iter(<ptr(4) to <array 2 of <int>>>) --> <int>           ]
+          [ *gcd_mod(<ptr(4) to <array 2 of <int>>>) --> <int>           ]
+          [ *gcd_rec(<ptr(4) to <array 2 of <int>>>) --> <int>           ]
+          [ main     <NULL>           ]
+          [ @n        <array 2 of <int>>           ]
+        ]]
+      statement list:
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 25 of <char>>>
+            "Greatest commond divisor" <array 25 of <char>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *ReadNumbers(<ptr(4) to <array 2 of <int>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 2 of <int>>>
+            [ @n        <array 2 of <int>> ] <array 2 of <int>>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 14 of <char>>>
+            " subtract  : " <array 14 of <char>>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          call [ *gcd_iter(<ptr(4) to <array 2 of <int>>>) --> <int> ] <int>
+            &() <ptr(4) to <array 2 of <int>>>
+              [ @n        <array 2 of <int>> ] <array 2 of <int>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 14 of <char>>>
+            " divide    : " <array 14 of <char>>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          call [ *gcd_mod(<ptr(4) to <array 2 of <int>>>) --> <int> ] <int>
+            &() <ptr(4) to <array 2 of <int>>>
+              [ @n        <array 2 of <int>> ] <array 2 of <int>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 14 of <char>>>
+            " recursive : " <array 14 of <char>>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          call [ *gcd_rec(<ptr(4) to <array 2 of <int>>>) --> <int> ] <int>
+            &() <ptr(4) to <array 2 of <int>>>
+              [ @n        <array 2 of <int>> ] <array 2 of <int>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+      nested scopes:
+        CAstScope: 'gcd_iter'
+          symbol table:
+            [[
+              [ %a        <ptr(4) to <array 2 of <int>>>               ]
+            ]]
+          statement list:
+            while cond
+              # <bool>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  0 <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+            while-body
+              if cond
+                > <bool>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                    0 <int>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                    1 <int>
+              if-body
+                := <int>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                    0 <int>
+                  sub <int>
+                    [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                      0 <int>
+                    [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                      1 <int>
+              else-body
+                := <int>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                    1 <int>
+                  sub <int>
+                    [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                      1 <int>
+                    [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                      0 <int>
+            return <int>
+              [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                0 <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'gcd_mod'
+          symbol table:
+            [[
+              [ %a        <ptr(4) to <array 2 of <int>>>               ]
+              [ $t        <int>               ]
+            ]]
+          statement list:
+            while cond
+              # <bool>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+                0 <int>
+            while-body
+              := <int>
+                [ $t        <int> ] <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+              := <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+                sub <int>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                    0 <int>
+                  mul <int>
+                    div <int>
+                      [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                        0 <int>
+                      [ $t        <int> ] <int>
+                    [ $t        <int> ] <int>
+              := <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  0 <int>
+                [ $t        <int> ] <int>
+            return <int>
+              [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                0 <int>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'gcd_rec'
+          symbol table:
+            [[
+              [ %a        <ptr(4) to <array 2 of <int>>>               ]
+              [ $t        <int>               ]
+            ]]
+          statement list:
+            if cond
+              = <bool>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+                0 <int>
+            if-body
+              return <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  0 <int>
+            else-body
+              := <int>
+                [ $t        <int> ] <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  0 <int>
+              := <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  0 <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+              := <int>
+                [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                  1 <int>
+                sub <int>
+                  [ $t        <int> ] <int>
+                  mul <int>
+                    div <int>
+                      [ $t        <int> ] <int>
+                      [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                        1 <int>
+                    [ %a        <ptr(4) to <array 2 of <int>>> ] <int>
+                      1 <int>
+              return <int>
+                call [ *gcd_rec(<ptr(4) to <array 2 of <int>>>) --> <int> ] <int>
+                  [ %a        <ptr(4) to <array 2 of <int>>> ] <ptr(4) to <array 2 of <int>>>
+          nested scopes:
+            empty.
+        
+        CAstScope: 'ReadNumbers'
+          symbol table:
+            [[
+              [ $i        <int>               ]
+              [ %n        <ptr(4) to <array 2 of <int>>>               ]
+            ]]
+          statement list:
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 22 of <char>>>
+                "Enter first number : " <array 22 of <char>>
+            := <int>
+              [ %n        <ptr(4) to <array 2 of <int>>> ] <int>
+                0 <int>
+              call [ *ReadInt() --> <int> ] <int>
+            call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+              &() <ptr(4) to <array 22 of <char>>>
+                "Enter second number: " <array 22 of <char>>
+            := <int>
+              [ %n        <ptr(4) to <array 2 of <int>>> ] <int>
+                1 <int>
+              call [ *ReadInt() --> <int> ] <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *ReadNumbers(<ptr(4) to <array 2 of <int>>>) --> <NULL>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @_str_1   <array 22 of <char>>       ]
+        [ data: 'Enter first number : ' ]
+      [ @_str_2   <array 22 of <char>>       ]
+        [ data: 'Enter second number: ' ]
+      [ @_str_3   <array 25 of <char>>       ]
+        [ data: 'Greatest commond divisor' ]
+      [ @_str_4   <array 14 of <char>>       ]
+        [ data: ' subtract  : ' ]
+      [ @_str_5   <array 14 of <char>>       ]
+        [ data: ' divide    : ' ]
+      [ @_str_6   <array 14 of <char>>       ]
+        [ data: ' recursive : ' ]
+      [ *gcd_iter(<ptr(4) to <array 2 of <int>>>) --> <int>       ]
+      [ *gcd_mod(<ptr(4) to <array 2 of <int>>>) --> <int>       ]
+      [ *gcd_rec(<ptr(4) to <array 2 of <int>>>) --> <int>       ]
+      [ main     <NULL>       ]
+      [ @n        <array 2 of <int>>       ]
+    ]]
+

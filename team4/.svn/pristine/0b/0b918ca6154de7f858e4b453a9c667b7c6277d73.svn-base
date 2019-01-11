@@ -1,0 +1,910 @@
+/*
+ * cfg.cpp
+ *
+ *      Author: team4
+ */
+
+#include <cassert>
+#include <algorithm>
+
+#include "cfg.h"
+
+//------------------------------------------------------------------------------
+// iterators
+//
+
+using citCfgNode = list<shared_ptr<CfgNode>>::const_iterator;
+using critCfgNode = list<shared_ptr<CfgNode>>::const_reverse_iterator;
+using itCfgNode = list<shared_ptr<CfgNode>>::iterator;
+using ritCfgNode = list<shared_ptr<CfgNode>>::reverse_iterator;
+using citCTacInstr = list<CTacInstr*>::const_iterator;
+using setCitCTacAddr = set<CTacAddr*>::const_iterator;
+using setCitCfgNode = set<shared_ptr<CfgNode>>::const_iterator;
+
+//------------------------------------------------------------------------------
+// CfgNodeCmp
+//
+
+CfgNodeCmp::CfgNodeCmp(void) {
+}
+
+bool CfgNodeCmp::operator()(const shared_ptr<CfgNode> &lhs,
+		const shared_ptr<CfgNode> &rhs) const {
+	if (!lhs || !rhs)
+		return false;
+	return lhs->GetId() < rhs->GetId();
+}
+
+//------------------------------------------------------------------------------
+// CfgNode
+//
+
+CfgNode::CfgNode(CfgProc *owner, CTacInstr *instr) {
+	assert(owner != NULL);
+	assert(instr != NULL);
+	if (!owner || !instr)
+		return;
+	_nodeOwner = owner;
+	_nodeId = owner->GetNodeCnt() + owner->GetOffset();
+	_instr = instr;
+	InitNode();
+}
+
+CfgNode::CfgNode(const CfgNode &node) {
+	_nodeOwner = node._nodeOwner;
+	_nodeId = node._nodeId;
+	_instr = node._instr;
+	InitNode();
+}
+
+CfgNode::~CfgNode(void) {
+
+}
+
+const size_t CfgNode::InDegree(void) const {
+	return _preds.size();
+}
+
+const size_t CfgNode::OutDegree(void) const {
+	return _succs.size();
+}
+
+bool CfgNode::GoesTo(const shared_ptr<CfgNode> &n) const {
+	if (find(_succs.begin(), _succs.end(), n) != _succs.end())
+		return true;
+	return false;
+}
+
+bool CfgNode::ComesFrom(const shared_ptr<CfgNode> &n) const {
+	if (find(_preds.begin(), _preds.end(), n) != _preds.end())
+		return true;
+	return false;
+}
+
+void CfgNode::AddSucc(const shared_ptr<CfgNode> &n) {
+	if (!GoesTo(n))
+		_succs.push_back(n);
+}
+
+void CfgNode::AddPred(const shared_ptr<CfgNode> &n) {
+	if (!ComesFrom(n))
+		_preds.push_back(n);
+}
+
+void CfgNode::RmSucc(const shared_ptr<CfgNode> &n) {
+	if (GoesTo(n))
+		_succs.remove(n);
+}
+
+void CfgNode::RmPred(const shared_ptr<CfgNode> &n) {
+	if (ComesFrom(n))
+		_preds.remove(n);
+}
+
+void CfgNode::InitNode(void) {
+	// If re-initialized
+	_def = nullptr;
+	if(!_use.empty()) _use.clear();
+
+	_def = dynamic_cast<CTacAddr*>(_instr->GetDest());
+
+	unsigned int numSrc = _instr->GetNumSrc();
+	if (numSrc > 0) {
+		_use.push_back(_instr->GetSrc(1));
+		if (numSrc > 1) {
+			_use.push_back(_instr->GetSrc(2));
+		}
+	}
+
+	EOperation op = _instr->GetOperation();
+	switch (op) {
+	case opParam:
+		_def = nullptr; // we don't need param index in _def
+		break;
+	case opCall:
+		_use.clear(); // we don't need func name in _use
+		break;
+	case opGoto: {
+		if (!IsRelOp(op))
+			_def = nullptr; // we don't need jump label in _def
+		break;
+	}
+	case opAssign: {
+		if (dynamic_cast<CTacReference*>(_instr->GetDest())) {
+			//_use.push_back(_def); // reference is in _use
+			_use.clear(); // skip for now
+			_def = nullptr; // reference is not in _def
+		}
+		break;
+	}
+	// skip for now
+	case opAddress:
+	case opDeref:
+	case opCast: {
+		_use.clear();
+		_def = nullptr;
+		break;
+	}
+	}
+}
+
+void CfgNode::InitNode2(void) {
+	// TODO: how are _use and _def different for live and reach?
+	unsigned int numSrc = _instr->GetNumSrc();
+	if (numSrc > 0) {
+		_reachInfo2._use.push_back(_instr->GetSrc(1));
+		_liveInfo2._use.push_back(_instr->GetSrc(1));
+		if (numSrc > 1) {
+			_reachInfo2._use.push_back(_instr->GetSrc(2));
+			_liveInfo2._use.push_back(_instr->GetSrc(2));
+		}
+	}
+
+	_reachInfo2._def = dynamic_cast<CTacAddr*>(_instr->GetDest());
+	_liveInfo2._def = dynamic_cast<CTacAddr*>(_instr->GetDest());
+
+	EOperation op = _instr->GetOperation();
+	switch (op) {
+	case opParam: {
+		// we don't need param index in _def
+		_reachInfo2._def = nullptr;
+		_liveInfo2._def = nullptr;
+		break;
+	}
+	case opCall: {
+		// we don't need func name in _use
+		_reachInfo2._use.clear();
+		_liveInfo2._use.clear();
+		break;
+	}
+	case opGoto: {
+		// we don't need jump label in _def
+		if (!IsRelOp(op))
+			_reachInfo2._def = nullptr;
+			_liveInfo2._def = nullptr;
+		break;
+	}
+	case opAssign: {
+		if (dynamic_cast<CTacReference*>(_instr->GetDest())) {
+			// we don't need reference for constant propagation
+			_reachInfo2._use.clear();
+			_reachInfo2._def = nullptr;
+			// for dead code elimination, reference is in _use
+			_liveInfo2._use.push_back(_liveInfo2._def);
+			_liveInfo2._def = nullptr;
+		}
+		break;
+	}
+	// we don't need reference for constant propagation
+	case opAddress:
+	case opDeref:
+	case opCast: {
+		_reachInfo2._use.clear();
+		_reachInfo2._def = nullptr;
+		break;
+	}
+	}
+}
+
+//------------------------------------------------------------------------------
+// CfgProc
+//
+
+CfgProc::CfgProc(CCodeBlock *cb, size_t offset) {
+	assert(cb != NULL);
+	if (!cb)
+		return;
+	_cb = cb;
+	_procName = cb->GetName();
+	_offset = offset;
+	MakeNodes();
+	MakeEdges();
+}
+
+CfgProc::CfgProc(const CfgProc &proc) {
+	_cb = proc._cb;
+	_procName = proc._procName;
+	_offset = proc._offset;
+
+	// make new copies of existing nodes
+	citCfgNode it = proc._nodes.cbegin();
+	while (it != proc._nodes.cend()) {
+		const shared_ptr<CfgNode> &node = *it++;
+		shared_ptr<CfgNode> newNode(new CfgNode(*node));
+		_nodes.push_back(newNode);
+	}
+	MakeEdges();
+}
+
+CfgProc::~CfgProc(void) {
+
+}
+
+const size_t CfgProc::GetNodeCnt(void) const {
+	return _nodes.size();
+}
+
+const shared_ptr<CfgNode> CfgProc::FindNode(const CTacInstr *instr) const {
+	citCfgNode it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		const shared_ptr<CfgNode> &n = *it++;
+		if (n->GetInstr() == instr)
+			return n;
+	}
+	return nullptr;
+}
+
+void CfgProc::AddEdge(const shared_ptr<CfgNode> &from,
+		const shared_ptr<CfgNode> &to) {
+	to->AddPred(from);
+	from->AddSucc(to);
+}
+
+void CfgProc::RmEdge(const shared_ptr<CfgNode> &from,
+		const shared_ptr<CfgNode> &to) {
+	to->RmPred(from);
+	from->RmSucc(to);
+}
+
+void CfgProc::DelNode(const shared_ptr<CfgNode> &n) {
+	if (n->GetOwner() == this) {
+		size_t inDegree = n->InDegree();
+		size_t outDegree = n->OutDegree();
+		if (inDegree == 1 || outDegree == 1){
+			const list<shared_ptr<CfgNode>> &preds = n->GetPreds();
+			const list<shared_ptr<CfgNode>> &succs = n->GetSuccs();
+			const shared_ptr<CfgNode> &from = preds.front();
+			const shared_ptr<CfgNode> &to = succs.front();
+			if (outDegree == 1){
+				RmEdge(n, to);
+			}
+			if (inDegree == 1){
+				RmEdge(from, n);
+			}
+			if (inDegree == 1 && outDegree == 1){
+				AddEdge(from, to);
+			}
+			_nodes.remove(n);
+		}
+	}
+}
+
+void CfgProc::toDot(ostream &out) const { // TODO: make it prettier
+	out << "// scope '" << _procName << "'" << endl;
+	citCfgNode it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		const shared_ptr<CfgNode> &n = *it++;
+
+		size_t id = n->GetId();
+		out << "node" << id << " [label=\"";
+		if (n == _nodes.front()) {
+			out << " ENTER " << _procName << "\\r ";
+		} else if (n == _nodes.back()) {
+			out << " EXIT " << _procName << "\\r ";
+		}
+
+		const CTacInstr *instr = n->GetInstr();
+		out << instr << "\\l\",shape=box];" << endl;
+
+		const size_t degree = n->OutDegree();
+		if (degree > 0) {
+			const list<shared_ptr<CfgNode>> &succs = n->GetSuccs();
+			citCfgNode nit = succs.cbegin();
+			while (nit != succs.cend()) {
+				const shared_ptr<CfgNode> &next = *nit++;
+				size_t nid = next->GetId();
+				out << "node" << id << " -> " << "node" << nid << ";" << endl;
+			}
+		}
+	}
+}
+
+void CfgProc::LiveAlgo(void) {
+	// backward analysis
+	cout << "--------------------------------------------" <<endl;
+	cout << "Liveness analysis of " << _procName << endl;
+	cout << "--------------------------------------------" <<endl;
+
+	critCfgNode rit = _nodes.crbegin(); // const reverse iterator
+	shared_ptr<CfgNode> node = *rit;
+	// initialize use and def for each node
+	while (rit != _nodes.crend()) {
+		node = *rit++;
+		node->InitNode();
+	}
+
+	CfgProc *copy_proc = new CfgProc(*this);
+	const list<shared_ptr<CfgNode>> &copy_nodes = copy_proc->GetNodes();
+	critCfgNode copy_rit = copy_nodes.crbegin();
+	shared_ptr<CfgNode> copy_node = *copy_rit;
+
+	// print
+	unsigned int step = 0;
+	DumpLive(step, copy_proc);
+
+	// first iteration
+	rit = _nodes.crbegin();
+	while (rit != _nodes.crend()) {
+		node = *rit++;
+		LiveEq(node);
+	}
+
+	// print
+	step++;
+	DumpLive(step, this);
+
+	// repeat until reaching fixed-point
+	while (LiveFixPoint(copy_nodes)) {
+		copy_rit = copy_nodes.crbegin();
+		rit = _nodes.crbegin();
+		while (copy_rit != copy_nodes.crend() && rit != _nodes.crend()) {
+			node = *rit++;
+			copy_node = *copy_rit++;
+			CfgNode::LIVE &live = node->GetLiveInfo();
+			CfgNode::LIVE &copy_live = copy_node->GetLiveInfo();
+			// save
+			copy_live._liveIn = live._liveIn;
+			copy_live._liveOut = live._liveOut;
+			// step
+			LiveEq(node);
+		}
+		// print
+		step++;
+		cout << "SAVE" << endl;
+		DumpLive(step, copy_proc);
+		cout << "STEP" << endl;
+		DumpLive(step, this);
+	}
+	delete copy_proc;
+}
+
+void CfgProc::ReachAlgo(void) {
+	// forward analysis
+	cout << "--------------------------------------------" <<endl;
+	cout << "Reaching-definition analysis of " << _procName << endl;
+	cout << "--------------------------------------------" <<endl;
+
+	citCfgNode it = _nodes.cbegin();
+	shared_ptr<CfgNode> node = *it;
+	// initialize use and def for each node
+	while (it != _nodes.cend()) {
+		node = *it++;
+		node->InitNode();
+	}
+
+	// initialize gen and kill for each node
+	ReachDef();
+
+	CfgProc *copy_proc = new CfgProc(*this);
+	const list<shared_ptr<CfgNode>> &copy_nodes = copy_proc->GetNodes();
+	citCfgNode copy_it = copy_nodes.cbegin();
+	shared_ptr<CfgNode> copy_node = *copy_it;
+	// print
+	unsigned int step = 0;
+	DumpReach(step, this);
+
+	// first iteration
+	it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		node = *it++;
+		ReachEq(node);
+	}
+
+	// print
+	step++;
+	DumpReach(step, this);
+
+	// repeat until reaching fixed-point
+	while (ReachFixPoint(copy_nodes)) {
+		copy_it = copy_nodes.cbegin();
+		it = _nodes.cbegin();
+		while (copy_it != copy_nodes.cend() && it != _nodes.cend()) {
+			node = *it++;
+			copy_node = *copy_it++;
+			CfgNode::REACH &reach = node->GetReachInfo();
+			CfgNode::REACH &copy_reach = copy_node->GetReachInfo();
+			// save
+			copy_reach._liveIn = reach._liveIn;
+			copy_reach._liveOut = reach._liveOut;
+			// step
+			ReachEq(node);
+		}
+		// print
+		step++;
+		DumpReach(step, this);
+	}
+	delete copy_proc;
+}
+
+bool CfgProc::LiveFixPoint(const list<shared_ptr<CfgNode>> &copy_nodes) {
+	critCfgNode rit = _nodes.crbegin();
+	critCfgNode copy_rit = copy_nodes.crbegin();
+	while (copy_rit != copy_nodes.crend() && rit != _nodes.crend()) {
+		shared_ptr<CfgNode> node = *rit++;
+		shared_ptr<CfgNode> copy_node = *copy_rit++;
+		CfgNode::LIVE &live = node->GetLiveInfo();
+		CfgNode::LIVE &copy_live = copy_node->GetLiveInfo();
+		if (live._liveIn != copy_live._liveIn
+				&& live._liveOut != copy_live._liveOut) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void CfgProc::LiveEq(shared_ptr<CfgNode>& node) {
+	CfgNode::LIVE &live = node->GetLiveInfo();
+	const list<shared_ptr<CfgNode>> &succs = node->GetSuccs();
+	citCfgNode succ_it = succs.cbegin();
+	while (succ_it != succs.cend()) {
+		const shared_ptr<CfgNode> &succ_node = *succ_it++;
+		CfgNode::LIVE &succ_live = succ_node->GetLiveInfo();
+		live._liveOut.insert(succ_live._liveIn.begin(),
+				succ_live._liveIn.end());
+	}
+
+	live._liveIn.insert(live._liveOut.begin(), live._liveOut.end());
+	CTacAddr* def = const_cast<CTacAddr*>(node->GetDef());
+	if (def){
+		live._liveIn.erase(def);
+	}
+
+	live._liveIn.insert(node->GetUse().begin(), node->GetUse().end());
+}
+
+// note: works only for intraproc
+void CfgProc::ReachDef(void) {
+	list<shared_ptr<CfgNode>> defs; // list of all defs
+	citCfgNode it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		const shared_ptr<CfgNode> &node = *it++;
+		if (node->GetDef()) {
+			defs.push_back(node);
+		}
+	}
+
+	it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		const shared_ptr<CfgNode> &node = *it++;
+		CTacAddr* def = const_cast<CTacAddr*>(node->GetDef());
+		if (def) {
+			CfgNode::REACH &reach = node->GetReachInfo();
+			reach._gen.insert(node);
+
+			citCfgNode def_it = defs.cbegin();
+			while (def_it != defs.cend()) {
+				const shared_ptr<CfgNode> &def_node = *def_it++;
+				CTacAddr* prev_def = const_cast<CTacAddr*>(def_node->GetDef());
+				if (def->equal_to(*prev_def)) {
+					if (prev_def != def){
+						reach._kill.insert(def_node);
+					}
+				}
+			}
+		}
+	}
+	DumpReachDef(this);
+}
+
+bool CfgProc::ReachFixPoint(const list<shared_ptr<CfgNode>> &copy_nodes) {
+	citCfgNode it = _nodes.cbegin();
+	citCfgNode copy_it = copy_nodes.cbegin();
+	while (copy_it != copy_nodes.cend() && it != _nodes.cend()) {
+		shared_ptr<CfgNode> node = *it++;
+		shared_ptr<CfgNode> copy_node = *copy_it++;
+		CfgNode::REACH &reach = node->GetReachInfo();
+		CfgNode::REACH &copy_reach = copy_node->GetReachInfo();
+		if (reach._liveIn != copy_reach._liveIn
+				&& reach._liveOut != copy_reach._liveOut) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void CfgProc::ReachEq(const shared_ptr<CfgNode>& node) {
+	CfgNode::REACH &reach = node->GetReachInfo();
+	const list<shared_ptr<CfgNode>> &preds = node->GetPreds();
+	citCfgNode pred_it = preds.cbegin();
+	while (pred_it != preds.cend()) {
+		const shared_ptr<CfgNode> &pred_node = *pred_it++;
+		CfgNode::REACH &pred_reach = pred_node->GetReachInfo();
+		reach._liveIn.insert(pred_reach._liveOut.cbegin(),
+				pred_reach._liveOut.cend());
+	}
+
+	reach._liveOut.insert(reach._liveIn.begin(), reach._liveIn.end());
+	for (setCitCfgNode it = reach._kill.cbegin(); it != reach._kill.cend();
+			++it) {
+		const shared_ptr<CfgNode> &kill_node = *it;
+		reach._liveOut.erase(kill_node);
+	}
+
+	for (setCitCfgNode it = reach._gen.cbegin(); it != reach._gen.cend();
+			++it) {
+		const shared_ptr<CfgNode> &gen_node = *it;
+		reach._liveOut.insert(gen_node);
+	}
+}
+
+void CfgProc::DumpLive(const unsigned int step, const CfgProc *proc) const {
+	cout << "Iteration : " << step << endl;
+	cout << "NodeId\t| " << "succs\t| " << "use\t| " << "def\t| " << "out\t| " << "in\n";
+	const list<shared_ptr<CfgNode>> &nodes = proc->GetNodes();
+	critCfgNode node_it = nodes.crbegin();
+	while (node_it != nodes.crend()) {
+		const shared_ptr<CfgNode> &node = *node_it++;
+		//print node id
+		size_t nodeId = node->GetId();
+		cout << "n[" << nodeId << "]:\t| ";
+
+		// print succs
+		const list<shared_ptr<CfgNode>> &succs = node->GetSuccs();
+		citCfgNode succ_it = succs.cbegin();
+		while (succ_it != succs.cend()) {
+			const shared_ptr<CfgNode> &succ = *succ_it++;
+			size_t succId = succ->GetId();
+			cout << succId;
+			if (succ != succs.back())
+				cout << ",";
+		}
+		if (succs.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print use
+		const vector<CTacAddr*> &use = node->GetUse();
+		for (size_t i = 0; i < use.size(); ++i) {
+			cout << use[i];
+			if (i != use.size() - 1)
+				cout << ",";
+		}
+		if (node->GetUse().empty()) {
+			cout << "NULL";
+		}
+		cout << "\t| ";
+
+		// print def
+		const CTacAddr *def = node->GetDef();
+		if (def)
+			cout << def << "\t| ";
+		else
+			cout << "NULL" << "\t| ";
+
+		CfgNode::LIVE &live = node->GetLiveInfo();
+		// print liveOut
+		for (setCitCTacAddr it = live._liveOut.cbegin();
+				it != live._liveOut.cend(); ++it) {
+			CTacAddr *def = *it;
+			cout << def;
+			if (def != *live._liveOut.crbegin())
+				cout << ",";
+		}
+		if (live._liveOut.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print liveIn
+		for (setCitCTacAddr it = live._liveIn.cbegin();
+				it != live._liveIn.cend(); ++it) {
+			CTacAddr *def = *it;
+			cout << def;
+			if (def != *live._liveIn.crbegin())
+				cout << ",";
+		}
+		if (live._liveIn.empty())
+			cout << "NULL";
+		cout << "\n";
+	}
+	cout << endl;
+}
+
+void CfgProc::DumpReachDef(const CfgProc *proc) const {
+	cout << "NodeId\t| " << "def\t| " << "gen\t| " << "kill\n";
+	const list<shared_ptr<CfgNode>> &nodes = proc->GetNodes();
+	citCfgNode node_it = nodes.cbegin();
+	while (node_it != nodes.cend()) {
+		const shared_ptr<CfgNode> &node = *node_it++;
+		// print node id
+		size_t nodeId = node->GetId();
+		cout << "n[" << nodeId << "]:\t| ";
+
+		//print def
+		const CTacAddr *def = node->GetDef();
+		if (def)
+			cout << def << "\t| ";
+		else
+			cout << "NULL" << "\t| ";
+
+		CfgNode::REACH &reach = node->GetReachInfo();
+		// print gen
+		for (setCitCfgNode it = reach._gen.cbegin(); it != reach._gen.cend();
+				++it) {
+			const shared_ptr<CfgNode> &gen_node = *it;
+			size_t genId = gen_node->GetId();
+			cout << genId << ":";
+			const CTacAddr* def = gen_node->GetDef();
+			cout << def;
+			if (gen_node != *reach._gen.crbegin())
+				cout << ",";
+		}
+		if (reach._gen.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print kill
+		for (setCitCfgNode it = reach._kill.cbegin(); it != reach._kill.cend();
+				++it) {
+			const shared_ptr<CfgNode> &kill_node = *it;
+			size_t killId = kill_node->GetId();
+			cout << killId << ":";
+			const CTacAddr* def = kill_node->GetDef();
+			cout << def;
+			if (kill_node != *reach._kill.crbegin())
+				cout << ",";
+		}
+		if (reach._kill.empty())
+			cout << "NULL";
+		cout << "\n";
+	}
+	cout << endl;
+}
+
+void CfgProc::DumpReach(const unsigned int step, const CfgProc *proc) const {
+	cout << "Iteration : " << step << endl;
+	cout << "NodeId\t| " << "preds\t| " << "gen\t| " << "kill\t| " << "in\t| " << "out\n";
+	const list<shared_ptr<CfgNode>> &nodes = proc->GetNodes();
+	citCfgNode node_it = nodes.cbegin();
+	while (node_it != nodes.cend()) {
+		const shared_ptr<CfgNode> &node = *node_it++;
+		//print node id
+		size_t nodeId = node->GetId();
+		cout << "n[" << nodeId << "]:\t| ";
+
+		// print preds
+		const list<shared_ptr<CfgNode>> &preds = node->GetPreds();
+		citCfgNode pred_it = preds.cbegin();
+		while (pred_it != preds.cend()) {
+			const shared_ptr<CfgNode> &pred = *pred_it++;
+			size_t predId = pred->GetId();
+			cout << predId;
+			if (pred != preds.back())
+				cout << ",";
+		}
+		if (preds.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		CfgNode::REACH &reach = node->GetReachInfo();
+		// print gen
+		for (setCitCfgNode it = reach._gen.cbegin(); it != reach._gen.cend();
+				++it) {
+			const shared_ptr<CfgNode> &gen_node = *it;
+			size_t genId = gen_node->GetId();
+			cout << genId << ":";
+			const CTacAddr* def = gen_node->GetDef();
+			cout << def;
+			if (gen_node != *reach._gen.crbegin())
+				cout << ",";
+		}
+		if (reach._gen.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print kill
+		for (setCitCfgNode it = reach._kill.cbegin(); it != reach._kill.cend();
+				++it) {
+			const shared_ptr<CfgNode> &kill_node = *it;
+			size_t killId = kill_node->GetId();
+			cout << killId << ":";
+			const CTacAddr* def = kill_node->GetDef();
+			cout << def;
+			if (kill_node != *reach._kill.crbegin())
+				cout << ",";
+		}
+		if (reach._kill.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print liveIn
+		for (setCitCfgNode it = reach._liveIn.cbegin();
+				it != reach._liveIn.cend(); ++it) {
+			const shared_ptr<CfgNode> &live_node = *it;
+			size_t liveId = live_node->GetId();
+			cout << liveId << ":";
+			const CTacAddr* def = live_node->GetDef();
+			cout << def;
+			if (live_node != *reach._liveIn.crbegin())
+				cout << ",";
+		}
+		if (reach._liveIn.empty())
+			cout << "NULL";
+		cout << "\t| ";
+
+		// print liveOut
+		for (setCitCfgNode it = reach._liveOut.cbegin();
+				it != reach._liveOut.cend(); ++it) {
+			const shared_ptr<CfgNode> &live_node = *it;
+			size_t liveId = live_node->GetId();
+			cout << liveId << ":";
+			const CTacAddr* def = live_node->GetDef();
+			cout << def;
+			if (live_node != *reach._liveOut.crbegin())
+				cout << ",";
+		}
+		if (reach._liveOut.empty())
+			cout << "NULL";
+		cout << "\n";
+	}
+	cout << endl;
+}
+
+void CfgProc::MakeNodes(void) {
+	//make an instance of CfgNode for each CTacInstr in CCodeBlock
+	const list<CTacInstr*> &ops = _cb->GetInstr();
+	citCTacInstr it = ops.cbegin();
+	while (it != ops.cend()) {
+		CTacInstr *instr = *it++;
+		shared_ptr<CfgNode> n(new CfgNode(this, instr));
+		_nodes.push_back(n);
+	}
+}
+
+void CfgProc::MakeEdges(void) {
+	//type of _nodes : list<shared_ptr<CfgNode>> 
+	citCfgNode it = _nodes.cbegin();
+	while (it != _nodes.cend()) {
+		const shared_ptr<CfgNode> &n = *it++;
+		if (it != _nodes.cend()) {
+			// get next node (fall through case)
+			const shared_ptr<CfgNode> &next = *it;
+			const CTacInstr *instr = n->GetInstr();
+			// get dest instr (jump case)
+			const CTacInstr *dest =
+					dynamic_cast<const CTacInstr*>(instr->GetDest());
+			if (!dest) {
+				AddEdge(n, next);	// fall through
+				continue;
+			}
+			// get dest node (jump case)
+			const shared_ptr<CfgNode> target = FindNode(dest);
+			if (!target) {
+				cout << "Node not found at instr_id : " << dest->GetId()
+						<< endl;
+				continue;
+			}
+			// "if true goto" or just "goto"
+			AddEdge(n, target); 	// jump
+			// "if false goto"
+			if (IsRelOp(instr->GetOperation())) {
+				AddEdge(n, next);	// fall through
+			}
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// CfgIntraProc
+//
+
+CfgIntraProc::CfgIntraProc(CModule *m) {
+	assert(m != NULL);
+	if (!m)
+		return;
+	_m = m;
+	_modName = m->GetName();
+	// initial proc cfg offset
+	size_t offset = 0;
+	CCodeBlock *cb = _m->GetCodeBlock();
+	// increment offset for next proc cfg
+	offset += MakeProcs(cb, offset);
+	const vector<CScope*> &proc = _m->GetSubscopes();
+	for (size_t p = 0; p < proc.size(); ++p) {
+		cb = proc[p]->GetCodeBlock();
+		// increment offset for next proc cfg
+		offset += MakeProcs(cb, offset);
+	}
+}
+
+CfgIntraProc::~CfgIntraProc(void) {
+
+}
+
+const shared_ptr<CfgProc> CfgIntraProc::FindProc(const string &name) const {
+	for (size_t p = 0; p < _procs.size(); ++p) {
+		if (_procs[p]->GetName() == name)
+			return _procs[p];
+	}
+	return nullptr;
+}
+
+void CfgIntraProc::toDot(ostream &out) const {
+	for (size_t p = 0; p < _procs.size(); ++p) {
+		_procs[p]->toDot(out);
+	}
+}
+
+size_t CfgIntraProc::MakeProcs(CCodeBlock *cb, size_t offset) {
+	shared_ptr<CfgProc> proc(new CfgProc(cb, offset));
+	_procs.push_back(proc);
+	return proc->GetNodeCnt();
+}
+
+//------------------------------------------------------------------------------
+// CfgInterProc
+//
+
+CfgInterProc::CfgInterProc(CModule *m) :
+		CfgIntraProc(m) {
+	assert(m != NULL);
+	if (!m)
+		return;
+	MakeGraph();
+}
+
+CfgInterProc::~CfgInterProc(void) {
+
+}
+
+void CfgInterProc::MakeGraph() {
+	for (size_t p = 0; p < _procs.size(); ++p) {
+		const list<shared_ptr<CfgNode>> &nodes = _procs[p]->GetNodes();
+		citCfgNode it = nodes.cbegin();
+		while (it != nodes.cend()) {
+			const shared_ptr<CfgNode> &node = *it++;
+			const CTacInstr *instr = node->GetInstr();
+			EOperation op = instr->GetOperation();
+			// make edges between procs for func calls
+			if (op == opCall) {
+				const CTacName *func =
+						dynamic_cast<const CTacName*>(instr->GetSrc(1));
+				if (!func) {
+					cout << "Called function not found at instr_id : "
+							<< instr->GetId() << endl;
+					continue;
+				}
+				const string &name = func->GetSymbol()->GetName();
+				const shared_ptr<CfgProc> &dest = FindProc(name);
+				if (!dest) {
+					list<string> io_funcs = { "WriteInt", "WriteStr",
+							"WriteChar", "WriteLn", "ReadInt", "DIM", "DOFS" };
+					if (!(find(io_funcs.begin(), io_funcs.end(), name)
+							!= io_funcs.end())) {
+						cout << "Function [" << name << "] not found in : "
+								<< _modName << ".mod" << endl;
+					}
+					continue;
+				}
+				const list<shared_ptr<CfgNode>> &target = dest->GetNodes();
+				if (target.empty()) {
+					cout << "Function [" << name << "] nodes not found" << endl;
+					continue;
+				}
+				// edge from func call to func
+				_procs[p]->AddEdge(node, target.front());
+				// edge from func return to func call
+				dest->AddEdge(target.back(), node);
+			}
+		}
+	}
+}

@@ -1,0 +1,8 @@
+digraph IR {
+  graph [fontname="Times New Roman",fontsize=10];
+  node  [fontname="Courier New",fontsize=10];
+  edge  [fontname="Times New Roman",fontsize=10];
+
+  // scope 'test03'
+  test03_cb [label="test03\r  0:     if     1 = 1 goto 6\l  1:     goto   4\l  2: 6:\l  3:     if     0 = 1 goto 3\l  4:     goto   4\l  5: 3:\l  6:     assign t0 <- 1\l  7:     goto   5\l  8: 4:\l  9:     assign t0 <- 0\l 10: 5:\l 11:     assign c <- t0\l 12:     if     c = 1 goto 8_if_true\l 13:     goto   9_if_false\l 14: 8_if_true:\l 15:     param  0 <- 1\l 16:     call   WriteInt\l 17:     goto   7\l 18: 9_if_false:\l 19:     param  0 <- 0\l 20:     call   WriteInt\l 21: 7:\l 22:     if     1 = 1 goto 13\l 23:     if     0 = 1 goto 13\l 24:     goto   14\l 25: 13:\l 26:     assign t1 <- 1\l 27:     goto   15\l 28: 14:\l 29:     assign t1 <- 0\l 30: 15:\l 31:     assign c <- t1\l 32:     if     c = 1 goto 18_if_true\l 33:     goto   19_if_false\l 34: 18_if_true:\l 35:     param  0 <- 1\l 36:     call   WriteInt\l 37:     goto   17\l 38: 19_if_false:\l 39:     param  0 <- 0\l 40:     call   WriteInt\l 41: 17:\l 42:     if     1 = 1 goto 24\l 43:     if     0 = 1 goto 24\l 44:     assign t2 <- 1\l 45:     goto   25\l 46: 24:\l 47:     assign t2 <- 0\l 48: 25:\l 49:     assign c <- t2\l 50:     if     c = 1 goto 28_if_true\l 51:     goto   29_if_false\l 52: 28_if_true:\l 53:     param  0 <- 1\l 54:     call   WriteInt\l 55:     goto   27\l 56: 29_if_false:\l 57:     param  0 <- 0\l 58:     call   WriteInt\l 59: 27:\l",shape=box]
+}

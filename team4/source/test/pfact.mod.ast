@@ -1,0 +1,141 @@
+pfact.mod:
+    CAstScope: 'pfact'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @_str_1   <array 2 of <char>>           ]
+            [ data: ' ' ]
+          [ @_str_2   <array 2 of <char>>           ]
+            [ data: ' ' ]
+          [ @_str_3   <array 16 of <char>>           ]
+            [ data: 'Prime factoring' ]
+          [ @_str_4   <array 25 of <char>>           ]
+            [ data: 'Enter number to factor: ' ]
+          [ @_str_5   <array 20 of <char>>           ]
+            [ data: '  prime factors of ' ]
+          [ @_str_6   <array 3 of <char>>           ]
+            [ data: ': ' ]
+          [ main     <NULL>           ]
+          [ @n        <int>           ]
+          [ *primefactor(<int>) --> <NULL>           ]
+        ]]
+      statement list:
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 16 of <char>>>
+            "Prime factoring" <array 16 of <char>>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 25 of <char>>>
+            "Enter number to factor: " <array 25 of <char>>
+        := <int>
+          [ @n        <int> ] <int>
+          call [ *ReadInt() --> <int> ] <int>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 20 of <char>>>
+            "  prime factors of " <array 20 of <char>>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          [ @n        <int> ] <int>
+        call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+          &() <ptr(4) to <array 3 of <char>>>
+            ": " <array 3 of <char>>
+        call [ *primefactor(<int>) --> <NULL> ] <NULL>
+          [ @n        <int> ] <int>
+        call [ *WriteLn() --> <NULL> ] <NULL>
+      nested scopes:
+        CAstScope: 'primefactor'
+          symbol table:
+            [[
+              [ $f        <int>               ]
+              [ %n        <int>               ]
+            ]]
+          statement list:
+            if cond
+              < <bool>
+                [ %n        <int> ] <int>
+                1 <int>
+            if-body
+              return <NULL>
+            else-body
+              if cond
+                = <bool>
+                  [ %n        <int> ] <int>
+                  1 <int>
+              if-body
+                call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+                  &() <ptr(4) to <array 2 of <char>>>
+                    " " <array 2 of <char>>
+                call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                  1 <int>
+              else-body
+                := <int>
+                  [ $f        <int> ] <int>
+                  2 <int>
+                while cond
+                  <= <bool>
+                    [ $f        <int> ] <int>
+                    [ %n        <int> ] <int>
+                while-body
+                  if cond
+                    = <bool>
+                      mul <int>
+                        div <int>
+                          [ %n        <int> ] <int>
+                          [ $f        <int> ] <int>
+                        [ $f        <int> ] <int>
+                      [ %n        <int> ] <int>
+                  if-body
+                    call [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL> ] <NULL>
+                      &() <ptr(4) to <array 2 of <char>>>
+                        " " <array 2 of <char>>
+                    call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+                      [ $f        <int> ] <int>
+                    := <int>
+                      [ %n        <int> ] <int>
+                      div <int>
+                        [ %n        <int> ] <int>
+                        [ $f        <int> ] <int>
+                  else-body
+                    := <int>
+                      [ $f        <int> ] <int>
+                      add <int>
+                        [ $f        <int> ] <int>
+                        1 <int>
+          nested scopes:
+            empty.
+        
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @_str_1   <array 2 of <char>>       ]
+        [ data: ' ' ]
+      [ @_str_2   <array 2 of <char>>       ]
+        [ data: ' ' ]
+      [ @_str_3   <array 16 of <char>>       ]
+        [ data: 'Prime factoring' ]
+      [ @_str_4   <array 25 of <char>>       ]
+        [ data: 'Enter number to factor: ' ]
+      [ @_str_5   <array 20 of <char>>       ]
+        [ data: '  prime factors of ' ]
+      [ @_str_6   <array 3 of <char>>       ]
+        [ data: ': ' ]
+      [ main     <NULL>       ]
+      [ @n        <int>       ]
+      [ *primefactor(<int>) --> <NULL>       ]
+    ]]
+
