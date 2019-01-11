@@ -1,1 +1,6 @@
 Advanced Compiler Construction
+
+@ Brief : Constant Propagation & Dead Code Elimination
+@ Don't use it for Plagiarism, only for storing
+@ Constant Propagation Correctly works, but Dead Code Elimination does not completely works well
+@ have to fix it 
